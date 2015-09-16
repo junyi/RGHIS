@@ -1,6 +1,8 @@
 package sg.rghis.android;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -9,17 +11,30 @@ import java.io.InputStream;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import timber.log.Timber;
 
 public class RghisApplication extends Application {
+    private static final String KEY_DATABASE_VERSION = "version";
+
     @Override
     public void onCreate() {
         super.onCreate();
-        buildDatabase();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (preferences.contains(KEY_DATABASE_VERSION)) {
+            createDefaultConfig();
+        } else {
+            copyBundledRealmFile(getResources().openRawResource(R.raw.default0), "default");
+            createDefaultConfig();
+            preferences.edit().putLong(KEY_DATABASE_VERSION, 0).apply();
+        }
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
     }
 
-    private void buildDatabase() {
-        copyBundledRealmFile(getResources().openRawResource(R.raw.default0), "default");
-
+    private void createDefaultConfig() {
         RealmConfiguration config = new RealmConfiguration.Builder(this)
                 .name("default")
                 .schemaVersion(0)
@@ -27,6 +42,7 @@ public class RghisApplication extends Application {
 
         Realm.setDefaultConfiguration(config);
     }
+
 
     private String copyBundledRealmFile(InputStream inputStream, String outFileName) {
         try {
