@@ -1,0 +1,46 @@
+[{
+"items" : [
+{
+"id" : "All Institutions", 
+"specialities" : "All Specialties ,Anaesthesiology ,Cardiology ,Cardiothoracic Surgery ,Colorectal Surgery ,Dentistry ,Dermatology ,Diagnostic Radiology ,Emergency Medicine ,Endocrinology ,Family Medicine ,Gastroenterology ,General Surgery ,Geriatric Medicine ,Haematology ,Hand Surgery ,Infectious Diseases ,Internal Medicine ,Medical Oncology ,Neonatology ,Neurology ,Neurosurgery ,Nuclear Medicine ,Obstetrics & Gynaecology ,Occupational Health & Epidemiology ,Ophthalmology ,Oral & Maxillofacial Surgery ,Orthopaedic Surgery ,Others ,Otolaryngology (Ear, Nose and Throat or ENT) ,Paediatric Medicine ,Paediatric Surgery ,Palliative Medicine ,Pathology ,Plastic Surgery & Burns ,Psychological Medicine ,Public Health ,Radiation Oncology ,Rehabilitation Medicine ,Renal Medicine ,Respiratory Medicine ,Rheumatology & Immunology ,Sport Medicine ,Surgical Oncology ,Urology"
+},
+{
+"id" : "SingHealth Corporate", 
+"specialities" : "All Specialties ,Anaesthesiology ,Cardiology ,Cardiothoracic Surgery ,Colorectal Surgery ,Dentistry ,Dermatology ,Diagnostic Radiology ,Emergency Medicine ,Endocrinology ,Family Medicine ,Gastroenterology ,General Surgery ,Geriatric Medicine ,Haematology ,Hand Surgery ,Infectious Diseases ,Internal Medicine ,Medical Oncology ,Neonatology ,Neurology ,Neurosurgery ,Nuclear Medicine ,Obstetrics &amp; Gynaecology ,Occupational Health &amp; Epidemiology ,Ophthalmology ,Oral &amp; Maxillofacial Surgery ,Orthopaedic Surgery ,Others ,Otolaryngology (Ear, Nose and Throat or ENT) ,Paediatric Medicine ,Paediatric Surgery ,Palliative Medicine ,Pathology ,Plastic Surgery &amp; Burns ,Psychological Medicine ,Public Health ,Radiation Oncology ,Rehabilitation Medicine ,Renal Medicine ,Respiratory Medicine ,Rheumatology &amp; Immunology ,Sport Medicine ,Surgical Oncology ,Urology"
+},
+{
+"id" : "Singapore General Hospital", 
+"specialities" : "All Specialties ,Anaesthesia &amp; Surgical Intensive Care ,Colorectal Surgery ,Dermatology ,Diagnostic Radiology ,Emergency Medicine ,Endocrinology ,Family Medicine and Continuing Care ,Gastroenterology &amp; Hepatology ,General Surgery ,Geriatric Medicine ,Haematology ,Hand Surgery ,Internal Medicine ,Neonatal and Developmental Medicine ,Neurology ,Neurosurgery ,Nuclear Medicine &amp; PET ,Obstetrics &amp; Gynaecology ,Occupational Health &amp; Epidemiology ,Orthopaedic Surgery ,Otolaryngology ,Pathology ,Plastic, Reconstructive &amp; Aesthetic Surgery ,Psychiatry ,Rehabilitation Medicine ,Renal Medicine ,Respiratory &amp; Critical Care Medicine ,Rheumatology and Immunology ,Urology"
+},
+{
+"id" : "KK Women's and Children's Hospital", 
+"specialities" : "All Specialties ,Advanced Skills Training (Obstetrics &amp; Gynaecology) ,Ambulatory Geriatric ,Anaesthesia (Obstetrics &amp; Gynaecology) ,Antenatal Diagnosis/ Antenatal Monitoring ,Antenatal Risk Assessment ,Breast Centre ,Case Management ,Child &amp; Adolescent Psychiatry ,Child Development ,Children's Intensive Care ,Cleft &amp; Craniofacial Dentistry Unit ,Clinical Fellow ,Colorectal Service ,Colorectal Surgery ,Consultant ,Diagnostic Imaging ,Family Medicine ,General and Ambulatory Paediatrics ,General Obstetrics &amp; Gynaecology ,General Paediatric Surgery ,General Paediatrics &amp; Adolescent Medicine ,Gynaecological Oncology ,Intl Co-operation &amp; Collaboration ,Laboratory ,Maternal Fetal Medicine ,Menopause ,Minimally Invasive Surgery ,Neonatology ,Paediatric Anaesthesia ,Paediatric Cardiology ,Paediatric Cardiothoracic Surgery ,Paediatric Emergency Medicine ,Paediatric Endocrinology ,Paediatric Gastroenterology ,Paediatric Genetics ,Paediatric Haematology / Oncology ,Paediatric Infectious Diseases ,Paediatric Medicine ,Paediatric Medicine, Children's Intensive Care ,Paediatric Nephrology ,Paediatric Neurology ,Paediatric Neurosurgery ,Paediatric Ophthalmology ,Paediatric Orthopaedic Surgery ,Paediatric Orthopaedic Surgery, Hand Surgery ,Paediatric Otolaryngology ,Paediatric Respiratory Medicine ,Paediatric Rheumatology / Immunology / Allergy ,Paediatric Surgery ,Paediatric Surgery (Paediatric Surgical, Oncology) ,Paediatric Surgery, Dental ,Paediatric Surgical Oncology ,Perinatal Audit &amp; Epidemiology ,Peripartum ,Plastic, Reconstructive &amp; Aesthetic Surgery ,Prenatal Diagnosis &amp; Obstetric Ultrasound ,Psychiatry ,Psychosocial Trauma Support ,Reproductive Medicine ,Rheumatology &amp; Immunology ,Service Registrar ,Sports Medicine ,Urogynaecology ,Women's Orthopaedic Surgery"
+},
+{
+"id" : "National Cancer Centre Singapore", 
+"specialities" : "All Specialties ,Anaesthesiology ,Anaesthesiology &amp; Pain Mgt ,Anaesthesiology &amp; Pain Specialist ,Breast / Urology ,Cardiothoracic Surgery ,Colorectal Surgery ,ENT / Head &amp; Neck Surgery ,Gastroenterology ,General Medicine ,General Surgery ,Haematology ,Liver &amp; General Surgery ,Medical Oncology ,Neurology ,Neurosurgery ,NIL ,Nuclear Medicine ,Obstetrics &amp; Gynaecology ,Oncologic Imaging ,Oral &amp; Maxillofacial Surgery ,Orthopaedic Surgery ,Otolaryngology ,Palliative Medicine ,Plastic Surgery ,Psychiatry ,Radiation Oncology ,Respiratory &amp; Critical Care Medicine ,Surgical Oncology ,Urology"
+},
+{
+"id" : "National Dental Centre Singapore", 
+"specialities" : "All Specialties ,Endodontics ,General Dentistry ,Oral &amp; Maxillofacial Pathology ,Oral &amp; Maxillofacial Surgery ,Orthodontics ,Paediatric Dentistry ,Periodontics ,Prosthodontics ,Restorative Dentistry, Endodontics ,Restorative Dentistry, Paediatic Dentistry ,Restorative Dentistry, Periodontics ,Restorative Dentistry, Prosthodontics"
+},
+{
+"id" : "National Heart Centre Singapore", 
+"specialities" : "All Specialties ,Cardiac Radiology ,Cardiology ,Cardiothoracic Anaesthesia ,Cardiothoracic Surgery ,Heart/Lung Transplant ,Research"
+},
+{
+"id" : "National Neuroscience Institute", 
+"specialities" : "All Specialties ,Neurology ,Neuroradiology ,Neurosurgery"
+},
+{
+"id" : "Singapore National Eye Centre", 
+"specialities" : "All Specialties ,Advanced Surgical Training Programme ,Basic Specialty Training Programme ,Cataract and Comprehensive Ophthalmology Service ,Continuing Optometry/ Orthoptic Education ,Corneal and External Eye Disease Service ,Education ,Glaucoma Service ,Neuro-Ophthalmology ,NIL ,Ocular Inflammation and Immunology Service ,Oculoplastic/ Aesthetic Eyeplastic Service ,Ophthalmic Nursing, Paramedical and Technician Tra ,Paediatric Ophthalmology and Strabismus Service ,Refractive Surgery Service ,Research ,Undergraduate Training Programme ,Vitreo-Retina Service"
+},
+{
+"id" : "SingHealth Polyclinics", 
+"specialities" : "All Specialties ,Family Medicine ,Internal Medicine"
+}
+]
+}]
+
+

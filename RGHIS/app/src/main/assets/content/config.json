@@ -1,0 +1,35 @@
+{
+"lastUpdateTime": "0",
+"items":[
+{
+"id" : "home",
+"display" : "Home",
+"icon" : "../img/ico_home.png",
+"active" : true
+},
+{
+"id" : "healthtips",
+"display" : "HealthTips",
+"icon" : "../img/ico_healthtips.png",
+"active" : true
+},
+{
+"id" : "wayfinder",
+"display" : "WayFinder",
+"icon" : "../img/ico_wayfinder.png",
+"active" : true
+},
+{
+"id" : "appt",
+"display" : "Appt",
+"icon" : "../img/ico_appt.png",
+"active" : true
+},
+{
+"id" : "settings",
+"display" : "Settings",
+"icon" : "../img/ico_settings.png",
+"active" : true
+}
+]
+}

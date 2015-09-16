@@ -1,0 +1,528 @@
+{
+  "items" : [ {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Anaesthesiology",
+    "info" : "Anaesthesiology.html",
+    "services" : [ {
+      "center" : "Specialty-NHCS",
+      "dept" : "Cardiothoracic Anaesthesia",
+      "tel" : "(65) 6436 7800"
+    }, {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Anaesthesiology",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Women's - Anaesthesia",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Cardiology",
+    "info" : "Cardiology.html",
+    "services" : [ {
+      "center" : "Specialty-NHCS",
+      "dept" : "Dept of Cardiology",
+      "tel" : "(65) 6436 7800"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - Cardiology",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Cardiothoracic Surgery",
+    "info" : "CardiothoracicSurgery.html",
+    "services" : [ {
+      "center" : "Specialty-NHCS",
+      "dept" : "Dept of Cardiothoracic Surgery",
+      "tel" : "(65) 6436 7800"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - Cardiothoracic Surgery",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Colorectal Surgery",
+    "info" : "ColorectalSurgery.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Colorectal Surgery",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Women's - Colorectal Surgery",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Dentistry",
+    "info" : "Dentistry.html",
+    "services" : [ {
+      "center" : "Specialty-NDCS",
+      "dept" : "Dental Services",
+      "tel" : "(65) 6324 8910"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - Dentistry and Dental Surgery",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Dermatology",
+    "info" : "Dermatology.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Dermatology",
+      "tel" : "(65) 6222 3322"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Diagnostic Radiology",
+    "info" : "DiagnosticRadiology.html",
+    "services" : [ {
+      "center" : "Specialty-NCCS",
+      "dept" : "Medical Imaging and Investigative Service",
+      "tel" : "(65) 6436 8000"
+    }, {
+      "center" : "Specialty-NHCS",
+      "dept" : "Dept of Cardiac Radiology",
+      "tel" : "(65) 6436 7800"
+    }, {
+      "center" : "Specialty-NNI",
+      "dept" : "Neurodiagnostic Laboratory",
+      "tel" : "(65) 6357 7153"
+    }, {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Diagnostic Radiology",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Women's - Diagnostic Imaging",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Emergency Medicine",
+    "info" : "EmergencyMedicine.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Emergency Medicine",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - Emergency",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Endocrinology",
+    "info" : "Endocrinology.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Endocrinology",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - Endocrinology",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Family Medicine",
+    "info" : "FamilyMedicine.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Family Medicine and Continuing Care",
+      "tel" : "(65) 6222 3322"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Gastroenterology",
+    "info" : "Gastroenterology.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Gastroenterology & Hepatology",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - Gastroenterology",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "General Surgery",
+    "info" : "GeneralSurgery.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of General Surgery",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's Surgery Centre",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Geriatric Medicine",
+    "info" : "GeriatricMedicine.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Geriatric Medicine",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Women's - Ambulatory Geriatric Service",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Haematology",
+    "info" : "Haematology.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Haematology",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's Cancer Centre",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Hand Surgery",
+    "info" : "HandSurgery.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Hand Surgery",
+      "tel" : "(65) 6222 3322"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Infectious Diseases",
+    "info" : "InfectiousDiseases.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Infectious Disease",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - Infectious Diseases",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Internal Medicine",
+    "info" : "InternalMedicine.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Internal Medicine",
+      "tel" : "(65) 6222 3322"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Medical Oncology",
+    "info" : "MedicalOncology.html",
+    "services" : [ {
+      "center" : "Specialty-NCCS",
+      "dept" : "Dept of Medical Oncology",
+      "tel" : "(65) 6436 8000"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's Cancer Centre",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Neonatology",
+    "info" : "Neonatology.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Neonatal & Developmental Medicine",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - Neonatology",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Neurology",
+    "info" : "Neurology.html",
+    "services" : [ {
+      "center" : "Specialty-NNI",
+      "dept" : "Dept of Neurology",
+      "tel" : "(65) 6357 7153"
+    }, {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Neurology",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - Neurology Service",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Neurosurgery",
+    "info" : "Neurosurgery.html",
+    "services" : [ {
+      "center" : "Specialty-NNI",
+      "dept" : "Dept of Neurosurgery",
+      "tel" : "(65) 6357 7153"
+    }, {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Neurosurgery",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - Neurosurgical Service",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Nuclear Medicine",
+    "info" : "NuclearMedicine.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Nuclear Medicine & PET",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-NHCS",
+      "dept" : "Dept of Cardiology (Nuclear Cardiology)",
+      "tel" : "(65) 6436 7800"
+    }]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Obstetrics & Gynaecology",
+    "info" : "ObstetricsGynaecology.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Obstetrics & Gynaecology",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Women's - General Obstetrics & Gynaecology",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Occupational Health & Epidemiology",
+    "info" : "OccupationalHealthEpidemiology.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Internal Medicine",
+      "tel" : "(65) 6222 3322"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Ophthalmology",
+    "info" : "Ophthalmology.html",
+    "services" : [ {
+      "center" : "Specialty-SNEC",
+      "dept" : "Clinical Services",
+      "tel" : "(65) 6227 7255"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - KK Eye Centre",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Oral & Maxillofacial Surgery",
+    "info" : "OralMaxillofacialSurgery.html",
+    "services" : [ {
+      "center" : "Specialty-NDCS",
+      "dept" : "Dept of Oral and Maxillofacial Surgery",
+      "tel" : "(65) 6324 8910"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - Dentistry and Dental Surgery",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Orthopaedic Surgery",
+    "info" : "OrthopaedicSurgery.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Orthopaedic Surgery",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Women's - Orthopaedic Surgery",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Otolaryngology (Ear, Nose and Throat or ENT)",
+    "info" : "Otolaryngology(Ear,NoseandThroatorENT).html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Otolaryngology",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Women's - Otolaryngology",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Paediatric Medicine",
+    "info" : "PaediatricMedicine.html",
+    "services" : [ {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's Services",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Palliative Medicine",
+    "info" : "PalliativeMedicine.html",
+    "services" : [ {
+      "center" : "Specialty-NCCS",
+      "dept" : "Palliative Medicine",
+      "tel" : "(65) 6436 8000"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Pathology",
+    "info" : "Pathology.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Pathology",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "KKH Laboratory",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Plastic Surgery & Burns",
+    "info" : "PlasticSurgeryBurns.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Plastic, Reconstructive & Aesthetic Surgery",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Women's - Plastic, Reconstructive & Aesthetic Surgery",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Psychological Medicine",
+    "info" : "PsychologicalMedicine.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Psychiatry",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Women's - Mental Wellness Service",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Radiation Oncology",
+    "info" : "RadiationOncology.html",
+    "services" : [ {
+      "center" : "Specialty-NCCS",
+      "dept" : "Dept of Radiation Oncology",
+      "tel" : "(65) 6436 8000"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Rehabilitation Medicine",
+    "info" : "RehabilitationMedicine.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Rehabilitation Medicine",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Rehabilitation",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Renal Medicine",
+    "info" : "RenalMedicine.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Renal Medicine",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - Nephrology Service",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Respiratory Medicine",
+    "info" : "RespiratoryMedicine.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Respiratory & Critical Care Medicine",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - Respiratory Medicine",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Rheumatology & Immunology",
+    "info" : "RheumatologyImmunology.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Rheumatology & Immunology",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's - Rheumatology & Immunology",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Sports Medicine",
+    "info" : "SportsMedicine.html",
+    "services" : [ {
+      "center" : "Specialty-KKH",
+      "dept" : "Sports Medicine Service",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Surgical Oncology",
+    "info" : "SurgicalOncology.html",
+    "services" : [ {
+      "center" : "Specialty-NCCS",
+      "dept" : "Dept of Surgical Oncology",
+      "tel" : "(65) 6436 8000"
+    }, {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of General Surgery",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Children's Cancer Centre",
+      "tel" : "(65) 6225 5554"
+    } ]
+  }, {
+    "updateTimestamp" : "1313648489964",
+    "title" : "Urology",
+    "info" : "Urology.html",
+    "services" : [ {
+      "center" : "Specialty-SGH",
+      "dept" : "Dept of Urology",
+      "tel" : "(65) 6222 3322"
+    }, {
+      "center" : "Specialty-KKH",
+      "dept" : "Dept of Urogynaeocology",
+      "tel" : "(65) 6225 5554"
+    } ]
+  } ]
+}

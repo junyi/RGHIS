@@ -1,0 +1,280 @@
+[{
+"items" : [ 
+{
+"title" : "Anaesthesiology",
+"info" : "../content/spec/Anaesthesiology.html",
+"services" : [
+    {
+      "dept": "Cardiothoracic Anaesthesia",
+      "centre": "National Heart Centre Singapore",
+     
+      "tel" : "61111111"
+    },
+    {
+      "dept": "Dept of Anaesthesiology",
+      "centre": "Singapore General Hospital",
+     
+      "tel" : "62222222"
+    },
+    {
+      "dept": "Women's Anaesthesia, Children's Anaesthesia",
+      "centre": "KK Women's and Children's Hospital",
+     
+      "tel" : "63333333"
+    }
+  ]
+},
+{
+"title" : "Cardiology",
+"info" : "../content/spec/Cardiology.html",
+"services" : []
+},
+{
+"title" : "Cardiothoracic Surgery",
+"info" : "../content/spec/CardiothoracicSurgery.html",
+"services" : []
+},
+{
+"title" : "Colorectal Surgery",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Dentistry",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Dermatology",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Diagnostic Radiology",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Emergency Medicine",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Endocrinology",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Family Medicine",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Gastroenterology",
+"info" : "",
+"services" : []
+},
+{
+"title" : "General Surgery",
+"info" : "../content/spec/GeneralSurgery.html",
+"services" : [
+    {
+      "dept": "Dept of General Surgery",
+      "centre": "Singapore General Hospital",
+     
+      "tel" : "62223322"
+    },
+    {
+      "dept": "Children's Surgery Centre",
+      "centre": "KK Women's and Children's Hospital",
+     
+      "tel" : "62255554"
+    }
+  ]
+},
+{
+"title" : "Geriatric Medicine",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Haematology",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Hand Surgery",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Infectious Diseases",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Internal Medicine",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Medical Oncology",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Neonatology",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Neurology",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Neurosurgery",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Nuclear Medicine",
+"info" : "",
+"services" : [
+    {
+      "dept": "Dept of Nuclear Medicine & PET",
+      "centre": "Singapore General Hospital",
+     
+      "tel" : "62223322"
+    },
+    {
+      "dept": "Dept of Cardiology (Nuclear Cardiology)",
+      "centre": "National Heart Center Singapore",
+     
+      "tel" : "64367800"
+    }
+]
+},
+{
+"title" : "Obstetrics &amp; Gynaecology",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Occupational Health &amp; Epidemiology",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Ophthalmology",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Oral &amp; Maxillofacial Surgery",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Orthopaedic Surgery",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Otolaryngology (Ear, Nose and Throat or ENT)",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Paediatric Medicine",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Palliative Medicine",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Pathology",
+"info" : "../content/spec/Pathology.html",
+"services" : [
+    {
+      "dept": "Dept of Pathology",
+      "centre": "Singapore General Hospital",
+     
+      "tel" : "62223322"
+    },
+    {
+      "dept": "KKH Laboratory",
+      "centre": "KK Women's and Children's Hospital",
+     
+      "tel" : "62255554"
+    }
+  ]
+},
+{
+"title" : "Plastic Surgery &amp; Burns",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Psychological Medicine",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Radiation Oncology",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Rehabilitation Medicine",
+"info" : "../content/spec/RehabilitationMedicine.html",
+"services" : [
+    {
+      "dept": "Dept of Rehabilitation Medicine",
+      "centre": "Singapore General Hospital",
+     
+      "tel" : "62223322"
+    },
+    {
+      "dept": "Rehabilitation",
+      "centre": "KK Women's and Children's Hospital",
+     
+      "tel" : "62255554"
+    }
+  ]
+},
+{
+"title" : "Renal Medicine",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Respiratory Medicine",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Rheumatology &amp; Immunology",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Sports Medicine",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Surgical Oncology",
+"info" : "",
+"services" : []
+},
+{
+"title" : "Urology",
+"info" : "",
+"services" : []
+}
+]
+}]
