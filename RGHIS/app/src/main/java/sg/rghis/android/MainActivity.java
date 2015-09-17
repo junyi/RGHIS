@@ -15,7 +15,11 @@ import android.view.View;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
+import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
+import com.turingtechnologies.materialscrollbar.MaterialScrollBar;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
@@ -29,6 +33,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import sg.rghis.android.databinding.HealthTopicSheetBinding;
 import sg.rghis.android.model.HealthTopic;
 import sg.rghis.android.model.ObservableHealthTopic;
+import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheet.showWithSheetView(binding.getRoot());
             }
         }));
+
+        MaterialScrollBar materialScrollBar = new MaterialScrollBar(this, recyclerView, true);
+        materialScrollBar.addIndicator(new AlphabetIndicator(this));
 //        realm.beginTransaction();
 //        try {
 //            realm.where(HealthTopic.class).equalTo(HealthTopic.TITLE, "W").findFirst().removeFromRealm();
@@ -80,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //
 //        realm.commitTransaction();
+
+
     }
 
 

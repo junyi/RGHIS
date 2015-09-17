@@ -2,6 +2,8 @@ package sg.rghis.android;
 
 import android.content.Context;
 
+import com.turingtechnologies.materialscrollbar.INameableAdapter;
+
 import io.realm.RealmResults;
 import sg.rghis.android.model.HealthTopic;
 

@@ -6,9 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.turingtechnologies.materialscrollbar.INameableAdapter;
+
 import sg.rghis.android.model.HealthTopic;
 
-public class HealthTopicAdapter extends RealmRecyclerViewAdapter<HealthTopic, HealthTopicAdapter.SimpleViewHolder> {
+public class HealthTopicAdapter extends RealmRecyclerViewAdapter<HealthTopic, HealthTopicAdapter.SimpleViewHolder>
+        implements INameableAdapter {
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
         public final TextView title;
@@ -42,5 +45,10 @@ public class HealthTopicAdapter extends RealmRecyclerViewAdapter<HealthTopic, He
             return getRealmAdapter().getCount();
         }
         return 0;
+    }
+
+    @Override
+    public Character getCharacterForElement(int i) {
+        return getItem(i).getTitle().charAt(0);
     }
 }

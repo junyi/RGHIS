@@ -80,7 +80,9 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.flipboard/bottomsheet-core/1.4.3/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.jakewharton.rxbinding/rxbinding-appcompat-v7/0.2.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.jakewharton.rxbinding/rxbinding/0.2.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.turingtechnologies.materialscrollbar/lib/4.1.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/io.reactivex/rxandroid/1.0.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/xyz.danoz/recyclerviewfastscroller/0.1.3/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jacoco" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaResources" />
@@ -108,6 +110,7 @@
     <orderEntry type="library" exported="" name="rxjava-1.0.14" level="project" />
     <orderEntry type="library" exported="" name="adapters-1.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="timber-3.1.0" level="project" />
+    <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="kotlin-stdlib-0.12.613" level="project" />
     <orderEntry type="library" exported="" name="antlr4-annotations-4.5" level="project" />
     <orderEntry type="library" exported="" name="antlr4-4.5" level="project" />
@@ -116,17 +119,19 @@
     <orderEntry type="library" exported="" name="antlr4-runtime-4.5" level="project" />
     <orderEntry type="library" exported="" name="baseLibrary-1.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="rxbinding-0.2.0" level="project" />
-    <orderEntry type="library" exported="" name="commons-lang3-3.3.2" level="project" />
+    <orderEntry type="library" exported="" name="recyclerviewfastscroller-0.1.3" level="project" />
     <orderEntry type="library" exported="" name="realm-android-0.82.2" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.0.1" level="project" />
-    <orderEntry type="library" exported="" name="compiler-1.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="commons-codec-1.10" level="project" />
+    <orderEntry type="library" exported="" name="compiler-1.0-rc1" level="project" />
+    <orderEntry type="library" exported="" name="commons-lang3-3.4" level="project" />
     <orderEntry type="library" exported="" name="bottomsheet-core-1.4.3" level="project" />
     <orderEntry type="library" exported="" name="ST4-4.0.8" level="project" />
-    <orderEntry type="library" exported="" name="compilerCommon-1.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="jsoup-1.8.3" level="project" />
+    <orderEntry type="library" exported="" name="compilerCommon-1.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="library-1.0-rc1" level="project" />
+    <orderEntry type="library" exported="" name="lib-4.1.0" level="project" />
   </component>
 </module>
