@@ -10,6 +10,7 @@ import android.widget.TextView;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
+import sg.rghis.android.BR;
 import sg.rghis.android.utils.HtmlTagHandler;
 import sg.rghis.android.utils.SystemUtils;
 
@@ -21,8 +22,22 @@ public class ObservableHealthTopic extends BaseObservable {
     }
 
     @Bindable
+    public HealthTopic getHealthTopic() {
+        return healthTopic;
+    }
+
+    public void setHealthTopic(HealthTopic healthTopic) {
+        this.healthTopic = healthTopic;
+        notifyPropertyChanged(BR.healthTopic);
+        notifyPropertyChanged(BR.title);
+    }
+
+    @Bindable
     public CharSequence getTitle() {
-        return Html.fromHtml(healthTopic.getTitle());
+        if (healthTopic != null)
+            return Html.fromHtml(healthTopic.getTitle());
+        else
+            return "";
     }
 
     public void setTitle(String title) {

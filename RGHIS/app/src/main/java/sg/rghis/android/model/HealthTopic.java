@@ -1,18 +1,16 @@
 package sg.rghis.android.model;
 
-import android.databinding.Bindable;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class HealthTopic extends RealmObject {
 
-    public static String TITLE = "title";
-    public static String OVERVIEW = "overview";
-    public static String SYMPTOMS = "symptoms";
-    public static String TREATMENT = "treatment";
-    public static String TAGS = "tags";
-    public static String INSTITUTION = "institution";
+    public static final String TITLE = "title";
+    public static final String OVERVIEW = "overview";
+    public static final String SYMPTOMS = "symptoms";
+    public static final String TREATMENT = "treatment";
+    public static final String TAGS = "tags";
+    public static final String INSTITUTION = "institution";
 
     @PrimaryKey
     private String title;

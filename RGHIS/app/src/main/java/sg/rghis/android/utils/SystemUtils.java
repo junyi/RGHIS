@@ -1,6 +1,8 @@
 package sg.rghis.android.utils;
 
 import android.content.Context;
+import android.os.Build;
+import android.util.TypedValue;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,5 +39,20 @@ public class SystemUtils {
         }
 
         return null;
+    }
+
+    public static int getActionBarHeight(Context context) {
+        int actionBarHeight = 0;
+        TypedValue tv = new TypedValue();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv,
+                    true))
+                actionBarHeight = TypedValue.complexToDimensionPixelSize(
+                        tv.data, context.getResources().getDisplayMetrics());
+        } else {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,
+                    context.getResources().getDisplayMetrics());
+        }
+        return actionBarHeight;
     }
 }
