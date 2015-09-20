@@ -1,7 +1,9 @@
 package sg.rghis.android.utils;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
+import android.support.annotation.AttrRes;
 import android.util.TypedValue;
 
 import java.io.BufferedReader;
@@ -54,5 +56,17 @@ public class SystemUtils {
                     context.getResources().getDisplayMetrics());
         }
         return actionBarHeight;
+    }
+
+    public static float getDimensAttr(Context context, @AttrRes int attrResId) {
+        TypedValue typedValue = new TypedValue();
+
+        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[]{attrResId});
+        int resId = a.getResourceId(0, 0);
+        float dimen = context.getResources().getDimension(resId);
+
+        a.recycle();
+
+        return dimen;
     }
 }

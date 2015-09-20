@@ -6,25 +6,25 @@
     tools:context=".MainActivity">
 
     <!--<android.support.design.widget.AppBarLayout-->
-        <!--android:id="@+id/app_bar_layout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:elevation="0dp"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_marginLeft="@dimen/navigation_drawer_width">-->
+    <!--android:id="@+id/app_bar_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:elevation="0dp"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_marginLeft="@dimen/navigation_drawer_width">-->
 
-        <!--<android.support.v7.widget.Toolbar-->
-            <!--android:elevation="0dp"-->
-            <!--android:id="@+id/toolbar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="?attr/colorPrimary"-->
-            <!--android:minHeight="?attr/actionBarSize"-->
-            <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-            <!--app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />-->
+    <!--<android.support.v7.widget.Toolbar-->
+    <!--android:elevation="0dp"-->
+    <!--android:id="@+id/toolbar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="?attr/colorPrimary"-->
+    <!--android:minHeight="?attr/actionBarSize"-->
+    <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+    <!--app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />-->
 
-        <!--<Space-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="64dp" />-->
+    <!--<Space-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="64dp" />-->
     <!--</android.support.design.widget.AppBarLayout>-->
 
 
@@ -48,10 +48,9 @@
 
         <FrameLayout
             android:id="@+id/content"
-            android:elevation="2dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/drawer_left_margin" />
+            android:elevation="2dp" />
 
     </android.support.v4.widget.SlidingPaneLayout>
 

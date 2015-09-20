@@ -8,12 +8,12 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SlidingPaneLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
@@ -23,6 +23,7 @@ import com.mikepenz.iconics.utils.Utils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import sg.rghis.android.utils.SystemUtils;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PROFILE_SETTING = 1;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     @Bind(R.id.sliding_panel_layout)
     SlidingPaneLayout slidingPaneLayout;
+    @Bind(R.id.content)
+    FrameLayout container;
 
     private View headerView;
     private int startPx;
@@ -62,6 +65,20 @@ public class MainActivity extends AppCompatActivity {
         AppBarLayout appBarLayout = (AppBarLayout) headerView;
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout)
                 headerView.findViewById(R.id.collapsing_toolbar);
+
+        int leftMargin = (int) SystemUtils.getDimensAttr(
+                this, android.R.attr.listPreferredItemPaddingLeft);
+
+        int marginDiff = (leftMargin * 2 + Utils.convertDpToPx(this, 24)
+                - Utils.convertDpToPx(this, 56)) / 4;
+
+        AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
+        layoutParams.setMargins(-marginDiff, 0, 0, 0);
+        collapsingToolbarLayout.setLayoutParams(layoutParams);
+        Timber.d("Left margin" + leftMargin);
+        Timber.d("Left margin" + Utils.convertDpToPx(this, 4));
+        Timber.d("Left margin 72dp" + Utils.convertDpToPx(this, 72));
+
         Toolbar toolbar = (Toolbar) headerView.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -84,63 +101,43 @@ public class MainActivity extends AppCompatActivity {
         endPx = Utils.convertDpToPx(MainActivity.this, 192);
 
         Menu menu = navigationView.getMenu();
-        menu.findItem(R.id.drawer_home).
-
-                setIcon(
-                        new IconicsDrawable(this)
-                                .icon(GoogleMaterial.Icon.gmd_home)
-                                .alpha(137)
-
-                );
+        menu.findItem(R.id.drawer_home)
+                .setIcon(new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_home)
+                        .alpha(137));
         menu.findItem(R.id.drawer_health_info).
-
-                setIcon(
-                        new IconicsDrawable(this)
-
-                                .
-
-                                        icon(CommunityMaterial.Icon.cmd_hospital)
-
-                                .
-
-                                        alpha(137)
-
-                );
-        menu.findItem(R.id.drawer_settings).
-
-                setIcon(
-                        new IconicsDrawable(this)
-
-                                .
-
-                                        icon(GoogleMaterial.Icon.gmd_settings)
-
-                                .
-
-                                        alpha(137)
-
-                );
+                setIcon(new IconicsDrawable(this)
+                        .icon(CommunityMaterial.Icon.cmd_hospital)
+                        .alpha(137));
+        menu.findItem(R.id.drawer_settings)
+                .setIcon(new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_settings)
+                        .alpha(137));
 
         updateDrawerState(0);
 
         slidingPaneLayout.setShadowResourceLeft(R.drawable.material_drawer_shadow_left);
-        slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener()
 
-                                                {
-                                                    @Override
-                                                    public void onPanelSlide(View panel, float slideOffset) {
-                                                        updateDrawerState(slideOffset);
-                                                    }
+        SlidingPaneLayout.LayoutParams containerLp = (SlidingPaneLayout.LayoutParams) container.getLayoutParams();
+        int margin = leftMargin * 2 + Utils.convertDpToPx(this, 24);
+        containerLp.setMargins(margin, 0, 0, 0);
+        container.setLayoutParams(containerLp);
 
-                                                    @Override
-                                                    public void onPanelOpened(View panel) {
-                                                    }
+        slidingPaneLayout.setPanelSlideListener(
+                new SlidingPaneLayout.PanelSlideListener() {
+                    @Override
+                    public void onPanelSlide(View panel, float slideOffset) {
+                        updateDrawerState(slideOffset);
+                    }
 
-                                                    @Override
-                                                    public void onPanelClosed(View panel) {
-                                                    }
-                                                }
+                    @Override
+                    public void onPanelOpened(View panel) {
+                    }
 
+                    @Override
+                    public void onPanelClosed(View panel) {
+                    }
+                }
         );
 
     }
