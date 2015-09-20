@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF">
+
+    <com.mrebhan.disqus.widgets.AvatarImageView
+        android:id="@+id/img_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/eight"
+        android:layout_marginLeft="@dimen/eight"
+        android:layout_marginEnd="@dimen/eight"
+        android:layout_marginRight="@dimen/eight"/>
+
+    <LinearLayout
+        android:id="@+id/layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="@dimen/eight"
+        android:layout_marginEnd="@dimen/eight"
+        android:layout_marginBottom="@dimen/four"
+        android:layout_toRightOf="@id/img_avatar"
+        android:layout_toEndOf="@id/img_avatar">
+
+        <com.mrebhan.disqus.widgets.TextViewMedium
+            android:id="@+id/txt_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_support"
+            tools:text="Ubermensch"/>
+
+        <!--TODO add reply image-->
+        <ImageView
+            android:id="@+id/img_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/four"
+            android:layout_marginRight="@dimen/four"
+            android:layout_marginStart="@dimen/four"
+            android:layout_marginEnd="@dimen/four"/>
+
+        <com.mrebhan.disqus.widgets.TextViewLight
+            android:id="@+id/txt_reply_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:textSize="@dimen/text_support"
+            android:textColor="@color/text_support"
+            tools:text="fuziontech"/>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="2dp"
+            android:background="@color/text_support"
+            android:layout_marginLeft="@dimen/eight"
+            android:layout_marginRight="@dimen/eight"
+            android:layout_marginStart="@dimen/eight"
+            android:layout_marginEnd="@dimen/eight"
+            android:layout_gravity="center_vertical"/>
+
+        <com.mrebhan.disqus.widgets.TextViewLight
+            android:id="@+id/txt_time_ago"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_support"
+            tools:text="13 Days Ago"/>
+
+        </LinearLayout>
+
+    <com.mrebhan.disqus.widgets.TextViewLight
+        android:id="@+id/txt_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/img_avatar"
+        android:layout_toRightOf="@+id/img_avatar"
+        android:layout_below="@+id/layout_top"
+        android:layout_marginRight="@dimen/eight"
+        android:layout_marginEnd="@dimen/eight"
+        android:layout_marginBottom="@dimen/four"
+        android:textSize="@dimen/text_main"
+        android:textColor="@color/black"
+        tools:text="Here is my comment about some random stuff that I disagree about. This is my outlet where I can express my rage."/>
+
+    <LinearLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/eight"
+        android:layout_marginRight="@dimen/eight"
+        android:layout_marginEnd="@dimen/eight"
+        android:layout_toRightOf="@id/img_avatar"
+        android:layout_toEndOf="@id/img_avatar"
+        android:layout_below="@id/txt_comment">
+
+        <LinearLayout
+            android:id="@+id/view_up_vote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!--Contained area for click area-->
+            <LinearLayout
+                android:id="@+id/frame_up_vote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.mrebhan.disqus.widgets.TextViewLight
+                    android:id="@+id/txt_up_votes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/eight"
+                    android:paddingEnd="@dimen/eight"
+                    android:textSize="@dimen/text_support"
+                    android:textColor="@color/text_support"
+                    tools:text="53"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_up_vote"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="@dimen/eight"
+                    android:layout_marginEnd="@dimen/eight"/>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="16dp"
+            android:background="@color/text_support"
+            android:layout_gravity="center_vertical"/>
+
+        <!--Contained area for click area-->
+        <FrameLayout
+            android:id="@+id/frame_down_vote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/eight"
+                android:layout_marginRight="@dimen/eight"
+                android:background="@drawable/ic_down_vote"/>
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <!--set the touchable area to be @dimen/padding_card_item on all sides bigger than just the image ignoring parent padding-->
+    <FrameLayout
+        android:id="@+id/post_menu"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/layout_bottom">
+
+        <ImageView
+            android:id="@+id/post_menu_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_navigation_vertical"
+            android:layout_gravity="center"/>
+
+        </FrameLayout>
+
+</RelativeLayout>
