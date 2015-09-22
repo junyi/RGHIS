@@ -1,4 +1,4 @@
-package sg.rghis.android;
+package sg.rghis.android.views.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import io.realm.RealmBaseAdapter;

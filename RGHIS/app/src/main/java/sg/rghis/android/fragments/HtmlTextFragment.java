@@ -1,4 +1,4 @@
-package sg.rghis.android;
+package sg.rghis.android.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import org.jsoup.safety.Whitelist;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import sg.rghis.android.R;
 import sg.rghis.android.utils.HtmlTagHandler;
 import sg.rghis.android.utils.SystemUtils;
 

@@ -1,4 +1,4 @@
-package sg.rghis.android.model;
+package sg.rghis.android.models;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

@@ -1,11 +1,6 @@
-package sg.rghis.android;
+package sg.rghis.android.views.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +9,10 @@ import android.widget.TextView;
 
 import com.turingtechnologies.materialscrollbar.INameableAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import sg.rghis.android.model.HealthTopic;
+import sg.rghis.android.R;
+import sg.rghis.android.models.HealthTopic;
 
 public class HealthTopicAdapter extends RealmRecyclerViewAdapter<HealthTopic, HealthTopicAdapter.SimpleViewHolder>
         implements INameableAdapter {

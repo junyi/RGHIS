@@ -11,4 +11,5 @@
     <string name="health_info">Health Info</string>
     <string name="open_drawer">Open drawer</string>
     <string name="close_drawer">Close drawer</string>
+    <string name="forum">Forum</string>
 </resources>

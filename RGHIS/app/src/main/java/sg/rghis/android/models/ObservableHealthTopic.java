@@ -1,4 +1,4 @@
-package sg.rghis.android.model;
+package sg.rghis.android.models;
 
 import android.content.Context;
 import android.databinding.BaseObservable;

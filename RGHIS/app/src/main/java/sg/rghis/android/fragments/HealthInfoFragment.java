@@ -1,4 +1,4 @@
-package sg.rghis.android;
+package sg.rghis.android.fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -32,7 +32,12 @@ import io.realm.RealmResults;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import sg.rghis.android.model.HealthTopic;
+import sg.rghis.android.views.widgets.DividerItemDecoration;
+import sg.rghis.android.views.adapters.HealthTopicAdapter;
+import sg.rghis.android.R;
+import sg.rghis.android.views.RealmHealthTopicAdapter;
+import sg.rghis.android.views.RecyclerItemClickListener;
+import sg.rghis.android.models.HealthTopic;
 
 public class HealthInfoFragment extends Fragment {
 

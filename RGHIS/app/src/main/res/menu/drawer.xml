@@ -14,6 +14,11 @@
             android:title="@string/health_info"/>
 
         <item
+            android:id="@+id/drawer_forum"
+            android:checked="true"
+            android:title="@string/forum"/>
+
+        <item
             android:id="@+id/drawer_settings"
             android:title="@string/settings"/>
 

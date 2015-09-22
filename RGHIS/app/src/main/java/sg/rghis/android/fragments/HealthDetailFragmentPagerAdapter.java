@@ -1,7 +1,6 @@
-package sg.rghis.android;
+package sg.rghis.android.fragments;
 
 import android.content.Context;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,7 +9,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import sg.rghis.android.model.HealthTopic;
+import sg.rghis.android.fragments.HtmlTextFragment;
+import sg.rghis.android.models.HealthTopic;
 import timber.log.Timber;
 
 public class HealthDetailFragmentPagerAdapter extends FragmentPagerAdapter {

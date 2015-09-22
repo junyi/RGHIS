@@ -1,11 +1,10 @@
-package sg.rghis.android;
+package sg.rghis.android.views;
 
 import android.content.Context;
 
-import com.turingtechnologies.materialscrollbar.INameableAdapter;
-
 import io.realm.RealmResults;
-import sg.rghis.android.model.HealthTopic;
+import sg.rghis.android.models.HealthTopic;
+import sg.rghis.android.views.adapters.RealmModelAdapter;
 
 public class RealmHealthTopicAdapter extends RealmModelAdapter<HealthTopic> {
     public RealmHealthTopicAdapter(Context context, RealmResults<HealthTopic> realmResults, boolean automaticUpdate) {

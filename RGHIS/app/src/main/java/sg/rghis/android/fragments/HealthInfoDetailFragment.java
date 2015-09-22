@@ -1,4 +1,4 @@
-package sg.rghis.android;
+package sg.rghis.android.fragments;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -14,9 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import sg.rghis.android.R;
 import sg.rghis.android.databinding.HealthInfoDetailFragmentBinding;
-import sg.rghis.android.model.HealthTopic;
-import sg.rghis.android.model.ObservableHealthTopic;
+import sg.rghis.android.models.HealthTopic;
+import sg.rghis.android.models.ObservableHealthTopic;
 
 public class HealthInfoDetailFragment extends Fragment {
     private static final String ARG_LARGE_LAYOUT = "large_layout";

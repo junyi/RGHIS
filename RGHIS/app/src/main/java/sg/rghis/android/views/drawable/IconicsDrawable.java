@@ -1,4 +1,4 @@
-package sg.rghis.android;
+package sg.rghis.android.views.drawable;
 
 /*
  * Copyright 2014 Mike Penz

@@ -1,4 +1,4 @@
-package sg.rghis.android;
+package sg.rghis.android.views.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -1,4 +1,4 @@
-package sg.rghis.android;
+package sg.rghis.android.views;
 
 import android.animation.IntEvaluator;
 import android.content.res.ColorStateList;
@@ -22,8 +22,10 @@ import com.mikepenz.iconics.utils.Utils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import sg.rghis.android.R;
+import sg.rghis.android.fragments.HealthInfoFragment;
 import sg.rghis.android.utils.SystemUtils;
-import timber.log.Timber;
+import sg.rghis.android.views.drawable.IconicsDrawable;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PROFILE_SETTING = 1;
@@ -75,9 +77,6 @@ public class MainActivity extends AppCompatActivity {
         AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
         layoutParams.setMargins(-marginDiff, 0, 0, 0);
         collapsingToolbarLayout.setLayoutParams(layoutParams);
-        Timber.d("Left margin" + leftMargin);
-        Timber.d("Left margin" + Utils.convertDpToPx(this, 4));
-        Timber.d("Left margin 72dp" + Utils.convertDpToPx(this, 72));
 
         Toolbar toolbar = (Toolbar) headerView.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -109,11 +108,16 @@ public class MainActivity extends AppCompatActivity {
                 setIcon(new IconicsDrawable(this)
                         .icon(CommunityMaterial.Icon.cmd_hospital)
                         .alpha(137));
+        menu.findItem(R.id.drawer_forum)
+                .setIcon(new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_forum)
+                        .alpha(137));
         menu.findItem(R.id.drawer_settings)
                 .setIcon(new IconicsDrawable(this)
                         .icon(GoogleMaterial.Icon.gmd_settings)
                         .alpha(137));
 
+        // Set the drawer in its initial position
         updateDrawerState(0);
 
         slidingPaneLayout.setShadowResourceLeft(R.drawable.material_drawer_shadow_left);

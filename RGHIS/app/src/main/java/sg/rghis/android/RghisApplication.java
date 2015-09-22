@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.parse.Parse;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,6 +34,11 @@ public class RghisApplication extends Application {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+
+        Parse.enableLocalDatastore(this);
+
+        Parse.initialize(this, "LQdlEterOdWEML1bsYZTNm2HUo6FpU6hFHEMmsgX", "6sMtC1NVyM479vLn9RrB1XooERiTjdRGMpxqDSwV");
+
     }
 
     private void createDefaultConfig() {
