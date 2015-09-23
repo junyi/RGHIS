@@ -1,10 +1,13 @@
 package sg.rghis.android.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -68,5 +71,19 @@ public class SystemUtils {
         a.recycle();
 
         return dimen;
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        // Check if no view has focus:
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    public static void hideKeyboard(Context context, View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

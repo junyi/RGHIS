@@ -23,15 +23,13 @@ import com.mikepenz.iconics.utils.Utils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import sg.rghis.android.R;
-import sg.rghis.android.fragments.HealthInfoFragment;
+import sg.rghis.android.disqus.fragments.CategoriesFragment;
 import sg.rghis.android.utils.SystemUtils;
 import sg.rghis.android.views.drawable.IconicsDrawable;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PROFILE_SETTING = 1;
 
-    //    @Bind(R.id.toolbar)
-//    Toolbar toolbar;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     @Bind(R.id.navigation_view)
@@ -54,13 +52,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-//        setSupportActionBar(toolbar);
-
-//        setupDrawer(toolbar, savedInstanceState);
-
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content, new HealthInfoFragment())
+                .replace(R.id.content, CategoriesFragment.newInstance())
                 .commit();
 
         headerView = navigationView.inflateHeaderView(R.layout.drawer_header);
@@ -103,19 +97,23 @@ public class MainActivity extends AppCompatActivity {
         menu.findItem(R.id.drawer_home)
                 .setIcon(new IconicsDrawable(this)
                         .icon(GoogleMaterial.Icon.gmd_home)
-                        .alpha(137));
+                        .paddingDp(2)
+                        .colorRes(R.color.divider2));
         menu.findItem(R.id.drawer_health_info).
                 setIcon(new IconicsDrawable(this)
                         .icon(CommunityMaterial.Icon.cmd_hospital)
-                        .alpha(137));
+                        .paddingDp(2)
+                        .colorRes(R.color.divider2));
         menu.findItem(R.id.drawer_forum)
                 .setIcon(new IconicsDrawable(this)
                         .icon(GoogleMaterial.Icon.gmd_forum)
-                        .alpha(137));
+                        .paddingDp(2)
+                        .colorRes(R.color.divider2));
         menu.findItem(R.id.drawer_settings)
                 .setIcon(new IconicsDrawable(this)
                         .icon(GoogleMaterial.Icon.gmd_settings)
-                        .alpha(137));
+                        .paddingDp(2)
+                        .colorRes(R.color.divider2));
 
         // Set the drawer in its initial position
         updateDrawerState(0);

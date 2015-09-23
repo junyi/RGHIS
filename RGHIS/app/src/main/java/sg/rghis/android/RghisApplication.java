@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.parse.Parse;
+import com.parse.ParseObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -13,10 +14,14 @@ import java.io.InputStream;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import sg.rghis.android.disqus.DisqusSdkProvider;
+import sg.rghis.android.models.User;
+import sg.rghis.android.utils.DisqusUtils;
 import timber.log.Timber;
 
 public class RghisApplication extends Application {
     private static final String KEY_DATABASE_VERSION = "version";
+    private DisqusSdkProvider disqusSdkProvider;
 
     @Override
     public void onCreate() {
@@ -38,6 +43,17 @@ public class RghisApplication extends Application {
         Parse.enableLocalDatastore(this);
 
         Parse.initialize(this, "LQdlEterOdWEML1bsYZTNm2HUo6FpU6hFHEMmsgX", "6sMtC1NVyM479vLn9RrB1XooERiTjdRGMpxqDSwV");
+
+        ParseObject.registerSubclass(User.class);
+
+        disqusSdkProvider = new DisqusSdkProvider.Builder()
+                .setPublicKey(BuildConfig.PUBLIC_KEY)
+                .setPrivateKey(BuildConfig.PRIVATE_KEY)
+                .setRedirectUri(BuildConfig.REDIRECT_URI)
+                .setContext(getApplicationContext())
+                .build();
+
+        Timber.d(DisqusUtils.generateSsoString("1", "junyihjy@gmail.com", "junyihjy@gmail.com"));
 
     }
 

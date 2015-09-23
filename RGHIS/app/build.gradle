@@ -5,12 +5,25 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
+    def disqusSdk = new Properties()
+    def disqusProps = file("disqus_keys.properties")
+    if (disqusProps.exists()) {
+        disqusProps.withInputStream {
+            stream -> disqusSdk.load(stream)
+        }
+    }
+
     defaultConfig {
         applicationId "sg.rghis.android"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", "PUBLIC_KEY", "\"${disqusSdk.PUBLIC_KEY}\""
+        buildConfigField "String", "PRIVATE_KEY", "\"${disqusSdk.PRIVATE_KEY}\""
+        buildConfigField "String", "REDIRECT_URI", "\"${disqusSdk.REDIRECT_URI}\""
+        buildConfigField "String", "FORUM_SHORTNAME", "\"${disqusSdk.FORUM_SHORTNAME}\""
+
     }
     buildTypes {
         release {
@@ -25,6 +38,9 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    provided 'com.squareup.dagger:dagger-compiler:1.2.2'
+
     compile project (':disqus-sdk')
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
@@ -49,4 +65,7 @@ dependencies {
     compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
     compile 'com.mikepenz:community-material-typeface:1.1.70.3@aar'
     compile 'com.parse.bolts:bolts-android:1.2.0'
+    compile 'com.mobsandgeeks:android-saripaar:2.0-SNAPSHOT'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 }
