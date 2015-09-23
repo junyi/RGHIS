@@ -9,4 +9,8 @@ public class UrlUtils {
         queryParams.put("cursorId", cursorId);
         return queryParams;
     }
+
+    public static String[] author() {
+        return new String[]{"author"};
+    }
 }

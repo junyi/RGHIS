@@ -1,4 +1,4 @@
-package sg.rghis.android.disqus.fragments;
+package sg.rghis.android.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,10 +21,12 @@ import sg.rghis.android.disqus.adapters.CategoriesAdapter;
 import sg.rghis.android.disqus.models.Category;
 import sg.rghis.android.disqus.models.PaginatedList;
 import sg.rghis.android.disqus.services.CategoriesService;
+import sg.rghis.android.views.MainActivity;
+import sg.rghis.android.views.RecyclerItemClickListener;
 import sg.rghis.android.views.widgets.WrappingGridLayoutManager;
 import timber.log.Timber;
 
-public class CategoriesFragment extends BaseFragment {
+public class CategoriesFragment extends BaseDisqusFragment {
     public static final String PREFIX_ADAPTER = ".CategoriesFragment.MyAdapter";
 
     @Inject
@@ -67,7 +69,6 @@ public class CategoriesFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new WrappingGridLayoutManager(
                 getContext(),
@@ -76,6 +77,21 @@ public class CategoriesFragment extends BaseFragment {
                 false
         ));
         recyclerView.setAdapter(categoriesAdapter);
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Category category = (Category) categoriesAdapter.getItem(position);
+                gotoThreadsFragment(category);
+            }
+        }));
+    }
+
+    private void gotoThreadsFragment(Category category) {
+        long categoryId = category.id;
+        Bundle bundle = new Bundle();
+        bundle.putLong(ThreadsContainerFragment.ARG_CATEGORY_ID, categoryId);
+        boolean addToBackStack = true;
+        navigateToState(MainActivity.STATE_THREADS, bundle, addToBackStack);
     }
 
     private class GetCategoriesCallback implements Callback<PaginatedList<Category>> {

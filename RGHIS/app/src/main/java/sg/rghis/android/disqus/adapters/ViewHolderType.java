@@ -5,6 +5,7 @@ package sg.rghis.android.disqus.adapters;
  */
 public enum ViewHolderType {
     CATEGORIES,
+    THREADS,
     COMMENT,
     POST_COMMENT,
     ACTION_BAR,

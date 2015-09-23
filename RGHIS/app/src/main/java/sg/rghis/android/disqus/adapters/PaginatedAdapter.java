@@ -85,7 +85,7 @@ public abstract class PaginatedAdapter<T extends Parcelable> extends RecyclerVie
         }
     }
 
-    protected Object getItem(int position) {
+    public Object getItem(int position) {
         int index = positionMetaData.get(position).dataPosition;
         if (index != -1)  {
             return allResourceItems.get(index);

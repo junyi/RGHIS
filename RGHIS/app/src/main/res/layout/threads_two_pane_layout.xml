@@ -5,15 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <include
-        layout="@layout/health_info_list_fragment"
+    <FrameLayout
+        android:id="@+id/left_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="32dp"
         android:layout_weight="1" />
 
     <FrameLayout
-        android:id="@+id/container"
+        android:id="@+id/right_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />

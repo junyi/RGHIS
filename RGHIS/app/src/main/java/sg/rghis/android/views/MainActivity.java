@@ -3,15 +3,19 @@ package sg.rghis.android.views;
 import android.animation.IntEvaluator;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -20,15 +24,32 @@ import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.utils.Utils;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import sg.rghis.android.R;
-import sg.rghis.android.disqus.fragments.CategoriesFragment;
+import sg.rghis.android.fragments.CategoriesFragment;
+import sg.rghis.android.fragments.HealthInfoFragment;
+import sg.rghis.android.fragments.SignupFragment;
+import sg.rghis.android.fragments.ThreadsContainerFragment;
 import sg.rghis.android.utils.SystemUtils;
 import sg.rghis.android.views.drawable.IconicsDrawable;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PROFILE_SETTING = 1;
+
+    @IntDef({STATE_SIGNUP, STATE_HEALTH_INFO, STATE_CATEGORIES, STATE_THREADS})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface FragmentState {
+    }
+
+    public static final int STATE_SIGNUP = 1;
+    public static final int STATE_HEALTH_INFO = 2;
+    public static final int STATE_CATEGORIES = 3;
+    public static final int STATE_THREADS = 4;
+
 
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -46,16 +67,16 @@ public class MainActivity extends AppCompatActivity {
     private ColorStateList itemTextColor;
     private DrawerArrowDrawable arrowDrawable;
 
+    @FragmentState
+    private int currentState = STATE_HEALTH_INFO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content, CategoriesFragment.newInstance())
-                .commit();
+        navigateToState(STATE_SIGNUP, null, false);
 
         headerView = navigationView.inflateHeaderView(R.layout.drawer_header);
         AppBarLayout appBarLayout = (AppBarLayout) headerView;
@@ -115,6 +136,21 @@ public class MainActivity extends AppCompatActivity {
                         .paddingDp(2)
                         .colorRes(R.color.divider2));
 
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.drawer_forum:
+                        navigateToState(STATE_CATEGORIES, null, false);
+                        break;
+                    case R.id.drawer_health_info:
+                        navigateToState(STATE_HEALTH_INFO, null, false);
+                        break;
+                }
+                return false;
+            }
+        });
+
         // Set the drawer in its initial position
         updateDrawerState(0);
 
@@ -144,6 +180,43 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public int getCurrentState() {
+        return currentState;
+    }
+
+    public void navigateToState(@FragmentState int state, Bundle bundle, boolean addToBackStack) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment f = getFragmentByState(state, bundle);
+        ft.replace(R.id.content, f);
+        if (addToBackStack)
+            ft.addToBackStack(null);
+        ft.commit();
+        currentState = state;
+    }
+
+    private Fragment getFragmentByState(@FragmentState int state, Bundle bundle) {
+        Fragment f = null;
+        switch (state) {
+            case STATE_SIGNUP:
+                f = new SignupFragment();
+                break;
+            case STATE_HEALTH_INFO:
+                f = new HealthInfoFragment();
+                break;
+            case STATE_CATEGORIES:
+                f = new CategoriesFragment();
+                break;
+            case STATE_THREADS:
+                f = new ThreadsContainerFragment();
+                break;
+        }
+
+        if (f != null) {
+            f.setArguments(bundle);
+        }
+
+        return f;
+    }
 
     private void updateDrawerState(float slideOffset) {
         int height = evaluator.evaluate(slideOffset, startPx, endPx);

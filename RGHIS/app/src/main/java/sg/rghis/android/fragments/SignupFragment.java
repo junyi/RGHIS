@@ -333,7 +333,10 @@ public class SignupFragment extends Fragment implements Validator.ValidationList
     @Override
     public void onDestroy() {
         super.onDestroy();
-        progressDialog.dismiss();
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
     }
 
 

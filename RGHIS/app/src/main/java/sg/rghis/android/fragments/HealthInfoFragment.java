@@ -35,7 +35,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import sg.rghis.android.views.widgets.DividerItemDecoration;
 import sg.rghis.android.views.adapters.HealthTopicAdapter;
 import sg.rghis.android.R;
-import sg.rghis.android.views.RealmHealthTopicAdapter;
+import sg.rghis.android.views.adapters.RealmHealthTopicAdapter;
 import sg.rghis.android.views.RecyclerItemClickListener;
 import sg.rghis.android.models.HealthTopic;
 
@@ -54,6 +54,15 @@ public class HealthInfoFragment extends Fragment {
     private HealthInfoDetailFragment detailFragment;
     private SlidingPaneLayout slidingPaneLayout;
     private boolean isLargeLayout = false;
+
+    public static HealthInfoFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        HealthInfoFragment fragment = new HealthInfoFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override

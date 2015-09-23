@@ -18,6 +18,7 @@ import sg.rghis.android.R;
 import sg.rghis.android.databinding.HealthInfoDetailFragmentBinding;
 import sg.rghis.android.models.HealthTopic;
 import sg.rghis.android.models.ObservableHealthTopic;
+import sg.rghis.android.views.adapters.HealthDetailFragmentPagerAdapter;
 
 public class HealthInfoDetailFragment extends Fragment {
     private static final String ARG_LARGE_LAYOUT = "large_layout";

@@ -1,4 +1,4 @@
-package sg.rghis.android.views;
+package sg.rghis.android.views.adapters;
 
 import android.content.Context;
 

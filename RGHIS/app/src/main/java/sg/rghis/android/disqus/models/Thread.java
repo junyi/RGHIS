@@ -18,7 +18,7 @@ public class Thread implements Parcelable {
     public String feed;
 
     @SerializedName("category")
-    public Category category;
+    public String category;
 
     @SerializedName("identifiers")
     public List<String> identifiers;
@@ -85,7 +85,7 @@ public class Thread implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.feed);
-        dest.writeParcelable(this.category, flags);
+        dest.writeString(this.category);
         dest.writeStringList(this.identifiers);
         dest.writeString(this.cleanTitle);
         dest.writeInt(this.dislikes);
@@ -111,7 +111,7 @@ public class Thread implements Parcelable {
 
     protected Thread(Parcel in) {
         this.feed = in.readString();
-        this.category = in.readParcelable(Object.class.getClassLoader());
+        this.category = in.readString();
         this.identifiers = in.createStringArrayList();
         this.cleanTitle = in.readString();
         this.dislikes = in.readInt();

@@ -9,36 +9,38 @@ import java.util.List;
 import javax.inject.Inject;
 
 import retrofit.Callback;
-import sg.rghis.android.BuildConfig;
 import sg.rghis.android.disqus.DisqusSdkProvider;
-import sg.rghis.android.disqus.models.Category;
 import sg.rghis.android.disqus.models.PaginatedList;
+import sg.rghis.android.disqus.models.Thread;
 import sg.rghis.android.disqus.services.CategoriesService;
 import sg.rghis.android.disqus.utils.UrlUtils;
 
-public class CategoriesAdapter extends PaginatedAdapter<Category> {
+public class ThreadsAdapter extends PaginatedAdapter<Thread> {
 
     @Inject
     CategoriesService categoriesService;
 
+    private long categoryId;
+
     private List<Integer> viewPixelOffsets = new LinkedList<>();
 
-    @Inject
-    public CategoriesAdapter() {
+    public ThreadsAdapter(long categoryId) {
         DisqusSdkProvider.getInstance().getObjectGraph().inject(this);
+        this.categoryId = categoryId;
     }
 
     @Override
-    protected void loadNextPage(String cursorId, Callback<PaginatedList<Category>> callback) {
-        categoriesService.list(
-                BuildConfig.FORUM_SHORTNAME,
+    protected void loadNextPage(String cursorId, Callback<PaginatedList<Thread>> callback) {
+        categoriesService.listThreads(
+                categoryId,
+                UrlUtils.author(),
                 UrlUtils.cursor(cursorId),
                 callback);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return CategoriesItem.createInstance(parent);
+        return ThreadsItem.createInstance(parent);
     }
 
     @Override
@@ -46,4 +48,5 @@ public class CategoriesAdapter extends PaginatedAdapter<Category> {
         super.onBindViewHolder(holder, position);
         ((ViewHolderItem) holder).onBindViewHolder(getItem(position), getLeftPixelOffset(position));
     }
+
 }

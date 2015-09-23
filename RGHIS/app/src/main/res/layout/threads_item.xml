@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="80dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="8dp"
+        android:paddingTop="16dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/primary_text"
+            tools:text="Nexus 6 2014" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_marginBottom="4dp"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/secondary_text"
+            tools:text="Nexus 6 2014" />
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/message"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            tools:text="by \@junyihjy" />
+
+        <com.mikepenz.iconics.view.IconicsTextView
+            android:id="@+id/num_likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/message"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/author"
+            tools:text="5" />
+
+        <com.mikepenz.iconics.view.IconicsTextView
+            android:id="@+id/icon_likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/author"
+            android:layout_below="@id/message"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/num_likes"
+            android:gravity="center"
+            android:text="{cmd-heart}"
+            android:textColor="@color/pink_500" />
+
+        <com.mikepenz.iconics.view.IconicsTextView
+            android:id="@+id/num_replies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/message"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/icon_likes"
+            tools:text="3" />
+
+        <com.mikepenz.iconics.view.IconicsTextView
+            android:id="@+id/icon_replies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/author"
+            android:layout_below="@id/message"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/num_replies"
+            android:gravity="center"
+            android:text="{cmd-reply}"
+            android:textColor="@color/deep_orange_500" />
+
+    </RelativeLayout>
+</FrameLayout>

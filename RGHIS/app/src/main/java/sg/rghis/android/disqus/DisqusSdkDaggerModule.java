@@ -2,17 +2,7 @@ package sg.rghis.android.disqus;
 
 import android.content.Context;
 
-import com.mrebhan.disqus.auth.RefreshTokenBroadcastReceiver;
-import com.mrebhan.disqus.fragment.ActionBarItem;
-import com.mrebhan.disqus.fragment.CommentItem;
-import com.mrebhan.disqus.fragment.LoginFragment;
-import com.mrebhan.disqus.fragment.PostCommentItem;
-import com.mrebhan.disqus.fragment.PostsAdapter;
-import com.mrebhan.disqus.fragment.PostsFragment;
 import com.mrebhan.disqus.json.GsonFactory;
-import com.squareup.picasso.LruCache;
-import com.squareup.picasso.OkHttpDownloader;
-import com.squareup.picasso.Picasso;
 
 import javax.inject.Singleton;
 
@@ -22,18 +12,22 @@ import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 import sg.rghis.android.disqus.adapters.CategoriesAdapter;
 import sg.rghis.android.disqus.adapters.CategoriesItem;
-import sg.rghis.android.disqus.fragments.CategoriesFragment;
-import sg.rghis.android.disqus.services.AccessTokenService;
+import sg.rghis.android.disqus.adapters.ThreadsAdapter;
+import sg.rghis.android.disqus.adapters.ThreadsItem;
 import sg.rghis.android.disqus.services.CategoriesService;
-import sg.rghis.android.disqus.services.ThreadPostsService;
-import sg.rghis.android.disqus.services.UserService;
 import sg.rghis.android.disqus.url.RequestInterceptor;
+import sg.rghis.android.fragments.CategoriesFragment;
+import sg.rghis.android.fragments.ThreadsFragment;
 
 @Module(
         injects = {
                 CategoriesFragment.class,
                 CategoriesAdapter.class,
                 CategoriesItem.class,
+                ThreadsFragment.class,
+                ThreadsAdapter.class,
+                ThreadsItem.class,
+                ThreadsAdapter.class,
         }
 )
 public class DisqusSdkDaggerModule {

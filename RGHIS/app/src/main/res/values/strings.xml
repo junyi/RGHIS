@@ -20,4 +20,6 @@
     <string name="signup_desc">No account yet? Create one</string>
     <string name="login_desc">Already a member? Login</string>
     <string name="username">Username</string>
+    <string name="likes_template">%d {cmd-heart}</string>
+    <string name="replies_template">%d {cmd-reply}</string>
 </resources>
