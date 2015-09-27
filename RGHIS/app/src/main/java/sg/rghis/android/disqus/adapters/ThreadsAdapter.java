@@ -8,7 +8,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import retrofit.Callback;
+import rx.Observer;
+import rx.Subscription;
 import sg.rghis.android.disqus.DisqusSdkProvider;
 import sg.rghis.android.disqus.models.PaginatedList;
 import sg.rghis.android.disqus.models.Thread;
@@ -20,6 +21,7 @@ public class ThreadsAdapter extends PaginatedAdapter<Thread> {
     @Inject
     CategoriesService categoriesService;
 
+    private Subscription subscription;
     private long categoryId;
 
     private List<Integer> viewPixelOffsets = new LinkedList<>();
@@ -30,12 +32,13 @@ public class ThreadsAdapter extends PaginatedAdapter<Thread> {
     }
 
     @Override
-    protected void loadNextPage(String cursorId, Callback<PaginatedList<Thread>> callback) {
-        categoriesService.listThreads(
+    protected void loadNextPage(String cursorId, Observer<PaginatedList<Thread>> callback) {
+        subscription = categoriesService.listThreads(
                 categoryId,
                 UrlUtils.author(),
-                UrlUtils.cursor(cursorId),
-                callback);
+                UrlUtils.cursor(cursorId))
+                .subscribe(callback);
+
     }
 
     @Override
@@ -46,7 +49,12 @@ public class ThreadsAdapter extends PaginatedAdapter<Thread> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        ((ViewHolderItem) holder).onBindViewHolder(getItem(position), getLeftPixelOffset(position));
+        ((ViewHolderItem) holder).onBindViewHolder(getItem(position));
     }
 
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        if (subscription != null)
+            subscription.unsubscribe();
+    }
 }

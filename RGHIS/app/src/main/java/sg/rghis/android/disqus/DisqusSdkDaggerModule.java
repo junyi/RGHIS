@@ -2,21 +2,29 @@ package sg.rghis.android.disqus;
 
 import android.content.Context;
 
-import com.mrebhan.disqus.json.GsonFactory;
+import com.squareup.okhttp.OkHttpClient;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
 import sg.rghis.android.disqus.adapters.CategoriesAdapter;
 import sg.rghis.android.disqus.adapters.CategoriesItem;
+import sg.rghis.android.disqus.adapters.PostsAdapter;
+import sg.rghis.android.disqus.adapters.PostsItem;
 import sg.rghis.android.disqus.adapters.ThreadsAdapter;
 import sg.rghis.android.disqus.adapters.ThreadsItem;
+import sg.rghis.android.disqus.interceptors.ApiKeyRequestInterceptor;
+import sg.rghis.android.disqus.interceptors.LoggingInterceptor;
+import sg.rghis.android.disqus.json.GsonFactory;
 import sg.rghis.android.disqus.services.CategoriesService;
-import sg.rghis.android.disqus.url.RequestInterceptor;
+import sg.rghis.android.disqus.services.PostsService;
+import sg.rghis.android.disqus.services.ThreadsService;
 import sg.rghis.android.fragments.CategoriesFragment;
+import sg.rghis.android.fragments.PostsFragment;
 import sg.rghis.android.fragments.ThreadsFragment;
 
 @Module(
@@ -28,6 +36,9 @@ import sg.rghis.android.fragments.ThreadsFragment;
                 ThreadsAdapter.class,
                 ThreadsItem.class,
                 ThreadsAdapter.class,
+                PostsFragment.class,
+                PostsAdapter.class,
+                PostsItem.class,
         }
 )
 public class DisqusSdkDaggerModule {
@@ -40,20 +51,23 @@ public class DisqusSdkDaggerModule {
 
     @Singleton
     @Provides
-    RestAdapter providesRestAdapter(RequestInterceptor requestInterceptor) {
-        return new RestAdapter
+    Retrofit providesRetrofit(OkHttpClient okHttpClient) {
+        return new Retrofit
                 .Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setEndpoint("https://disqus.com/api/3.0")
-                .setConverter(new GsonConverter(GsonFactory.newGsonInstance()))
-                .setRequestInterceptor(requestInterceptor)
+                .client(okHttpClient)
+                .baseUrl("https://disqus.com/api/3.0/")
+                .addConverterFactory(GsonConverterFactory.create(GsonFactory.newGsonInstance()))
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
     }
 
     @Provides
     @Singleton
-    RequestInterceptor providesRequestInterceptor() {
-        return new RequestInterceptor();
+    OkHttpClient providesOkHttpClient() {
+        OkHttpClient client = new OkHttpClient();
+        client.interceptors().add(new LoggingInterceptor());
+        client.networkInterceptors().add(new ApiKeyRequestInterceptor());
+        return client;
     }
 
 //    @Provides
@@ -67,8 +81,18 @@ public class DisqusSdkDaggerModule {
 //    }
 
     @Provides
-    CategoriesService providesCategoriesService(RestAdapter restAdapter) {
-        return restAdapter.create(CategoriesService.class);
+    CategoriesService providesCategoriesService(Retrofit retrofit) {
+        return retrofit.create(CategoriesService.class);
+    }
+
+    @Provides
+    ThreadsService providesThreadsService(Retrofit retrofit) {
+        return retrofit.create(ThreadsService.class);
+    }
+
+    @Provides
+    PostsService providesPostsService(Retrofit retrofit) {
+        return retrofit.create(PostsService.class);
     }
 
 //    @Provides

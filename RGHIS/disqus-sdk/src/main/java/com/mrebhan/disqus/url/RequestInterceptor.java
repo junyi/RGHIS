@@ -2,7 +2,7 @@ package com.mrebhan.disqus.url;
 
 import com.mrebhan.disqus.DisqusSdkProvider;
 
-public class RequestInterceptor implements retrofit.RequestInterceptor {
+public class RequestInterceptor {
     private static final String PARAM_API_KEY = "api_key";
     private static final String PARAM_ACCESS_TOKEN = "access_token";
 

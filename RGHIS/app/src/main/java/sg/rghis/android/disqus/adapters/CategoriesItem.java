@@ -47,7 +47,7 @@ public class CategoriesItem extends RecyclerView.ViewHolder implements ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(Object data, int leftPixelOffset) {
+    public void onBindViewHolder(Object data) {
         Category category = (Category) data;
 
         titleTextView.setText(category.title);

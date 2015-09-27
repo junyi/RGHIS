@@ -126,7 +126,7 @@ public class SignupFragment extends Fragment implements Validator.ValidationList
     private void ensureLoginState() {
         firstNameTextInputLayout.setVisibility(View.GONE);
         lastNameTextInputLayout.setVisibility(View.GONE);
-        emailEditText.setVisibility(View.GONE);
+        emailTextInputLayout.setVisibility(View.GONE);
         primaryButton.setText(loginButtonString);
         descTextView.setText(signUpDescString);
     }
@@ -134,7 +134,7 @@ public class SignupFragment extends Fragment implements Validator.ValidationList
     private void ensureSignupState() {
         firstNameTextInputLayout.setVisibility(View.VISIBLE);
         lastNameTextInputLayout.setVisibility(View.VISIBLE);
-        emailEditText.setVisibility(View.VISIBLE);
+        emailTextInputLayout.setVisibility(View.VISIBLE);
         primaryButton.setText(signUpButtonString);
         descTextView.setText(loginDescString);
     }
@@ -274,12 +274,15 @@ public class SignupFragment extends Fragment implements Validator.ValidationList
         String name = user.getFirstName() + " " + user.getLastName();
         Snackbar.make(getView(), String.format("Welcome %s", name),
                 Snackbar.LENGTH_SHORT).show();
+        primaryButton.setEnabled(true);
+
     }
 
     private void signupSuccess() {
         hideProgress();
         Snackbar.make(getView(), "Account successfully created. Please sign in.",
                 Snackbar.LENGTH_SHORT).show();
+        primaryButton.setEnabled(true);
         switchState();
     }
 

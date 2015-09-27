@@ -5,9 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -32,12 +30,13 @@ import io.realm.RealmResults;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import sg.rghis.android.views.widgets.DividerItemDecoration;
-import sg.rghis.android.views.adapters.HealthTopicAdapter;
 import sg.rghis.android.R;
-import sg.rghis.android.views.adapters.RealmHealthTopicAdapter;
-import sg.rghis.android.views.RecyclerItemClickListener;
 import sg.rghis.android.models.HealthTopic;
+import sg.rghis.android.views.RecyclerItemClickListener;
+import sg.rghis.android.views.adapters.HealthTopicAdapter;
+import sg.rghis.android.views.adapters.RealmHealthTopicAdapter;
+import sg.rghis.android.views.widgets.DividerItemDecoration;
+import sg.rghis.android.views.widgets.RGSlidingPaneLayout;
 
 public class HealthInfoFragment extends Fragment {
 
@@ -52,7 +51,7 @@ public class HealthInfoFragment extends Fragment {
     private HealthTopicAdapter adapter;
     private Subscription searchSubscription;
     private HealthInfoDetailFragment detailFragment;
-    private SlidingPaneLayout slidingPaneLayout;
+    private RGSlidingPaneLayout slidingPaneLayout;
     private boolean isLargeLayout = false;
 
     public static HealthInfoFragment newInstance() {
@@ -107,9 +106,9 @@ public class HealthInfoFragment extends Fragment {
         realm = Realm.getDefaultInstance();
 
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(
-                ContextCompat.getDrawable(getContext(), R.color.divider)));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
 
         adapter = new HealthTopicAdapter(getContext());
         recyclerView.setAdapter(adapter);
@@ -136,7 +135,7 @@ public class HealthInfoFragment extends Fragment {
             isLargeLayout = getView().findViewById(R.id.two_pane_divider) != null;
 
             if (!isLargeLayout) {
-                slidingPaneLayout = (SlidingPaneLayout) getView()
+                slidingPaneLayout = (RGSlidingPaneLayout) getView()
                         .findViewById(R.id.sliding_panel_layout);
                 slidingPaneLayout.setShadowResourceLeft(
                         R.drawable.material_drawer_shadow_left);

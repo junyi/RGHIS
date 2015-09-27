@@ -6,7 +6,7 @@ package sg.rghis.android.disqus.adapters;
 public interface ViewHolderItem {
 
     public ViewHolderType getViewItemType();
-    public void onBindViewHolder(Object data, int leftPixelOffset);
+    public void onBindViewHolder(Object data);
     public void injectThis();
 
 }

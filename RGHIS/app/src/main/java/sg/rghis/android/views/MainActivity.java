@@ -1,6 +1,7 @@
 package sg.rghis.android.views;
 
 import android.animation.IntEvaluator;
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
@@ -36,6 +37,7 @@ import sg.rghis.android.fragments.SignupFragment;
 import sg.rghis.android.fragments.ThreadsContainerFragment;
 import sg.rghis.android.utils.SystemUtils;
 import sg.rghis.android.views.drawable.IconicsDrawable;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PROFILE_SETTING = 1;
@@ -69,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
 
     @FragmentState
     private int currentState = STATE_HEALTH_INFO;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

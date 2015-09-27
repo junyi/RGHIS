@@ -3,10 +3,10 @@ package sg.rghis.android.disqus.services;
 
 import java.util.Map;
 
-import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;
 import retrofit.http.QueryMap;
+import rx.Observable;
 import sg.rghis.android.disqus.models.Category;
 import sg.rghis.android.disqus.models.PaginatedList;
 import sg.rghis.android.disqus.models.Post;
@@ -28,9 +28,8 @@ public interface CategoriesService {
      * @return The category details
      * @see <a href="https://disqus.com/api/docs/categories/details/">Documentation</a>
      */
-    @GET("/categories/details.json")
-    void details(@Query("category") long category,
-                 Callback<ResponseItem<Category>> details);
+    @GET("categories/details.json")
+    Observable<ResponseItem<Category>> details(@Query("category") long category);
 
     /**
      * Returns a list of categories within a forum
@@ -39,9 +38,9 @@ public interface CategoriesService {
      * @return A list of categories
      * @see <a href="https://disqus.com/api/docs/categories/list/">Documentation</a>
      */
-    @GET("/categories/list.json")
-    void list(@Query("forum") String forum,
-              Callback<PaginatedList<Category>> categories);
+    @GET("categories/list.json")
+    Observable<PaginatedList<Category>> list(@Query("forum") String forum);
+
 
     /**
      * Returns a list of categories within a forum
@@ -51,10 +50,10 @@ public interface CategoriesService {
      * @return A list of categories
      * @see <a href="https://disqus.com/api/docs/categories/list/">Documentation</a>
      */
-    @GET("/categories/list.json")
-    void list(@Query("forum") String forum,
-              @QueryMap Map<String, String> optionalParams,
-              Callback<PaginatedList<Category>> categories);
+    @GET("categories/list.json")
+    Observable<PaginatedList<Category>> list(@Query("forum") String forum,
+                                             @QueryMap Map<String, String> optionalParams);
+
 
     /**
      * Returns a list of posts within a category
@@ -63,9 +62,8 @@ public interface CategoriesService {
      * @return A list of posts
      * @see <a href="https://disqus.com/api/docs/categories/listPosts/">Documentation</a>
      */
-    @GET("/categories/listPosts.json")
-    void listPosts(@Query("category") long category,
-                   Callback<PaginatedList<Post>> posts);
+    @GET("categories/listPosts.json")
+    Observable<PaginatedList<Post>> listPosts(@Query("category") long category);
 
     /**
      * Returns a list of posts within a category
@@ -75,10 +73,9 @@ public interface CategoriesService {
      * @return A list of posts
      * @see <a href="https://disqus.com/api/docs/categories/listPosts/">Documentation</a>
      */
-    @GET("/categories/listPosts.json")
-    void listPosts(@Query("category") long category,
-                   @QueryMap Map<String, String> optionalParams,
-                   Callback<PaginatedList<Post>> posts);
+    @GET("categories/listPosts.json")
+    Observable<PaginatedList<Post>> listPosts(@Query("category") long category,
+                                              @QueryMap Map<String, String> optionalParams);
 
     /**
      * Returns a list of posts within a category
@@ -91,12 +88,11 @@ public interface CategoriesService {
      * @return A list of posts
      * @see <a href="https://disqus.com/api/docs/categories/listPosts/">Documentation</a>
      */
-    @GET("/categories/listPosts.json")
-    void listPosts(@Query("category") long category,
-                   @Query("related") String[] related,
-                   @Query("include") String[] include,
-                   @QueryMap Map<String, String> optionalParams,
-                   Callback<PaginatedList<Post>> posts);
+    @GET("categories/listPosts.json")
+    Observable<PaginatedList<Post>> listPosts(@Query("category") long category,
+                                              @Query("related") String[] related,
+                                              @Query("include") String[] include,
+                                              @QueryMap Map<String, String> optionalParams);
 
 
     /**
@@ -106,9 +102,8 @@ public interface CategoriesService {
      * @return A list of threads
      * @see <a href="https://disqus.com/api/docs/categories/listThreads/">Documentation</a>
      */
-    @GET("/categories/listThreads.json")
-    void listThreads(@Query("category") long category,
-                     Callback<PaginatedList<Thread>> threads);
+    @GET("categories/listThreads.json")
+    Observable<PaginatedList<Thread>> listThreads(@Query("category") long category);
 
     /**
      * Returns a list of threads within a category sorted by the date created
@@ -118,10 +113,9 @@ public interface CategoriesService {
      * @return A list of threads
      * @see <a href="https://disqus.com/api/docs/categories/listThreads/">Documentation</a>
      */
-    @GET("/categories/listThreads.json")
-    void listThreads(@Query("category") long category,
-                     @QueryMap Map<String, String> optionalParams,
-                     Callback<PaginatedList<Thread>> threads);
+    @GET("categories/listThreads.json")
+    Observable<PaginatedList<Thread>> listThreads(@Query("category") long category,
+                                                  @QueryMap Map<String, String> optionalParams);
 
 
     /**
@@ -133,10 +127,9 @@ public interface CategoriesService {
      * @return A list of threads
      * @see <a href="https://disqus.com/api/docs/categories/listThreads/">Documentation</a>
      */
-    @GET("/categories/listThreads.json")
-    void listThreads(@Query("category") long category,
-                     @Query("related") String[] related,
-                     @QueryMap Map<String, String> optionalParams,
-                     Callback<PaginatedList<Thread>> threads);
+    @GET("categories/listThreads.json")
+    Observable<PaginatedList<Thread>> listThreads(@Query("category") long category,
+                                                  @Query("related") String[] related,
+                                                  @QueryMap Map<String, String> optionalParams);
 
 }

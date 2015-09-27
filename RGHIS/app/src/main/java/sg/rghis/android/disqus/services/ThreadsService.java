@@ -3,12 +3,15 @@ package sg.rghis.android.disqus.services;
 
 import java.util.Map;
 
-import retrofit.Callback;
+import retrofit.http.Field;
+import retrofit.http.FieldMap;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Query;
-import retrofit.http.QueryMap;
+import rx.Observable;
 import sg.rghis.android.disqus.models.PaginatedList;
+import sg.rghis.android.disqus.models.Post;
 import sg.rghis.android.disqus.models.ResponseItem;
 import sg.rghis.android.disqus.models.Thread;
 
@@ -21,9 +24,9 @@ public interface ThreadsService {
      * @return
      * @see <a href="https://disqus.com/api/docs/threads/close/">Documentation</a>
      */
-    @POST("/threads/close.json")
-    void close(@Query("thread") long thread,
-               Callback<PaginatedList<Thread>> callback);
+    @FormUrlEncoded
+    @POST("threads/close.json")
+    Observable<PaginatedList<Thread>> close(@Field("thread") long thread);
 
 
     /**
@@ -34,10 +37,10 @@ public interface ThreadsService {
      * @return
      * @see <a href="https://disqus.com/api/docs/threads/create/">Documentation</a>
      */
-    @POST("/threads/create.json")
-    void create(@Query("forum") String forum,
-                @Query("title") String title,
-                Callback<ResponseItem<Thread>> callback);
+    @FormUrlEncoded
+    @POST("threads/create.json")
+    Observable<ResponseItem<Thread>> create(@Field("forum") String forum,
+                                            @Field("title") String title);
 
     /**
      * Creates a new thread
@@ -48,11 +51,28 @@ public interface ThreadsService {
      * @return
      * @see <a href="https://disqus.com/api/docs/threads/create/">Documentation</a>
      */
-    @POST("/threads/create.json")
-    void create(@Query("forum") String forum,
-                @Query("title") String title,
-                @QueryMap Map<String, String> optionalParams,
-                Callback<ResponseItem<Thread>> callback);
+    @FormUrlEncoded
+    @POST("threads/create.json")
+    Observable<ResponseItem<Thread>> create(@Field("forum") String forum,
+                                            @Field("title") String title,
+                                            @FieldMap Map<String, String> optionalParams);
+
+
+
+    /**
+     * Updates a thread
+     *
+     * @param thread
+     * @param category
+     * @param optionalParams
+     * @return
+     * @see <a href="https://disqus.com/api/docs/threads/create/">Documentation</a>
+     */
+    @FormUrlEncoded
+    @POST("threads/update.json")
+    Observable<ResponseItem<Thread>> update(@Field("thread") String thread,
+                                            @Field("category") String category,
+                                            @FieldMap Map<String, String> optionalParams);
 
 
     /**
@@ -62,9 +82,8 @@ public interface ThreadsService {
      * @return
      * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      */
-    @GET("/threads/details.json")
-    void details(@Query("thread") long thread,
-                 Callback<ResponseItem<Thread>> callback);
+    @GET("threads/details.json")
+    Observable<ResponseItem<Thread>> details(@Query("thread") long thread);
 
     /**
      * Returns thread details
@@ -74,10 +93,9 @@ public interface ThreadsService {
      * @return
      * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      */
-    @GET("/threads/details.json")
-    void details(@Query("thread") long thread,
-                 @Query("forum") String forum,
-                 Callback<ResponseItem<Thread>> callback);
+    @GET("threads/details.json")
+    Observable<ResponseItem<Thread>> details(@Query("thread") long thread,
+                                             @Query("forum") String forum);
 
     /**
      * Returns thread details
@@ -88,10 +106,15 @@ public interface ThreadsService {
      * @return
      * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      */
-    @GET("/threads/details.json")
-    void details(@Query("thread") long thread,
-                 @Query("forum") String forum,
-                 @Query("related") String[] related,
-                 Callback<ResponseItem<Thread>> callback);
+    @GET("threads/details.json")
+    Observable<ResponseItem<Thread>> details(@Query("thread") long thread,
+                                             @Query("forum") String forum,
+                                             @Query("related") String[] related);
+
+    @GET("threads/listPosts.json")
+    Observable<PaginatedList<Post>> listPosts(@Query("thread") long thread);
+
+    @GET("threads/listPosts.json")
+    Observable<PaginatedList<Post>> listPosts(@Query("cursor") String cursor);
 
 }

@@ -18,6 +18,7 @@ import sg.rghis.android.disqus.DisqusSdkProvider;
 import sg.rghis.android.models.User;
 import sg.rghis.android.utils.DisqusUtils;
 import timber.log.Timber;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class RghisApplication extends Application {
     private static final String KEY_DATABASE_VERSION = "version";
@@ -53,7 +54,11 @@ public class RghisApplication extends Application {
                 .setContext(getApplicationContext())
                 .build();
 
-        Timber.d(DisqusUtils.generateSsoString("1", "junyihjy@gmail.com", "junyihjy@gmail.com"));
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+//                        .setDefaultFontPath("fonts/ClearSans-Regular.ttf")
+                        .setFontAttrId(R.attr.fontPath)
+                        .build()
+        );
 
     }
 

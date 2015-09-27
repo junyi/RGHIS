@@ -12,9 +12,10 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import rx.Observable;
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import sg.rghis.android.BuildConfig;
 import sg.rghis.android.R;
 import sg.rghis.android.disqus.adapters.CategoriesAdapter;
@@ -36,6 +37,7 @@ public class CategoriesFragment extends BaseDisqusFragment {
     RecyclerView recyclerView;
 
     private CategoriesAdapter categoriesAdapter;
+    private Subscription subscription;
 
     public static CategoriesFragment newInstance() {
         Bundle args = new Bundle();
@@ -53,7 +55,9 @@ public class CategoriesFragment extends BaseDisqusFragment {
         if (savedInstanceState != null) {
             categoriesAdapter.onRestoreInstanceState(PREFIX_ADAPTER, savedInstanceState);
         } else {
-            categoriesService.list(BuildConfig.FORUM_SHORTNAME, new GetCategoriesCallback());
+            Observable<PaginatedList<Category>> observable = categoriesService.list(BuildConfig.FORUM_SHORTNAME);
+            subscription = observable.observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new GetCategoriesObserver());
         }
     }
 
@@ -94,17 +98,27 @@ public class CategoriesFragment extends BaseDisqusFragment {
         navigateToState(MainActivity.STATE_THREADS, bundle, addToBackStack);
     }
 
-    private class GetCategoriesCallback implements Callback<PaginatedList<Category>> {
+    private class GetCategoriesObserver implements Observer<PaginatedList<Category>> {
+        @Override
+        public void onCompleted() {
+        }
 
         @Override
-        public void success(PaginatedList<Category> categoryPaginatedList, Response response) {
+        public void onError(Throwable e) {
+            Timber.e(Log.getStackTraceString(e));
+        }
+
+        @Override
+        public void onNext(PaginatedList<Category> categoryPaginatedList) {
             categoriesAdapter.addList(categoryPaginatedList);
             categoriesAdapter.notifyDataSetChanged();
         }
+    }
 
-        @Override
-        public void failure(RetrofitError error) {
-            Timber.e(Log.getStackTraceString(error));
-        }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (subscription != null)
+            subscription.unsubscribe();
     }
 }

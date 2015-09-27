@@ -54,12 +54,12 @@ public class ThreadsItem extends RecyclerView.ViewHolder implements ViewHolderIt
     }
 
     @Override
-    public void onBindViewHolder(Object data, int leftPixelOffset) {
+    public void onBindViewHolder(Object data) {
         Thread thread = (Thread) data;
 
         titleTextView.setText(thread.title);
-        messageTextView.setText(thread.message);
-        authorTextView.setText("by @" + ParseUser.getCurrentUser().getUsername());
+        messageTextView.setText(thread.rawMessage);
+        authorTextView.setText("by @" + thread.author.getName());
 
         numLikesTextView.setText(String.valueOf(thread.likes));
         numRepliesTextView.setText(String.valueOf(thread.posts));
