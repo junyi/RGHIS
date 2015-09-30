@@ -2,13 +2,13 @@ package sg.rghis.android.disqus.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mikepenz.iconics.view.IconicsTextView;
-import com.parse.ParseUser;
 
 import javax.inject.Inject;
 
@@ -58,8 +58,11 @@ public class ThreadsItem extends RecyclerView.ViewHolder implements ViewHolderIt
         Thread thread = (Thread) data;
 
         titleTextView.setText(thread.title);
-        messageTextView.setText(thread.rawMessage);
-        authorTextView.setText("by @" + thread.author.getName());
+        if (!TextUtils.isEmpty(thread.rawMessage))
+            messageTextView.setText(thread.rawMessage);
+        else
+            messageTextView.setVisibility(View.GONE);
+        authorTextView.setText(thread.author.getName());
 
         numLikesTextView.setText(String.valueOf(thread.likes));
         numRepliesTextView.setText(String.valueOf(thread.posts));

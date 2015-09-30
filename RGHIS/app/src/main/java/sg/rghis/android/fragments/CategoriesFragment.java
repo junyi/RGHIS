@@ -1,8 +1,12 @@
 package sg.rghis.android.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,19 +16,21 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import mehdi.sakout.dynamicbox.DynamicBox;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import sg.rghis.android.BuildConfig;
 import sg.rghis.android.R;
 import sg.rghis.android.disqus.adapters.CategoriesAdapter;
 import sg.rghis.android.disqus.models.Category;
 import sg.rghis.android.disqus.models.PaginatedList;
 import sg.rghis.android.disqus.services.CategoriesService;
-import sg.rghis.android.views.MainActivity;
 import sg.rghis.android.views.RecyclerItemClickListener;
-import sg.rghis.android.views.widgets.WrappingGridLayoutManager;
+import sg.rghis.android.views.widgets.AutofitRecyclerView;
+import sg.rghis.android.views.widgets.RoundedLetterView;
 import timber.log.Timber;
 
 public class CategoriesFragment extends BaseDisqusFragment {
@@ -34,10 +40,11 @@ public class CategoriesFragment extends BaseDisqusFragment {
     CategoriesService categoriesService;
 
     @Bind(R.id.recycler_view)
-    RecyclerView recyclerView;
+    AutofitRecyclerView recyclerView;
 
     private CategoriesAdapter categoriesAdapter;
     private Subscription subscription;
+    private DynamicBox dynamicBox;
 
     public static CategoriesFragment newInstance() {
         Bundle args = new Bundle();
@@ -56,7 +63,9 @@ public class CategoriesFragment extends BaseDisqusFragment {
             categoriesAdapter.onRestoreInstanceState(PREFIX_ADAPTER, savedInstanceState);
         } else {
             Observable<PaginatedList<Category>> observable = categoriesService.list(BuildConfig.FORUM_SHORTNAME);
-            subscription = observable.observeOn(AndroidSchedulers.mainThread())
+            subscription = observable
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new GetCategoriesObserver());
         }
     }
@@ -73,34 +82,57 @@ public class CategoriesFragment extends BaseDisqusFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new WrappingGridLayoutManager(
-                getContext(),
-                3,
-                WrappingGridLayoutManager.VERTICAL,
-                false
-        ));
+        dynamicBox = new DynamicBox(getContext(), recyclerView);
+        dynamicBox.showLoadingLayout();
         recyclerView.setAdapter(categoriesAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Category category = (Category) categoriesAdapter.getItem(position);
-                gotoThreadsFragment(category);
+                gotoThreadsFragment(view, category);
             }
         }));
     }
 
-    private void gotoThreadsFragment(Category category) {
-        long categoryId = category.id;
-        Bundle bundle = new Bundle();
-        bundle.putLong(ThreadsContainerFragment.ARG_CATEGORY_ID, categoryId);
-        boolean addToBackStack = true;
-        navigateToState(MainActivity.STATE_THREADS, bundle, addToBackStack);
+    private void gotoThreadsFragment(View view, Category category) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ThreadsFragment f = ThreadsFragment.newInstance(category);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Inflate transitions to apply
+            Transition changeTransform = TransitionInflater.from(getContext()).
+                    inflateTransition(R.transition.change_avatar_transform);
+            Transition explodeTransform = TransitionInflater.from(getContext()).
+                    inflateTransition(android.R.transition.fade);
+
+            // Setup exit transition on first fragment
+            setSharedElementReturnTransition(changeTransform);
+            setExitTransition(explodeTransform);
+
+            // Setup enter transition on second fragment
+            f.setSharedElementEnterTransition(changeTransform);
+            f.setEnterTransition(explodeTransform);
+
+            // Prevent transitions for overlapping
+            f.setAllowEnterTransitionOverlap(true);
+            f.setAllowReturnTransitionOverlap(true);
+
+
+            // Find the shared element (in Fragment A)
+            RoundedLetterView avatar = (RoundedLetterView) view.findViewById(R.id.image);
+
+            // Add second fragment by replacing first
+            ft.addSharedElement(avatar, avatar.getTransitionName());
+        }
+
+        ft.replace(R.id.content, f);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
     private class GetCategoriesObserver implements Observer<PaginatedList<Category>> {
         @Override
         public void onCompleted() {
+            dynamicBox.hideAll();
         }
 
         @Override

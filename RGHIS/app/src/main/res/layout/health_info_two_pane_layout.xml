@@ -6,6 +6,7 @@
     android:orientation="horizontal">
 
     <include
+        android:id="@+id/left_container"
         layout="@layout/health_info_list_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,7 +14,7 @@
         android:layout_weight="1" />
 
     <FrameLayout
-        android:id="@+id/container"
+        android:id="@+id/right_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />

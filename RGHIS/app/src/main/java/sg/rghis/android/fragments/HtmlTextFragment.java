@@ -11,13 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
+import org.sufficientlysecure.htmltextview.HtmlTagHandler;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import sg.rghis.android.R;
-import sg.rghis.android.utils.HtmlTagHandler;
 import sg.rghis.android.utils.SystemUtils;
 
 public class HtmlTextFragment extends Fragment {
@@ -67,7 +65,7 @@ public class HtmlTextFragment extends Fragment {
         if (url != null && !url.equals("null")) {
             String html = SystemUtils.loadAssetTextAsString(context, "content/" + url);
             if (html != null) {
-                html = Jsoup.clean(html, Whitelist.basic());
+//                html = Jsoup.clean(html, Whitelist.basic());
                 parsedHtml = Html.fromHtml(html, null, new HtmlTagHandler());
                 if (parsedHtml != null && textView != null) {
                     textView.setText(parsedHtml);

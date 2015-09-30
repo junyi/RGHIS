@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import rx.Observer;
 import rx.Subscription;
+import rx.schedulers.Schedulers;
 import sg.rghis.android.disqus.DisqusSdkProvider;
 import sg.rghis.android.disqus.models.PaginatedList;
 import sg.rghis.android.disqus.models.Thread;
@@ -37,6 +38,7 @@ public class ThreadsAdapter extends PaginatedAdapter<Thread> {
                 categoryId,
                 UrlUtils.author(),
                 UrlUtils.cursor(cursorId))
+                .subscribeOn(Schedulers.io())
                 .subscribe(callback);
 
     }

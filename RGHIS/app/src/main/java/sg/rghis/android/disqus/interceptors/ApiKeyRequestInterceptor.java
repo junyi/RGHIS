@@ -9,7 +9,6 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 
 import sg.rghis.android.disqus.DisqusSdkProvider;
-import sg.rghis.android.models.User;
 import sg.rghis.android.utils.DisqusUtils;
 import timber.log.Timber;
 
@@ -32,7 +31,7 @@ public class ApiKeyRequestInterceptor implements Interceptor {
 //            key = DisqusSdkProvider.privateKey;
 //        }
 
-        User currentUser = User.wrap(ParseUser.getCurrentUser());
+        ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             remoteAuthString = DisqusUtils.generateSsoString(
                     currentUser.getSessionToken(),

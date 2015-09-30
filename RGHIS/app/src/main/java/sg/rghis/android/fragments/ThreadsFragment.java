@@ -1,12 +1,16 @@
 package sg.rghis.android.fragments;
 
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -29,24 +34,31 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mehdi.sakout.dynamicbox.DynamicBox;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import sg.rghis.android.BuildConfig;
 import sg.rghis.android.R;
 import sg.rghis.android.disqus.adapters.ThreadsAdapter;
+import sg.rghis.android.disqus.models.Category;
 import sg.rghis.android.disqus.models.PaginatedList;
 import sg.rghis.android.disqus.models.ResponseItem;
 import sg.rghis.android.disqus.models.Thread;
 import sg.rghis.android.disqus.services.CategoriesService;
 import sg.rghis.android.disqus.services.ThreadsService;
 import sg.rghis.android.disqus.utils.UrlUtils;
+import sg.rghis.android.utils.ColorUtils;
+import sg.rghis.android.utils.SystemUtils;
 import sg.rghis.android.views.RecyclerItemClickListener;
-import sg.rghis.android.views.widgets.DividerItemDecoration;
+import sg.rghis.android.views.widgets.RGSlidingPaneLayout;
+import sg.rghis.android.views.widgets.RoundedLetterView;
 import timber.log.Timber;
 
 public class ThreadsFragment extends BaseDisqusFragment implements Validator.ValidationListener {
+    public final static String ARG_CATEGORY = "category";
     public static final String PREFIX_ADAPTER = ".ThreadsFragment.MyAdapter";
 
     @Inject
@@ -57,16 +69,34 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
+
+    @Bind(R.id.dummy_view)
+    FrameLayout dummyView;
+
     @Bind(R.id.fab)
     FloatingActionButton floatingActionButton;
+
+    @Bind(R.id.image)
+    RoundedLetterView avatarView;
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+
+    @Bind(R.id.app_bar_layout)
+    AppBarLayout appBarLayout;
+
+    private Category category;
+    private PostListFragment postsFragment;
+    private RGSlidingPaneLayout slidingPaneLayout;
+    private boolean isLargeLayout = false;
 
     private Subscription subscription;
     private Subscription createThreadSubscription;
     private ThreadsAdapter threadsAdapter;
-    private long categoryId;
     private MaterialDialog dialogInstance = null;
     private final DialogViewHolder dialogViewHolder = new DialogViewHolder();
     private Validator validator;
+    private DynamicBox dynamicBox;
 
     static class DialogViewHolder {
         @NotEmpty
@@ -88,9 +118,10 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
         TextInputLayout messageTextInputLayout;
     }
 
-    public static ThreadsFragment newInstance(long categoryId) {
+    public static ThreadsFragment newInstance(Category category) {
+
         Bundle args = new Bundle();
-        args.putLong(ThreadsContainerFragment.ARG_CATEGORY_ID, categoryId);
+        args.putParcelable(ARG_CATEGORY, category);
 
         ThreadsFragment fragment = new ThreadsFragment();
         fragment.setArguments(args);
@@ -98,68 +129,123 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Bundle bundle = getArguments();
-        if (bundle == null || !bundle.containsKey(ThreadsContainerFragment.ARG_CATEGORY_ID)) {
-            throw new IllegalStateException("Category ID must be provided.");
+        if (bundle == null || !bundle.containsKey(ThreadsFragment.ARG_CATEGORY)) {
+            throw new IllegalStateException("Category must be provided.");
         } else {
-            categoryId = bundle.getLong(ThreadsContainerFragment.ARG_CATEGORY_ID);
+            if (bundle.containsKey(ThreadsFragment.ARG_CATEGORY))
+                category = bundle.getParcelable(ThreadsFragment.ARG_CATEGORY);
         }
 
-        threadsAdapter = new ThreadsAdapter(categoryId);
+        threadsAdapter = new ThreadsAdapter(category.id);
 
         if (savedInstanceState != null) {
             threadsAdapter.onRestoreInstanceState(PREFIX_ADAPTER, savedInstanceState);
         } else {
             Observable<PaginatedList<Thread>> observable =
-                    categoriesService.listThreads(categoryId, UrlUtils.author(), null);
-            subscription = observable.observeOn(AndroidSchedulers.mainThread())
+                    categoriesService.listThreads(category.id, UrlUtils.author(), null);
+            subscription = observable
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new GetThreadsObserver());
         }
-
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.thread_list_fragment, container, false);
+        View view = inflater.inflate(R.layout.threads_two_pane_layout, container, false);
         ButterKnife.bind(this, view);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            avatarView.setTransitionName(getString(R.string.avatar_transition) + category.id);
+        }
+        toolbar.setTitle(category.title);
+        toolbar.setNavigationIcon(ContextCompat.getDrawable(getContext(),
+                R.drawable.ic_arrow_back_white_24dp));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().popBackStack();
+            }
+        });
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        determineCurrentLayout();
+
+        dynamicBox = new DynamicBox(getContext(), dummyView);
+        dynamicBox.showLoadingLayout();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
         recyclerView.setAdapter(threadsAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         Thread thread = (Thread) threadsAdapter.getItem(position);
-                        ((ThreadsContainerFragment) getParentFragment()).loadPosts(thread.id);
+                        loadPosts(thread.id);
                     }
                 }));
 
+        int colorRes = ColorUtils.getColorGenerator().getColor(category.title);
+        int color = ContextCompat.getColor(getContext(), colorRes);
+        avatarView.setInitials(String.valueOf(category.title.charAt(0)));
+        avatarView.setBackgroundColor(color);
+        appBarLayout.setBackgroundColor(ColorUtils.combineColors(0.4f, color, 0x000000));
+
+    }
+
+    private void determineCurrentLayout() {
+        if (getView() != null) {
+            isLargeLayout = getView().findViewById(R.id.two_pane_divider) != null;
+
+            if (!isLargeLayout) {
+                slidingPaneLayout = (RGSlidingPaneLayout) getView()
+                        .findViewById(R.id.sliding_panel_layout);
+                slidingPaneLayout.setShadowResourceLeft(
+                        R.drawable.material_drawer_shadow_left);
+                slidingPaneLayout.openPane();
+            }
+        }
+    }
+
+    public void closeDetailPane() {
+        if (!isLargeLayout && slidingPaneLayout != null) {
+            slidingPaneLayout.openPane();
+        }
+    }
+
+    private void loadPosts(long threadId) {
+        postsFragment = PostListFragment.newInstance(threadId);
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.right_container, postsFragment)
+                .commit();
+        if (!isLargeLayout && slidingPaneLayout != null) {
+            slidingPaneLayout.closePane();
+        }
     }
 
     @OnClick(R.id.fab)
     public void showCreateThreadDialog() {
-        if (dialogInstance != null)
-            dialogInstance.cancel();
+        if (!SystemUtils.promptLoginIfNecessary(getContext())) {
+            if (dialogInstance != null)
+                dialogInstance.cancel();
 
-        MaterialDialog.Builder dialogBuilder = getDialogBuilder();
+            MaterialDialog.Builder dialogBuilder = getDialogBuilder();
 
-        dialogInstance = dialogBuilder.build();
-        bindDialogViews(dialogInstance, dialogViewHolder);
+            dialogInstance = dialogBuilder.build();
+            bindDialogViews(dialogInstance, dialogViewHolder);
 
-        dialogInstance.show();
+            dialogInstance.show();
+        }
     }
 
     private MaterialDialog.Builder getDialogBuilder() {
@@ -177,7 +263,7 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
                         String title = dialogViewHolder.titleEditText.getText().toString();
                         String message = dialogViewHolder.messageEditText.getText().toString();
                         Map<String, String> extras = new UrlUtils.MapBuilder()
-                                .add("category", String.valueOf(categoryId))
+                                .add("category", String.valueOf(category.id))
                                 .add("message", message)
                                 .build();
 
@@ -281,6 +367,7 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
     private class GetThreadsObserver implements Observer<PaginatedList<Thread>> {
         @Override
         public void onCompleted() {
+            dynamicBox.hideAll();
         }
 
         @Override

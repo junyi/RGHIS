@@ -3,21 +3,23 @@
     android:id="@+id/scrollView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="?attr/colorPrimary"
+    android:background="@color/primary_dark"
+    android:fillViewport="true"
     android:fitsSystemWindows="true"
     android:overScrollMode="never"
     android:scrollbars="none"
     android:theme="@style/AppTheme.Dark">
 
     <LinearLayout
-        style="@style/OrientationSensitiveWidth"
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:animateLayoutChanges="true"
+        android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingTop="56dp">
+        android:paddingRight="24dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -25,55 +27,59 @@
             android:layout_gravity="center_horizontal"
             android:src="@drawable/rg_white_small" />
 
-
-        <sg.rghis.android.views.widgets.SmartTextInputLayout
-            android:id="@+id/first_name_text_input_layout"
+        <LinearLayout
+            android:id="@+id/sign_up_fields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
+            android:orientation="vertical"
             android:visibility="gone">
 
-            <EditText
-                android:id="@+id/first_name_edit_text"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/first_name"
-                android:singleLine="true" />
-        </sg.rghis.android.views.widgets.SmartTextInputLayout>
+            <sg.rghis.android.views.widgets.SmartTextInputLayout
+                android:id="@+id/first_name_text_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical">
 
-        <sg.rghis.android.views.widgets.SmartTextInputLayout
-            android:id="@+id/last_name_text_input_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:visibility="gone">
+                <EditText
+                    android:id="@+id/first_name_edit_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/first_name"
+                    android:singleLine="true" />
+            </sg.rghis.android.views.widgets.SmartTextInputLayout>
 
-            <EditText
-                android:id="@+id/last_name_edit_text"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/last_name"
-                android:singleLine="true" />
-        </sg.rghis.android.views.widgets.SmartTextInputLayout>
+            <sg.rghis.android.views.widgets.SmartTextInputLayout
+                android:id="@+id/last_name_text_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical">
 
-        <sg.rghis.android.views.widgets.SmartTextInputLayout
-            android:id="@+id/email_text_input_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:visibility="gone">
+                <EditText
+                    android:id="@+id/last_name_edit_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/last_name"
+                    android:singleLine="true" />
+            </sg.rghis.android.views.widgets.SmartTextInputLayout>
 
-            <EditText
-                android:id="@+id/email_edit_text"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:singleLine="true" />
-        </sg.rghis.android.views.widgets.SmartTextInputLayout>
+            <sg.rghis.android.views.widgets.SmartTextInputLayout
+                android:id="@+id/email_text_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/email_edit_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true" />
+            </sg.rghis.android.views.widgets.SmartTextInputLayout>
+        </LinearLayout>
 
         <sg.rghis.android.views.widgets.SmartTextInputLayout
             android:id="@+id/username_text_input_layout"

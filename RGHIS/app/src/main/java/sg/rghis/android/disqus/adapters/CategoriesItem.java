@@ -1,24 +1,23 @@
 package sg.rghis.android.disqus.adapters;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.amulyakhare.textdrawable.TextDrawable;
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 import sg.rghis.android.R;
 import sg.rghis.android.disqus.DisqusSdkProvider;
 import sg.rghis.android.disqus.models.Category;
+import sg.rghis.android.utils.ColorUtils;
+import sg.rghis.android.views.widgets.RoundedLetterView;
 
 public class CategoriesItem extends RecyclerView.ViewHolder implements ViewHolderItem {
     @Inject
@@ -28,7 +27,7 @@ public class CategoriesItem extends RecyclerView.ViewHolder implements ViewHolde
     TextView titleTextView;
 
     @Bind(R.id.image)
-    CircleImageView imageView;
+    RoundedLetterView imageView;
 
     public CategoriesItem(View itemView) {
         super(itemView);
@@ -52,15 +51,13 @@ public class CategoriesItem extends RecyclerView.ViewHolder implements ViewHolde
 
         titleTextView.setText(category.title);
 
-        ColorGenerator generator = ColorGenerator.MATERIAL;
-        int color = generator.getColor(category.title);
-        TextDrawable drawable = TextDrawable.builder()
-                .beginConfig()
-                .width(72)
-                .height(72)
-                .endConfig()
-                .buildRound(String.valueOf(category.title.charAt(0)), color);
-        imageView.setImageDrawable(drawable);
+        int colorRes = ColorUtils.getColorGenerator().getColor(category.title);
+        int color = ContextCompat.getColor(context, colorRes);
+        imageView.setInitials(String.valueOf(category.title.charAt(0)));
+        imageView.setBackgroundColor(color);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            imageView.setTransitionName(context.getString(R.string.avatar_transition) + category.id);
+        }
     }
 
     @Override

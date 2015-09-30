@@ -35,7 +35,7 @@ public class HealthTopicAdapter extends RealmRecyclerViewAdapter<HealthTopic, He
 
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int i) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.health_topic_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.health_info_item, parent, false);
         return new SimpleViewHolder(v);
     }
 

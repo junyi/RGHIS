@@ -1,10 +1,11 @@
 package sg.rghis.android.fragments;
 
+import android.animation.LayoutTransition;
 import android.app.ProgressDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,7 @@ import sg.rghis.android.models.User;
 import sg.rghis.android.utils.SystemUtils;
 import timber.log.Timber;
 
-public class SignupFragment extends Fragment implements Validator.ValidationListener {
+public class SignupFragment extends BaseFragment implements Validator.ValidationListener {
     public final static int STATE_LOGIN = 0;
     public final static int STATE_SIGNUP = 1;
 
@@ -85,6 +86,9 @@ public class SignupFragment extends Fragment implements Validator.ValidationList
     @Bind(R.id.link_login)
     TextView descTextView;
 
+    @Bind(R.id.sign_up_fields)
+    View signUpFields;
+
     private Validator validator;
     private int currentState = STATE_LOGIN;
 
@@ -124,17 +128,19 @@ public class SignupFragment extends Fragment implements Validator.ValidationList
     }
 
     private void ensureLoginState() {
-        firstNameTextInputLayout.setVisibility(View.GONE);
-        lastNameTextInputLayout.setVisibility(View.GONE);
-        emailTextInputLayout.setVisibility(View.GONE);
+        signUpFields.setVisibility(View.GONE);
+//        firstNameTextInputLayout.setVisibility(View.GONE);
+//        lastNameTextInputLayout.setVisibility(View.GONE);
+//        emailTextInputLayout.setVisibility(View.GONE);
         primaryButton.setText(loginButtonString);
         descTextView.setText(signUpDescString);
     }
 
     private void ensureSignupState() {
-        firstNameTextInputLayout.setVisibility(View.VISIBLE);
-        lastNameTextInputLayout.setVisibility(View.VISIBLE);
-        emailTextInputLayout.setVisibility(View.VISIBLE);
+        signUpFields.setVisibility(View.VISIBLE);
+//        firstNameTextInputLayout.setVisibility(View.VISIBLE);
+//        lastNameTextInputLayout.setVisibility(View.VISIBLE);
+//        emailTextInputLayout.setVisibility(View.VISIBLE);
         primaryButton.setText(signUpButtonString);
         descTextView.setText(loginDescString);
     }
@@ -152,6 +158,12 @@ public class SignupFragment extends Fragment implements Validator.ValidationList
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= 16) {
+            ViewGroup layout = (ViewGroup) view.findViewById(R.id.linear_layout);
+            LayoutTransition layoutTransition = layout.getLayoutTransition();
+            layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
+        }
 
         validator = new Validator(this);
         validator.setValidationListener(this);
@@ -331,6 +343,7 @@ public class SignupFragment extends Fragment implements Validator.ValidationList
 
     private void hideProgress() {
         progressDialog.dismiss();
+        progressDialog = null;
     }
 
     @Override

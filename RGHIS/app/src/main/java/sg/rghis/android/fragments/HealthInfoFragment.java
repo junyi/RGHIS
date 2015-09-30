@@ -1,26 +1,16 @@
 package sg.rghis.android.fragments;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
 import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.MaterialScrollBar;
-
-import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,30 +19,24 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import rx.Observer;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
 import sg.rghis.android.R;
 import sg.rghis.android.models.HealthTopic;
 import sg.rghis.android.views.RecyclerItemClickListener;
 import sg.rghis.android.views.adapters.HealthTopicAdapter;
 import sg.rghis.android.views.adapters.RealmHealthTopicAdapter;
 import sg.rghis.android.views.widgets.DividerItemDecoration;
-import sg.rghis.android.views.widgets.RGSlidingPaneLayout;
 
-public class HealthInfoFragment extends Fragment {
+public class HealthInfoFragment extends BaseMasterDetailFragment {
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
-    @Bind(R.id.container)
+    @Bind(R.id.right_container)
     FrameLayout container;
 
     private Realm realm;
     private HealthTopicAdapter adapter;
     private Subscription searchSubscription;
     private HealthInfoDetailFragment detailFragment;
-    private RGSlidingPaneLayout slidingPaneLayout;
-    private boolean isLargeLayout = false;
 
     public static HealthInfoFragment newInstance() {
 
@@ -61,6 +45,16 @@ public class HealthInfoFragment extends Fragment {
         HealthInfoFragment fragment = new HealthInfoFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public int getTitleRes() {
+        return R.string.health_info;
+    }
+
+    @Override
+    public boolean shouldShowSearchView() {
+        return true;
     }
 
     @Nullable
@@ -75,33 +69,31 @@ public class HealthInfoFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        determineCurrentLayout();
-
         detailFragment = HealthInfoDetailFragment.newInstance(isLargeLayout);
         getChildFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, detailFragment)
+                .replace(R.id.right_container, detailFragment)
                 .commit();
 
-        toolbar.inflateMenu(R.menu.menu_health_info_list);
-        final MenuItem searchMenuItem = toolbar.getMenu().findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(
-                searchMenuItem);
-        SearchManager searchManager = (SearchManager) getContext().getSystemService(
-                Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(
-                getActivity().getComponentName()));
-        searchSubscription = RxSearchView.queryTextChanges(searchView)
-                .debounce(200, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(getSearchObserver());
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Open search when toolbar is clicked
-                MenuItemCompat.expandActionView(searchMenuItem);
-            }
-        });
+//        toolbar.inflateMenu(R.menu.menu_health_info_list);
+//        final MenuItem searchMenuItem = toolbar.getMenu().findItem(R.id.action_search);
+//        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(
+//                searchMenuItem);
+//        SearchManager searchManager = (SearchManager) getContext().getSystemService(
+//                Context.SEARCH_SERVICE);
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(
+//                getActivity().getComponentName()));
+//        searchSubscription = RxSearchView.queryTextChanges(searchView)
+//                .debounce(200, TimeUnit.MILLISECONDS)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(getSearchObserver());
+//        toolbar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Open search when toolbar is clicked
+//                MenuItemCompat.expandActionView(searchMenuItem);
+//            }
+//        });
 
         realm = Realm.getDefaultInstance();
 
@@ -130,26 +122,6 @@ public class HealthInfoFragment extends Fragment {
 
     }
 
-    private void determineCurrentLayout() {
-        if (getView() != null) {
-            isLargeLayout = getView().findViewById(R.id.two_pane_divider) != null;
-
-            if (!isLargeLayout) {
-                slidingPaneLayout = (RGSlidingPaneLayout) getView()
-                        .findViewById(R.id.sliding_panel_layout);
-                slidingPaneLayout.setShadowResourceLeft(
-                        R.drawable.material_drawer_shadow_left);
-                slidingPaneLayout.openPane();
-            }
-        }
-    }
-
-    public void closeDetailPane() {
-        if (!isLargeLayout && slidingPaneLayout != null) {
-            slidingPaneLayout.openPane();
-        }
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -160,7 +132,8 @@ public class HealthInfoFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    private Observer<CharSequence> getSearchObserver() {
+    @Override
+    public Observer<CharSequence> getSearchObserver() {
         return new Observer<CharSequence>() {
             @Override
             public void onCompleted() {
@@ -189,9 +162,6 @@ public class HealthInfoFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (searchSubscription != null) {
-            searchSubscription.unsubscribe();
-        }
         realm.close();
     }
 }

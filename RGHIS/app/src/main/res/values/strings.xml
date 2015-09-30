@@ -25,6 +25,7 @@
     <string name="thread_title">Thread title</string>
     <string name="thread_message">Thread message</string>
     <string name="login">Login</string>
+    <string name="login_signup">Login / Sign Up</string>
 
     <string name="moments_ago">moments ago</string>
     <string name="minutes_ago">%1$d minutes ago</string>
@@ -36,4 +37,13 @@
     <string name="years_ago">%1$d years ago</string>
     <string name="year_ago">a year ago</string>
     <string name="message">Message</string>
+    <string name="news">News</string>
+    <string name="avatar_transition">avatar_transition</string>
+    <string name="emergency_info">Emergency Procedures</string>
+    <string name="large_layout">large</string>
+    <string name="password_placeholder">&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;</string>
+    <string name="email_address">Email address</string>
+    <string name="current_password">Current password</string>
+    <string name="new_password">New password</string>
+    <string name="profile">Profile</string>
 </resources>

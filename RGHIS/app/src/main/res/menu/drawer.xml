@@ -5,13 +5,17 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/drawer_home"
+            android:id="@+id/drawer_news"
             android:checked="true"
-            android:title="@string/home"/>
+            android:title="@string/news"/>
 
         <item
             android:id="@+id/drawer_health_info"
             android:title="@string/health_info"/>
+
+        <item
+            android:id="@+id/drawer_emergency_info"
+            android:title="@string/emergency_info"/>
 
         <item
             android:id="@+id/drawer_forum"

@@ -9,6 +9,9 @@ public class User extends ParseUser {
     public final static String KEY_FIRST_NAME = "firstName";
     public final static String KEY_LAST_NAME = "lastName";
     public final static String KEY_ROLE = "role";
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_PASSWORD = "password";
+    public static final String KEY_EMAIL = "email";
 
     public User() {
         super();

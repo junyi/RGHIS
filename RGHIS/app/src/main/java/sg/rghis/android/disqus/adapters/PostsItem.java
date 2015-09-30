@@ -24,7 +24,7 @@ import sg.rghis.android.disqus.models.Post;
 import sg.rghis.android.disqus.models.ResponseItem;
 import sg.rghis.android.disqus.models.VoteResponseItem;
 import sg.rghis.android.disqus.services.PostsService;
-import sg.rghis.android.utils.UserManager;
+import sg.rghis.android.utils.SystemUtils;
 import timber.log.Timber;
 
 public class PostsItem extends RecyclerView.ViewHolder implements ViewHolderItem {
@@ -90,8 +90,7 @@ public class PostsItem extends RecyclerView.ViewHolder implements ViewHolderItem
         upVoteFrame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!UserManager.isLoggedIn())
-
+                if (!SystemUtils.promptLoginIfNecessary(context))
                     postsService.vote(post.getPostId(), 1).enqueue(new Callback<ResponseItem<VoteResponseItem>>() {
                         @Override
                         public void onResponse(Response<ResponseItem<VoteResponseItem>> response) {
@@ -107,30 +106,29 @@ public class PostsItem extends RecyclerView.ViewHolder implements ViewHolderItem
                             Timber.d(Log.getStackTraceString(t));
                         }
                     });
-                else{
-
-                }
             }
         });
 
         downVoteFrame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                postsService.vote(post.getPostId(), -1).enqueue(new Callback<ResponseItem<VoteResponseItem>>() {
-                    @Override
-                    public void onResponse(Response<ResponseItem<VoteResponseItem>> response) {
-                        VoteResponseItem vote = response.body().getResponse();
-                        Post post = vote.getPost();
-                        numLikesTextView.setText(String.valueOf(post.getLikes()));
-                        if (onVoteListener != null)
-                            onVoteListener.onVoteResult(post, vote.getDelta());
-                    }
+                if (!SystemUtils.promptLoginIfNecessary(context))
 
-                    @Override
-                    public void onFailure(Throwable t) {
-                        Timber.d(Log.getStackTraceString(t));
-                    }
-                });
+                    postsService.vote(post.getPostId(), -1).enqueue(new Callback<ResponseItem<VoteResponseItem>>() {
+                        @Override
+                        public void onResponse(Response<ResponseItem<VoteResponseItem>> response) {
+                            VoteResponseItem vote = response.body().getResponse();
+                            Post post = vote.getPost();
+                            numLikesTextView.setText(String.valueOf(post.getLikes()));
+                            if (onVoteListener != null)
+                                onVoteListener.onVoteResult(post, vote.getDelta());
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                            Timber.d(Log.getStackTraceString(t));
+                        }
+                    });
             }
         });
 

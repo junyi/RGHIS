@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <FrameLayout
-        android:id="@+id/left_container"
+    <include
+        layout="@layout/thread_list_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />

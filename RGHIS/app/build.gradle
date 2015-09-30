@@ -33,6 +33,16 @@ android {
     }
     packagingOptions {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
     }
 }
 
@@ -43,11 +53,17 @@ dependencies {
 
 //    compile project (':disqus-sdk')
     compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:cardview-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
+    compile 'com.android.support:gridlayout-v7:23.0.1'
     compile 'com.squareup.dagger:dagger:1.2.2'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta1'
     compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta1'
+    compile ('com.squareup.retrofit:converter-simplexml:2.0.0-beta1'){
+        exclude group: 'stax', module: 'stax-api'
+        exclude group: 'xpp3', module: 'xpp3'
+    }
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.5.0'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'io.realm:realm-android:0.82.2'
@@ -56,27 +72,26 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.android.support:recyclerview-v7:23.0.1'
     compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.2.0'
-    compile 'com.flipboard:bottomsheet-core:1.4.3'
     compile 'com.jakewharton.timber:timber:3.1.0'
     compile 'org.jsoup:jsoup:1.8.3'
     compile 'xyz.danoz:recyclerviewfastscroller:0.1.3'
     compile 'com.turingtechnologies.materialscrollbar:lib:4.1.0'
-    compile('com.mikepenz:materialdrawer:4.0.8@aar') {
-        transitive = true
-    }
-    compile('com.mikepenz:crossfader:1.0.5@aar') {
-        transitive = true
-    }
+    compile 'com.mikepenz:iconics-core:1.7.6@aar'
     compile 'com.mikepenz:google-material-typeface:1.2.0.1@aar'
     compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
     compile 'com.mikepenz:community-material-typeface:1.1.70.3@aar'
-    compile 'com.parse.bolts:bolts-android:1.2.0'
+    compile 'com.parse.bolts:bolts-android:1.2.1'
     compile 'com.mobsandgeeks:android-saripaar:2.0-SNAPSHOT'
-    compile 'de.hdodenhof:circleimageview:2.0.0'
-    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile('com.afollestad.material-dialogs:core:0.8.0.1@aar') {
         transitive = true
     }
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
-    compile 'com.einmalfel:earl:1.0.0'
+    compile 'com.github.medyo:dynamicbox:1.2@aar'
+    compile( 'net.nightwhistler.htmlspanner:htmlspanner:0.5-SNAPSHOT') {
+        exclude module: 'ant'
+        exclude module: 'commons-io'
+    }
+    compile 'org.sufficientlysecure:html-textview:1.2'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'me.grantland:autofittextview:0.2.+'
 }

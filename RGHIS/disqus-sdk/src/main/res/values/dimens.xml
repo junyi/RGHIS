@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="eight">8dp</dimen>
-    <dimen name="four">4dp</dimen>
-    <dimen name="text_main">15dp</dimen>
-    <dimen name="text_support">13dp</dimen>
-    <dimen name="button_support_height">24dp</dimen>
-
-</resources>

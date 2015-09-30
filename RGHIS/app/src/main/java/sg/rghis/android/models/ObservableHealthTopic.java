@@ -1,90 +1,30 @@
 package sg.rghis.android.models;
 
 import android.content.Context;
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
+import android.databinding.ObservableField;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.text.Html;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
-import sg.rghis.android.BR;
 import sg.rghis.android.utils.HtmlTagHandler;
 import sg.rghis.android.utils.SystemUtils;
 
-public class ObservableHealthTopic extends BaseObservable {
-    private HealthTopic healthTopic;
-
-    public ObservableHealthTopic(HealthTopic healthTopic) {
-        this.healthTopic = healthTopic;
-    }
-
-    @Bindable
-    public HealthTopic getHealthTopic() {
-        return healthTopic;
-    }
-
-    public void setHealthTopic(HealthTopic healthTopic) {
-        this.healthTopic = healthTopic;
-        notifyPropertyChanged(BR.healthTopic);
-        notifyPropertyChanged(BR.title);
-    }
-
-    @Bindable
-    public CharSequence getTitle() {
-        if (healthTopic != null)
-            return Html.fromHtml(healthTopic.getTitle());
-        else
-            return "";
-    }
-
-    public void setTitle(String title) {
-        healthTopic.setTitle(title);
-    }
-
-    public String getOverview() {
-        return healthTopic.getOverview();
-    }
-
-    public void setOverview(String overview) {
-        healthTopic.setOverview(overview);
-    }
-
-    public String getSymptoms() {
-        return healthTopic.getSymptoms();
-    }
-
-    public void setSymptoms(String symptoms) {
-        healthTopic.setSymptoms(symptoms);
-    }
-
-    public String getTreatment() {
-        return healthTopic.getTreatment();
-    }
-
-    public void setTreatment(String treatment) {
-        healthTopic.setTreatment(treatment);
-    }
-
-    public String getTags() {
-        return healthTopic.getTags();
-    }
-
-    public void setTags(String tags) {
-        healthTopic.setTags(tags);
-    }
-
-    public String getInstitution() {
-        return healthTopic.getInstitution();
-    }
-
-    public void setInstitution(String institution) {
-        healthTopic.setInstitution(institution);
-    }
+public class ObservableHealthTopic {
+    public final ObservableField<HealthTopic> healthTopic =
+            new ObservableField<>();
 
     @BindingAdapter({"app:html"})
+    public static void html(CollapsingToolbarLayout view, String html) {
+        if (html != null) {
+            view.setTitle(Html.fromHtml(html, null, new HtmlTagHandler()));
+        }
+    }
+
+    @BindingAdapter({"app:loadHtml"})
     public static void loadHtml(TextView view, String url) {
         if (url != null) {
             Context context = view.getContext();

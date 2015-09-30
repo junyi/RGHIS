@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import rx.Observer;
 import rx.Subscription;
+import rx.schedulers.Schedulers;
 import sg.rghis.android.disqus.DisqusSdkProvider;
 import sg.rghis.android.disqus.models.PaginatedList;
 import sg.rghis.android.disqus.models.Post;
@@ -34,6 +35,7 @@ public class PostsAdapter extends PaginatedAdapter<Post> {
     @Override
     protected void loadNextPage(String cursorId, Observer<PaginatedList<Post>> callback) {
         subscription = threadsService.listPosts(cursorId)
+                .subscribeOn(Schedulers.io())
                 .subscribe(callback);
 
     }

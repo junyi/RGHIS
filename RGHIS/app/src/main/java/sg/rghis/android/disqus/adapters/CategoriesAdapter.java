@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import rx.Observer;
 import rx.Subscription;
+import rx.schedulers.Schedulers;
 import sg.rghis.android.BuildConfig;
 import sg.rghis.android.disqus.DisqusSdkProvider;
 import sg.rghis.android.disqus.models.Category;
@@ -35,6 +36,7 @@ public class CategoriesAdapter extends PaginatedAdapter<Category> {
         subscription = categoriesService.list(
                 BuildConfig.FORUM_SHORTNAME,
                 UrlUtils.cursor(cursorId))
+                .subscribeOn(Schedulers.io())
                 .subscribe(callback);
     }
 
