@@ -33,7 +33,7 @@
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primary_light"
+                android:background="@color/grey_300"
                 android:theme="@style/ThemeOverlay.AppCompat.Light"
                 app:tabMode="scrollable" />
         </LinearLayout>

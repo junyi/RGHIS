@@ -5,6 +5,7 @@ import android.animation.IntEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
@@ -12,6 +13,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
     private View headerView;
     private int startPx;
     private int endPx;
+    private int avatarMarginLeft;
     private IntEvaluator evaluator = new IntEvaluator();
     private ColorStateList itemTextColor;
     private DrawerArrowDrawable arrowDrawable;
@@ -130,7 +133,9 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
     private Animation slideOutAnim;
     private boolean isDetailShowing = false;
     private final ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
-
+    private int deviceOrientation = Configuration.ORIENTATION_PORTRAIT;
+    private int nameTextColor;
+    private int usernameTextColor;
 
     @FragmentState
     private int currentState = STATE_HEALTH_INFO;
@@ -157,6 +162,15 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
 
         viewSwitcher.setInAnimation(slideInAnim);
         viewSwitcher.setOutAnimation(slideOutAnim);
+
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                if (getCurrentFragment() != null)
+                    updateCurrentTitle();
+            }
+        });
+
     }
 
     private void setupNavigationDrawer() {
@@ -176,10 +190,14 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (slidingPaneLayout.isOpen()) {
-                    slidingPaneLayout.closePane();
+                if (isDetailShowing) {
+                    hideDetailFragment();
                 } else {
-                    slidingPaneLayout.openPane();
+                    if (slidingPaneLayout.isOpen()) {
+                        slidingPaneLayout.closePane();
+                    } else {
+                        slidingPaneLayout.openPane();
+                    }
                 }
             }
         });
@@ -235,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
                         navigateToState(STATE_EMERGENCY_INFO, null, false);
                         break;
                 }
+                slidingPaneLayout.closePane();
                 return false;
             }
         });
@@ -243,6 +262,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
         updateDrawerState(0);
 
         slidingPaneLayout.setShadowResourceLeft(R.drawable.material_drawer_shadow_left);
+        slidingPaneLayout.setSliderFadeColor(0);
 
         SlidingPaneLayout.LayoutParams containerLp = (SlidingPaneLayout.LayoutParams) container.getLayoutParams();
         drawerLeftMargin = leftMargin * 2 + Utils.convertDpToPx(this, 24);
@@ -278,6 +298,10 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
         endPx = getResources().getDimensionPixelSize(R.dimen.header_view_height);
         avatarSize = getResources().getDimensionPixelSize(R.dimen.avatar_size);
         avatarMiniSize = getResources().getDimensionPixelSize(R.dimen.avatar_mini_size);
+        avatarMarginLeft = ((LinearLayout.LayoutParams) avatarView.getLayoutParams()).leftMargin;
+
+        nameTextColor = nameTextView.getCurrentTextColor();
+        usernameTextColor = usernameTextView.getCurrentTextColor();
 
         headerView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -287,8 +311,13 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
                 else {
                     navigateToState(STATE_PROFILE, null, true);
                 }
+                slidingPaneLayout.closePane();
             }
         });
+    }
+
+    private boolean isLandscape() {
+        return deviceOrientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     private void updateHeaderView() {
@@ -353,7 +382,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
         if (f != null) {
             BaseFragment fragment = ((BaseFragment) f);
             if (fragment.getTitleRes() != -1) {
-                setToolbarTitle(getString(fragment.getTitleRes()));
+                internalSetToolbarTitle(getString(fragment.getTitleRes()));
             }
         }
         return true;
@@ -362,7 +391,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
     private void updateCurrentTitle() {
         BaseFragment fragment = getCurrentFragment();
         if (fragment.getTitleRes() != -1) {
-            setToolbarTitle(getString(fragment.getTitleRes()));
+            internalSetToolbarTitle(getString(fragment.getTitleRes()));
         }
     }
 
@@ -370,10 +399,6 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
     public void onViewReady(BaseFragment fragment) {
         checkIfPaneLayout(fragment);
         refreshSearchView(fragment);
-    }
-
-    private boolean isPaneLayout() {
-        return isPaneLayout;
     }
 
     private void checkIfPaneLayout(BaseFragment fragment) {
@@ -426,24 +451,29 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
     }
 
     private void adjustTitleSearchView(float offset) {
-        int offsetWidth = (int) ((drawerWidth - drawerLeftMargin) * offset);
-        LinearLayout.LayoutParams lp =
-                new LinearLayout.LayoutParams(titleSearchView.getLayoutParams());
-        lp.width = leftContainerWidth + offsetWidth;
+        if (leftContainerWidth != 0) {
+            int offsetWidth = (int) ((drawerWidth - drawerLeftMargin) * offset);
+            LinearLayout.LayoutParams lp =
+                    new LinearLayout.LayoutParams(titleSearchView.getLayoutParams());
+            lp.width = leftContainerWidth + offsetWidth;
 
-        FrameLayout.LayoutParams oldLp2 =
-                (FrameLayout.LayoutParams) searchView.getLayoutParams();
-        FrameLayout.LayoutParams lp2 =
-                new FrameLayout.LayoutParams(searchView.getLayoutParams());
-        lp2.setMargins(oldLp2.leftMargin, oldLp2.topMargin,
-                0, oldLp2.bottomMargin);
-        lp2.width = leftContainerWidth + drawerLeftMargin + offsetWidth
-                - oldLp2.leftMargin;
-        lp2.height = SystemUtils.getActionBarHeight(MainActivity.this)
-                - oldLp2.topMargin - oldLp2.bottomMargin;
+            FrameLayout.LayoutParams oldLp2 =
+                    (FrameLayout.LayoutParams) searchView.getLayoutParams();
+            FrameLayout.LayoutParams lp2 =
+                    new FrameLayout.LayoutParams(searchView.getLayoutParams());
+            int rightMargin = isLandscape() ? 0 : oldLp2.leftMargin;
+            lp2.setMargins(oldLp2.leftMargin, oldLp2.topMargin,
+                    rightMargin, oldLp2.bottomMargin);
+            lp2.width = leftContainerWidth + drawerLeftMargin + offsetWidth
+                    - oldLp2.leftMargin;
+            if (!isLandscape())
+                lp2.width -= oldLp2.leftMargin;
+            lp2.height = SystemUtils.getActionBarHeight(MainActivity.this)
+                    - oldLp2.topMargin - oldLp2.bottomMargin;
 
-        titleSearchView.setLayoutParams(lp);
-        searchView.setLayoutParams(lp2);
+            titleSearchView.setLayoutParams(lp);
+            searchView.setLayoutParams(lp2);
+        }
     }
 
     private BaseFragment getFragmentByState(@FragmentState int state, Bundle bundle) {
@@ -479,6 +509,12 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
         return f;
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        deviceOrientation = newConfig.orientation;
+    }
+
     private void updateDrawerState(float slideOffset) {
         int height = evaluator.evaluate(slideOffset, startPx, endPx);
         headerView.setLayoutParams(new LinearLayout.LayoutParams(
@@ -486,6 +522,10 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
         ));
 
         int marginLeft = ((LinearLayout.LayoutParams) avatarView.getLayoutParams()).leftMargin;
+        if (!isLandscape()) {
+            marginLeft = evaluator.evaluate(slideOffset, avatarMarginLeft -
+                    SystemUtils.dpToPx(2), avatarMarginLeft);
+        }
         int currentAvatarSize = evaluator.evaluate(slideOffset, avatarMiniSize, avatarSize);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 currentAvatarSize, currentAvatarSize);
@@ -494,10 +534,13 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
 
         float mappedOffset = slideOffset >= 0.5 ? (slideOffset - 0.5f) / 0.5f : 0;
         int alpha = evaluator.evaluate(mappedOffset, 0, 255);
+        nameTextView.setTextColor(ColorUtils.setAlphaComponent(nameTextColor, alpha));
+        usernameTextView.setTextColor(ColorUtils.setAlphaComponent(usernameTextColor, alpha));
         profileView.setAlpha(alpha);
         ColorStateList newColor = itemTextColor.withAlpha(alpha);
         navigationView.setItemTextColor(newColor);
-        adjustTitleSearchView(slideOffset);
+        if (isLandscape())
+            adjustTitleSearchView(slideOffset);
 
 //        arrowDrawable.setProgress(slideOffset);
     }
@@ -526,12 +569,19 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
     public void onBackPressed() {
         if (isDetailShowing) {
             hideDetailFragment();
-        } else
+        } else {
             super.onBackPressed();
+        }
+    }
+
+    public void internalSetToolbarTitle(CharSequence title) {
+        toolbarTitleView.setText(title);
     }
 
     public void setToolbarTitle(CharSequence title) {
-        toolbarTitleView.setText(title);
+        if (!isDetailShowing)
+            return;
+        internalSetToolbarTitle(title);
     }
 
     @OnClick({R.id.search_button, R.id.image_search_back})
@@ -541,6 +591,10 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
         } else {
             openSearchView();
         }
+    }
+
+    public void notifyLoginSuccess() {
+        updateHeaderView();
     }
 
     private void openSearchView() {
@@ -639,6 +693,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnVi
 
     public void showDetailFragment() {
         viewSwitcher.showNext();
+        internalSetToolbarTitle("");
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {

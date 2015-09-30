@@ -15,6 +15,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import sg.rghis.android.R;
+import sg.rghis.android.utils.SystemUtils;
+import sg.rghis.android.views.MainActivity;
 
 public class NewsDetailFragment extends Fragment {
     public static final String ARG_URL = "url";
@@ -87,7 +89,7 @@ public class NewsDetailFragment extends Fragment {
     public void loadUrl(String url) {
         this.url = url;
         if (webView != null) {
-            if (!isLargeLayout)
+            if (getView() != null && !isLargeLayout)
                 setToolbarTitle("");
             hideProgressBar();
             webView.loadUrl("about:blank");
@@ -97,16 +99,21 @@ public class NewsDetailFragment extends Fragment {
     }
 
     private void setToolbarTitle(CharSequence s) {
-        ((NewsFragment) getParentFragment()).setToolbarTitle(s);
-
+        MainActivity activity = SystemUtils.getMainActivityFromContext(getContext());
+        if (activity != null)
+            activity.setToolbarTitle(s);
     }
 
     private void hideProgressBar() {
-        ((NewsFragment) getParentFragment()).hideProgressBar();
+        MainActivity activity = SystemUtils.getMainActivityFromContext(getContext());
+        if (activity != null)
+            activity.hideProgressBar();
     }
 
     private void showProgressBar() {
-        ((NewsFragment) getParentFragment()).showProgressBar();
+        MainActivity activity = SystemUtils.getMainActivityFromContext(getContext());
+        if (activity != null)
+            activity.showProgressBar();
     }
 
     @OnClick(R.id.fab)

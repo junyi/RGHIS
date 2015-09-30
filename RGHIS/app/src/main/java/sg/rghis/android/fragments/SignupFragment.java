@@ -34,6 +34,7 @@ import butterknife.OnLongClick;
 import sg.rghis.android.R;
 import sg.rghis.android.models.User;
 import sg.rghis.android.utils.SystemUtils;
+import sg.rghis.android.views.MainActivity;
 import timber.log.Timber;
 
 public class SignupFragment extends BaseFragment implements Validator.ValidationListener {
@@ -129,20 +130,16 @@ public class SignupFragment extends BaseFragment implements Validator.Validation
 
     private void ensureLoginState() {
         signUpFields.setVisibility(View.GONE);
-//        firstNameTextInputLayout.setVisibility(View.GONE);
-//        lastNameTextInputLayout.setVisibility(View.GONE);
-//        emailTextInputLayout.setVisibility(View.GONE);
         primaryButton.setText(loginButtonString);
         descTextView.setText(signUpDescString);
+        setToolbarTitle("Login");
     }
 
     private void ensureSignupState() {
         signUpFields.setVisibility(View.VISIBLE);
-//        firstNameTextInputLayout.setVisibility(View.VISIBLE);
-//        lastNameTextInputLayout.setVisibility(View.VISIBLE);
-//        emailTextInputLayout.setVisibility(View.VISIBLE);
         primaryButton.setText(signUpButtonString);
         descTextView.setText(loginDescString);
+        setToolbarTitle("Sign up");
     }
 
     @Override
@@ -287,7 +284,10 @@ public class SignupFragment extends BaseFragment implements Validator.Validation
         Snackbar.make(getView(), String.format("Welcome %s", name),
                 Snackbar.LENGTH_SHORT).show();
         primaryButton.setEnabled(true);
-
+        navigateToState(MainActivity.STATE_NEWS, null, false);
+        MainActivity activity = SystemUtils.getMainActivityFromContext(getContext());
+        if (activity != null)
+            activity.notifyLoginSuccess();
     }
 
     private void signupSuccess() {

@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.annotation.AttrRes;
-import android.util.Range;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -142,5 +141,9 @@ public class SystemUtils {
         if (activity != null) {
             activity.onBackPressed();
         }
+    }
+
+    public static int getDeviceOrientation(Context context) {
+        return context.getResources().getConfiguration().orientation;
     }
 }

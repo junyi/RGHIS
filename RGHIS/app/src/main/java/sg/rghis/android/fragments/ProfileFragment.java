@@ -127,6 +127,13 @@ public class ProfileFragment extends BaseFragment implements Validator.Validatio
         showChangePasswordDialog();
     }
 
+    @OnClick(R.id.sign_out_button)
+    public void signOut() {
+        ParseUser.logOut();
+        Toast.makeText(getContext(), "Sign out success!", Toast.LENGTH_SHORT).show();
+        navigateToState(MainActivity.STATE_NEWS, null, false);
+    }
+
     private String capitalize(String s) {
         if (TextUtils.isEmpty(s))
             return s;
