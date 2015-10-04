@@ -38,6 +38,7 @@ import sg.rghis.android.disqus.adapters.PostsAdapter;
 import sg.rghis.android.disqus.models.PaginatedList;
 import sg.rghis.android.disqus.models.Post;
 import sg.rghis.android.disqus.models.ResponseItem;
+import sg.rghis.android.disqus.models.Thread;
 import sg.rghis.android.disqus.services.PostsService;
 import sg.rghis.android.disqus.services.ThreadsService;
 import sg.rghis.android.utils.SystemUtils;
@@ -46,7 +47,7 @@ import sg.rghis.android.views.widgets.DividerItemDecoration;
 import timber.log.Timber;
 
 public class PostListFragment extends BaseDisqusFragment implements Validator.ValidationListener {
-    public static final String ARG_THREAD_ID = "thread_id";
+    public static final String ARG_THREAD = "thread";
     public static final String PREFIX_ADAPTER = ".PostsFragment.MyAdapter";
 
     @Inject
@@ -63,7 +64,7 @@ public class PostListFragment extends BaseDisqusFragment implements Validator.Va
     private Subscription subscription;
     private Subscription createThreadSubscription;
     private PostsAdapter postsAdapter;
-    private long threadId;
+    private Thread thread;
     private MaterialDialog dialogInstance = null;
     private final DialogViewHolder dialogViewHolder = new DialogViewHolder();
     private Validator validator;
@@ -80,9 +81,9 @@ public class PostListFragment extends BaseDisqusFragment implements Validator.Va
         TextInputLayout messageTextInputLayout;
     }
 
-    public static PostListFragment newInstance(long threadId) {
+    public static PostListFragment newInstance(Thread thread) {
         Bundle args = new Bundle();
-        args.putLong(ARG_THREAD_ID, threadId);
+        args.putParcelable(ARG_THREAD, thread);
 
         PostListFragment fragment = new PostListFragment();
         fragment.setArguments(args);
@@ -94,19 +95,19 @@ public class PostListFragment extends BaseDisqusFragment implements Validator.Va
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getArguments();
-        if (bundle == null || !bundle.containsKey(ARG_THREAD_ID)) {
+        if (bundle == null || !bundle.containsKey(ARG_THREAD)) {
             throw new IllegalStateException("Category ID must be provided.");
         } else {
-            threadId = bundle.getLong(ARG_THREAD_ID);
+            thread = bundle.getParcelable(ARG_THREAD);
         }
 
-        postsAdapter = new PostsAdapter(threadId);
+        postsAdapter = new PostsAdapter(thread);
 
         if (savedInstanceState != null) {
             postsAdapter.onRestoreInstanceState(PREFIX_ADAPTER, savedInstanceState);
         } else {
             Observable<PaginatedList<Post>> observable =
-                    threadsService.listPosts(threadId);
+                    threadsService.listPosts(thread.id);
             subscription = observable
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -127,10 +128,11 @@ public class PostListFragment extends BaseDisqusFragment implements Validator.Va
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView.setHasFixedSize(true);
+
+        recyclerView.setHasFixedSize(false);
         LinearLayoutManager manager = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, true);
-        manager.setStackFromEnd(true);
+                LinearLayoutManager.VERTICAL, false);
+//        manager.setStackFromEnd(true);
         recyclerView.setLayoutManager(manager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
         recyclerView.setAdapter(postsAdapter);
@@ -146,7 +148,7 @@ public class PostListFragment extends BaseDisqusFragment implements Validator.Va
 
     @OnClick(R.id.fab)
     public void showCreateThreadDialog() {
-        if (!SystemUtils.promptLoginIfNecessary(getContext())) {
+        if (!SystemUtils.promptLoginIfNecessary()) {
             if (dialogInstance != null)
                 dialogInstance.cancel();
 
@@ -165,9 +167,9 @@ public class PostListFragment extends BaseDisqusFragment implements Validator.Va
         boolean wrapInScrollView = true;
         MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getActivity())
                 .backgroundColorRes(R.color.white)
-                .title("Create Post")
+                .title("Reply")
                 .customView(R.layout.dialog_create_post, wrapInScrollView)
-                .positiveText("Create")
+                .positiveText("OK")
                 .negativeText("Cancel")
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
@@ -175,7 +177,7 @@ public class PostListFragment extends BaseDisqusFragment implements Validator.Va
                         String message = dialogViewHolder.messageEditText.getText().toString();
 
                         Observable<ResponseItem<Post>> observable =
-                                postsService.create(threadId, message);
+                                postsService.create(thread.id, message);
                         createThreadSubscription = observable.observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new CreatePostObserver());
 
@@ -284,7 +286,7 @@ public class PostListFragment extends BaseDisqusFragment implements Validator.Va
         public void onNext(ResponseItem<Post> postResponseItem) {
             postsAdapter.addItem(postResponseItem.getResponse());
             postsAdapter.notifyDataSetChanged();
-            recyclerView.smoothScrollToPosition(postsAdapter.getItemCount() - 1);
+            recyclerView.smoothScrollToPosition(1);
         }
     }
 

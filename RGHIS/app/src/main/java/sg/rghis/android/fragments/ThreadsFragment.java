@@ -181,7 +181,7 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
 
         dynamicBox = new DynamicBox(getContext(), dummyView);
         dynamicBox.showLoadingLayout();
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(threadsAdapter);
@@ -190,7 +190,7 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
                     @Override
                     public void onItemClick(View view, int position) {
                         Thread thread = (Thread) threadsAdapter.getItem(position);
-                        loadPosts(thread.id);
+                        loadPosts(thread);
                     }
                 }));
 
@@ -222,8 +222,8 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
         }
     }
 
-    private void loadPosts(long threadId) {
-        postsFragment = PostListFragment.newInstance(threadId);
+    private void loadPosts(Thread thread) {
+        postsFragment = PostListFragment.newInstance(thread);
         getChildFragmentManager()
                 .beginTransaction()
                 .replace(R.id.right_container, postsFragment)
@@ -235,7 +235,7 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
 
     @OnClick(R.id.fab)
     public void showCreateThreadDialog() {
-        if (!SystemUtils.promptLoginIfNecessary(getContext())) {
+        if (!SystemUtils.promptLoginIfNecessary()) {
             if (dialogInstance != null)
                 dialogInstance.cancel();
 

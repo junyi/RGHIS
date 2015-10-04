@@ -4,12 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
+    android:layout_marginBottom="8dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:layout_marginTop="4dp"
-    android:clickable="true"
-    android:foreground="?attr/selectableItemBackground"
+    android:layout_marginTop="8dp"
     app:cardCornerRadius="3dp">
 
     <RelativeLayout
@@ -22,10 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="8dp"
+            android:paddingBottom="12dp"
             android:paddingLeft="16dp"
             android:paddingRight="8dp"
-            android:paddingTop="8dp">
+            android:paddingTop="12dp">
 
             <TextView
                 android:id="@+id/title"
@@ -33,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:gravity="center_horizontal"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/primary_text"
                 tools:text="Nexus 6 2014" />
 
@@ -44,7 +42,7 @@
                 android:layout_below="@id/title"
                 android:layout_marginBottom="4dp"
                 android:gravity="center_horizontal"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/secondary_text"
                 tools:text="Nexus 6 2014" />
         </LinearLayout>
@@ -53,20 +51,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/text"
-            android:background="@color/grey_100"
+            android:background="@color/grey_800"
             android:orientation="horizontal"
-            android:paddingBottom="8dp"
+            android:paddingBottom="12dp"
             android:paddingLeft="16dp"
             android:paddingRight="8dp"
-            android:paddingTop="8dp">
+            android:paddingTop="12dp">
 
             <TextView
                 android:id="@+id/author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:textColor="@color/black"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 tools:text="\@junyihjy" />
 
             <com.mikepenz.iconics.view.IconicsTextView
@@ -74,8 +73,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:textColor="@color/grey_700"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/white"
                 tools:text="5" />
 
             <com.mikepenz.iconics.view.IconicsTextView
@@ -85,7 +84,7 @@
                 android:layout_marginLeft="4dp"
                 android:gravity="center"
                 android:text="{cmd-heart}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/pink_500" />
 
             <com.mikepenz.iconics.view.IconicsTextView
@@ -93,8 +92,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:textColor="@color/grey_700"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/white"
                 tools:text="3" />
 
             <com.mikepenz.iconics.view.IconicsTextView
@@ -104,9 +103,8 @@
                 android:layout_marginLeft="4dp"
                 android:gravity="center"
                 android:text="{cmd-reply}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/deep_orange_500" />
         </LinearLayout>
-
     </RelativeLayout>
 </android.support.v7.widget.CardView>

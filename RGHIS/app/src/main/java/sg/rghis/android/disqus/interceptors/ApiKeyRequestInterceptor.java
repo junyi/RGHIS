@@ -15,21 +15,17 @@ import timber.log.Timber;
 public class ApiKeyRequestInterceptor implements Interceptor {
     private static final String PARAM_API_KEY = "api_key";
     private static final String PARAM_REMOTE_AUTH = "remote_auth";
+    private static final String PARAM_ACCESS_TOKEN = "access_token";
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request originalRequest = chain.request();
 
-        String key, remoteAuthString;
+        String key, remoteAuthString, accessToken = null;
         Timber.d(originalRequest.method());
 
         HttpUrl.Builder builder = originalRequest.httpUrl().newBuilder();
-
-//        if (originalRequest.method().equals("GET")) {
         key = DisqusSdkProvider.publicKey;
-//        } else {
-//            key = DisqusSdkProvider.privateKey;
-//        }
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
@@ -40,6 +36,9 @@ public class ApiKeyRequestInterceptor implements Interceptor {
             Timber.d("remote_auth %s", remoteAuthString);
             builder.addQueryParameter(PARAM_REMOTE_AUTH, remoteAuthString);
         }
+
+        if (accessToken != null)
+            builder.addQueryParameter(PARAM_ACCESS_TOKEN, accessToken);
 
         HttpUrl httpUrl = builder
                 .addQueryParameter(PARAM_API_KEY, key)

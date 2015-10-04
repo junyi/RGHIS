@@ -37,7 +37,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -121,7 +120,6 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
     private IntEvaluator evaluator = new IntEvaluator();
     private ColorStateList itemTextColor;
     private DrawerArrowDrawable arrowDrawable;
-    private MaterialDialog loginDialog;
     private boolean isPaneLayout = false;
     private int drawerLeftMargin;
     private int drawerWidth;
@@ -317,6 +315,33 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
         );
     }
 
+    private void updateDrawerMenu() {
+        int id = -1;
+        switch (currentState) {
+            case STATE_NEWS:
+                id = R.id.drawer_news;
+                break;
+            case STATE_HEALTH_INFO:
+                id = R.id.drawer_health_info;
+                break;
+            case STATE_EMERGENCY_INFO:
+                id = R.id.drawer_emergency_info;
+                break;
+            case STATE_CATEGORIES:
+                id = R.id.drawer_forum;
+                break;
+        }
+        if (id != -1) {
+            navigationView.setCheckedItem(id);
+        } else {
+            int size = navigationView.getMenu().size();
+            for (int i = 0; i < size; i++) {
+                navigationView.getMenu().getItem(i).setChecked(false);
+            }
+        }
+
+    }
+
     private void setupHeaderView() {
         headerView = navigationView.inflateHeaderView(R.layout.drawer_header);
         avatarView = (CircleImageView) headerView.findViewById(R.id.avatar_view);
@@ -425,6 +450,7 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
                 internalSetToolbarTitle("");
             }
         }
+        updateDrawerMenu();
         return true;
     }
 
@@ -594,24 +620,11 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
 //        arrowDrawable.setProgress(slideOffset);
     }
 
-    public boolean promptLogin() {
-        if (!UserManager.isLoggedIn()) {
-            if (loginDialog != null)
-                loginDialog.cancel();
-            loginDialog = new MaterialDialog.Builder(getContext())
-                    .content("Please login or sign up to continue.")
-                    .positiveText("OK")
-                    .negativeText("Cancel")
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog dialog) {
-                            navigateToState(STATE_SIGNUP, null, true);
-                        }
-                    })
-                    .show();
-            return true;
-        }
-        return false;
+    public void showLogin() {
+        if (getView() != null)
+            navigateToState(STATE_SIGNUP, null, true);
+        else
+            currentState = STATE_SIGNUP;
     }
 
 //    @Override

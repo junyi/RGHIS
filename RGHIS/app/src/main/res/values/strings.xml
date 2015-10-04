@@ -47,4 +47,10 @@
     <string name="new_password">New password</string>
     <string name="profile">Profile</string>
     <string name="sign_out">Sign out</string>
+    <string name="by">by</string>
+
+    <array name="post_item_menu">
+        <item>Edit post</item>
+        <item>Delete post</item>
+    </array>
 </resources>

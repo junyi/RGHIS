@@ -23,6 +23,7 @@ android {
         buildConfigField "String", "PRIVATE_KEY", "\"${disqusSdk.PRIVATE_KEY}\""
         buildConfigField "String", "REDIRECT_URI", "\"${disqusSdk.REDIRECT_URI}\""
         buildConfigField "String", "FORUM_SHORTNAME", "\"${disqusSdk.FORUM_SHORTNAME}\""
+        buildConfigField "String", "ACCESS_TOKEN", "\"${disqusSdk.ACCESS_TOKEN}\""
 
     }
     buildTypes {
@@ -98,4 +99,5 @@ dependencies {
     provided 'de.greenrobot:eventbus-annotation-processor:3.0.0-beta1'
     compile 'frankiesardo:icepick:3.1.0'
     provided 'frankiesardo:icepick-processor:3.1.0'
+    compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'
 }

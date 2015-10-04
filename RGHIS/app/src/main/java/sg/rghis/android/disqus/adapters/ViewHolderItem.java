@@ -3,10 +3,12 @@ package sg.rghis.android.disqus.adapters;
 /**
  * Common interface for view holder items to implement
  */
-public interface ViewHolderItem {
+public interface ViewHolderItem extends ViewBinderInterface {
 
-    public ViewHolderType getViewItemType();
-    public void onBindViewHolder(Object data);
-    public void injectThis();
+    ViewHolderType getViewItemType();
+
+    void onBindViewHolder(Object data);
+
+    void injectThis();
 
 }

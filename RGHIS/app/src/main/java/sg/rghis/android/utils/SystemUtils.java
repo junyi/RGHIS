@@ -15,7 +15,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import de.greenrobot.event.EventBus;
 import sg.rghis.android.RghisApplication;
+import sg.rghis.android.events.PromptLoginEvent;
 import sg.rghis.android.views.MainActivity;
 import timber.log.Timber;
 
@@ -125,14 +127,10 @@ public class SystemUtils {
     /**
      * Utility method to request user to login
      *
-     * @param context
      * @return true if navigated to prompt login
      */
-    public static boolean promptLoginIfNecessary(Context context) {
-        MainActivity activity = getMainActivityFromContext(context);
-        if (activity != null) {
-            return activity.getMainFragment().promptLogin();
-        }
+    public static boolean promptLoginIfNecessary() {
+        EventBus.getDefault().post(new PromptLoginEvent());
         return !UserManager.isLoggedIn();
     }
 

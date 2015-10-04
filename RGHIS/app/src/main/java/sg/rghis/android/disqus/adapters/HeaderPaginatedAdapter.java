@@ -12,17 +12,19 @@ import rx.Observer;
 import sg.rghis.android.disqus.models.Cursor;
 import sg.rghis.android.disqus.models.PaginatedList;
 
-/**
- * Base adapter implementation for adapters associated with {@link PaginatedList}
- */
-public abstract class PaginatedAdapter<T extends Parcelable> extends RecyclerView.Adapter implements Observer<PaginatedList<T>> {
+public abstract class HeaderPaginatedAdapter<T extends Parcelable, U extends Parcelable>
+        extends RecyclerView.Adapter implements Observer<PaginatedList<T>> {
     private static final String ARG_PAGINATED_LISTS = ".paginatedLists";
     private static final String ARG_ALL_RESOURCE_ITEMS = ".allResourceItems";
+    public static final int TYPE_HEADER = 0;
+    public static final int TYPE_ITEM = 1;
 
     private ArrayList<PaginatedList<T>> paginatedLists = new ArrayList<>(); // all paginated lists that have been fetched
-    private ArrayList<T> allResourceItems = new ArrayList<>();
+    protected ArrayList<T> allResourceItems = new ArrayList<>();
 
     private AtomicBoolean loading = new AtomicBoolean(false);
+
+    private U headerData;
 
     protected abstract void loadNextPage(String cursorId, Observer<PaginatedList<T>> callback);
 
@@ -49,6 +51,20 @@ public abstract class PaginatedAdapter<T extends Parcelable> extends RecyclerVie
         }
     }
 
+    public void removeAt(int position) {
+        if (!isPositionHeader(position)) {
+            allResourceItems.remove(position - 1);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public void updateItem(int position, T item) {
+        if (!isPositionHeader(position) && item != null) {
+            allResourceItems.set(position - 1, item);
+            notifyItemChanged(position, item);
+        }
+    }
+
     public void loadNext() {
         Cursor cursor = paginatedLists.get(paginatedLists.size() - 1).getCursor();
         if (cursor.hasNext()) {
@@ -61,18 +77,42 @@ public abstract class PaginatedAdapter<T extends Parcelable> extends RecyclerVie
     }
 
     public Object getItem(int position) {
-        return allResourceItems.get(position);
+        if (isPositionHeader(position)) {
+            return headerData;
+        } else {
+            return allResourceItems.get(position - 1);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return allResourceItems.size();
+        return allResourceItems.size() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (isPositionHeader(position))
+            return TYPE_HEADER;
+
+        return TYPE_ITEM;
+    }
+
+    private boolean isPositionHeader(int position) {
+        return position == 0;
+    }
+
+    public void setHeaderData(U data) {
+        headerData = data;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position == getItemCount() - 10) {
-            loadNext();
+        if (holder instanceof HeaderVH) {
+            ((HeaderVH) holder).onBindViewHolder(headerData);
+        } else {
+            if (position == getItemCount() - 10) {
+                loadNext();
+            }
         }
     }
 
@@ -94,6 +134,10 @@ public abstract class PaginatedAdapter<T extends Parcelable> extends RecyclerVie
     @Override
     public void onCompleted() {
 
+    }
+
+    public interface HeaderVH<U> extends ViewBinderInterface<U> {
+        void onBindViewHolder(U data);
     }
 
 }
