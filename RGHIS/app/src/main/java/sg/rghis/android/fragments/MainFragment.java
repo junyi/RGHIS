@@ -50,19 +50,27 @@ import java.util.concurrent.TimeUnit;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
 import de.hdodenhof.circleimageview.CircleImageView;
+import icepick.Icepick;
+import icepick.State;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import sg.rghis.android.R;
+import sg.rghis.android.events.NavigationEvent;
+import sg.rghis.android.events.OnViewReadyEvent;
+import sg.rghis.android.events.SetDetailFragmentEvent;
+import sg.rghis.android.events.SetToolbarTitleEvent;
+import sg.rghis.android.events.ShowDetailFragmentEvent;
 import sg.rghis.android.models.User;
 import sg.rghis.android.utils.SystemUtils;
 import sg.rghis.android.utils.UserManager;
-import sg.rghis.android.views.MainActivity;
 import sg.rghis.android.views.drawable.IconicsDrawable;
 
 public class MainFragment extends Fragment implements BaseFragment.OnViewReadyListener {
     @IntDef({STATE_SIGNUP, STATE_NEWS, STATE_HEALTH_INFO,
-            STATE_EMERGENCY_INFO, STATE_CATEGORIES, STATE_THREADS, STATE_PROFILE})
+            STATE_EMERGENCY_INFO, STATE_CATEGORIES, STATE_THREADS, STATE_PROFILE, STATE_NONE})
     @Retention(RetentionPolicy.SOURCE)
     public @interface FragmentState {
     }
@@ -74,6 +82,7 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
     public static final int STATE_CATEGORIES = 5;
     public static final int STATE_THREADS = 6;
     public static final int STATE_PROFILE = 7;
+    public static final int STATE_NONE = -1;
 
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -127,15 +136,41 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
     private int deviceOrientation = Configuration.ORIENTATION_PORTRAIT;
     private int nameTextColor;
     private int usernameTextColor;
+    private OnViewReadyEvent onViewReadyEvent;
 
     @FragmentState
-    private int currentState = STATE_HEALTH_INFO;
+    @State
+    int currentState = STATE_NONE;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_fragment, container, false);
         ButterKnife.bind(this, view);
+        Icepick.restoreInstanceState(this, savedInstanceState);
 
         setupNavigationDrawer();
 
@@ -162,7 +197,14 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        navigateToState(STATE_NEWS, null, false);
+        if (currentState == STATE_NONE)
+            currentState = STATE_NEWS;
+        navigateToState(currentState, null, false);
+
+        if (onViewReadyEvent != null) {
+            handleOnViewReady(onViewReadyEvent);
+            onViewReadyEvent = null;
+        }
     }
 
     private void setupNavigationDrawer() {
@@ -322,19 +364,27 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
         }
     }
 
-    public int getCurrentState() {
-        return currentState;
+    private BaseFragment getFragment(@FragmentState int state) {
+        return (BaseFragment) getFragmentManager().findFragmentByTag("fragment_" + state);
     }
 
     private BaseFragment getCurrentFragment() {
-        return (BaseFragment) getFragmentManager().findFragmentByTag("fragment_" + getCurrentState());
+        return getFragment(currentState);
     }
 
-    public boolean navigateToState(@FragmentState int state, Bundle bundle, boolean addToBackStack) {
-        if (currentState == state)
+    @Subscribe
+    public void handleNavigateToState(NavigationEvent event) {
+        int state = event.state;
+        Bundle bundle = event.bundle;
+        boolean addToBackStack = event.addToBackStack;
+        navigateToState(state, bundle, addToBackStack);
+    }
+
+    private boolean navigateToState(@FragmentState int state, Bundle bundle, boolean addToBackStack) {
+        if (state == currentState && getFragment(state) != null && getFragment(state).isVisible())
             return false;
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment f = getFragmentByState(state, bundle);
+        Fragment f = getNewFragment(state, bundle);
         if (currentState == STATE_CATEGORIES && state == STATE_THREADS) {
             Fragment currrentFragment = getCurrentFragment();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -382,6 +432,15 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
         BaseFragment fragment = getCurrentFragment();
         if (fragment.getTitleRes() != -1) {
             internalSetToolbarTitle(getString(fragment.getTitleRes()));
+        }
+    }
+
+    @Subscribe
+    public void handleOnViewReady(OnViewReadyEvent event) {
+        if (getView() == null) {
+            onViewReadyEvent = event;
+        } else {
+            onViewReady(event.fragment);
         }
     }
 
@@ -466,7 +525,7 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
         }
     }
 
-    private BaseFragment getFragmentByState(@FragmentState int state, Bundle bundle) {
+    private BaseFragment getNewFragment(@FragmentState int state, Bundle bundle) {
         BaseFragment f = null;
         switch (state) {
             case STATE_SIGNUP:
@@ -568,10 +627,9 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
         toolbarTitleView.setText(title);
     }
 
-    public void setToolbarTitle(CharSequence title) {
-//        if (!isDetailShowing)
-//            return;
-        internalSetToolbarTitle(title);
+    @Subscribe
+    public void handleSetToolbarTitle(SetToolbarTitleEvent event) {
+        internalSetToolbarTitle(event.charSequence);
     }
 
     @OnClick({R.id.search_button, R.id.image_search_back})
@@ -675,13 +733,23 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
             searchSubscription.unsubscribe();
     }
 
-    public void setDetailFragment(Fragment f) {
+    @Subscribe
+    public void handleSetDetailFragment(SetDetailFragmentEvent event) {
+        setDetailFragment(event.fragment);
+    }
+
+    private void setDetailFragment(Fragment f) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.detail_content, f);
         ft.commit();
     }
 
-    public void showDetailFragment() {
+    @Subscribe
+    public void handleShowDetailFragment(ShowDetailFragmentEvent event) {
+        showDetailFragment();
+    }
+
+    private void showDetailFragment() {
         viewSwitcher.showNext();
         internalSetToolbarTitle("");
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -711,18 +779,6 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
         anim.start();
         isDetailShowing = false;
         updateCurrentTitle();
-    }
-
-    public void showDetailFragment(boolean hideToolbar) {
-        if (hideToolbar)
-            toolbar.setVisibility(View.GONE);
-        showDetailFragment();
-    }
-
-    public void hideDetailFragment(boolean showToolbar) {
-        if (showToolbar)
-            toolbar.setVisibility(View.VISIBLE);
-        hideDetailFragment();
     }
 
     public void showProgressBar() {

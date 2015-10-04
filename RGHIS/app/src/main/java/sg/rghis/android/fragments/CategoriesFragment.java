@@ -27,7 +27,6 @@ import sg.rghis.android.disqus.adapters.CategoriesAdapter;
 import sg.rghis.android.disqus.models.Category;
 import sg.rghis.android.disqus.models.PaginatedList;
 import sg.rghis.android.disqus.services.CategoriesService;
-import sg.rghis.android.views.MainActivity;
 import sg.rghis.android.views.RecyclerItemClickListener;
 import sg.rghis.android.views.widgets.AutofitRecyclerView;
 import sg.rghis.android.views.widgets.RoundedLetterView;
@@ -124,17 +123,10 @@ public class CategoriesFragment extends BaseDisqusFragment {
             ft.addSharedElement(avatar, avatar.getTransitionName());
         }
 
-        ft.replace(R.id.detail_content, f);
+        ft.replace(R.id.main_content, f);
         ft.addToBackStack(null);
         ft.commit();
-        showDetailFragment();
-
     }
-
-    private void showDetailFragment() {
-        ((MainActivity) getContext()).getMainFragment().showDetailFragment(true);
-    }
-
 
     private class GetCategoriesObserver implements Observer<PaginatedList<Category>> {
         @Override

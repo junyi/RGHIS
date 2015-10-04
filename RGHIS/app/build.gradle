@@ -96,4 +96,6 @@ dependencies {
     compile 'me.grantland:autofittextview:0.2.+'
     compile 'de.greenrobot:eventbus:3.0.0-beta1'
     provided 'de.greenrobot:eventbus-annotation-processor:3.0.0-beta1'
+    compile 'frankiesardo:icepick:3.1.0'
+    provided 'frankiesardo:icepick-processor:3.1.0'
 }

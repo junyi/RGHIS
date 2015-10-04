@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import de.greenrobot.event.EventBus;
 import rx.Observer;
+import sg.rghis.android.events.NavigationEvent;
+import sg.rghis.android.events.OnViewReadyEvent;
+import sg.rghis.android.events.SetToolbarTitleEvent;
 import sg.rghis.android.utils.SystemUtils;
 import sg.rghis.android.views.MainActivity;
 
@@ -26,13 +30,12 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MainActivity activity = SystemUtils.getMainActivityFromContext(getContext());
-        if (activity != null)
-            activity.getMainFragment().onViewReady(this);
+
+        EventBus.getDefault().post(new OnViewReadyEvent(this));
     }
 
     protected void navigateToState(@MainFragment.FragmentState int state, Bundle bundle, boolean addToBackStack) {
-        ((MainActivity) getActivity()).getMainFragment().navigateToState(state, bundle, addToBackStack);
+        EventBus.getDefault().post(new NavigationEvent(state, bundle, addToBackStack));
     }
 
     public boolean onBackPressed() {
@@ -60,6 +63,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void setToolbarTitle(CharSequence s) {
-        ((MainActivity) getContext()).getMainFragment().setToolbarTitle(s);
+        EventBus.getDefault().post(new SetToolbarTitleEvent(s));
     }
 }

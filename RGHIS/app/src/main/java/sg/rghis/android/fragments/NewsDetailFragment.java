@@ -14,7 +14,9 @@ import android.webkit.WebViewClient;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 import sg.rghis.android.R;
+import sg.rghis.android.events.SetToolbarTitleEvent;
 import sg.rghis.android.utils.SystemUtils;
 import sg.rghis.android.views.MainActivity;
 
@@ -95,8 +97,7 @@ public class NewsDetailFragment extends Fragment {
     }
 
     private void setToolbarTitle(CharSequence s) {
-        MainActivity activity = SystemUtils.getMainActivityFromContext(getContext());
-        activity.getMainFragment().setToolbarTitle(s);
+        EventBus.getDefault().post(new SetToolbarTitleEvent(s));
     }
 
     private void hideProgressBar() {

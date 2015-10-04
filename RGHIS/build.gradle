@@ -27,5 +27,8 @@ allprojects {
         maven {
             url 'http://repo.pageturner-reader.org'
         }
+        maven {
+            url "https://clojars.org/repo/"
+        }
     }
 }
