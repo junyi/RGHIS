@@ -23,7 +23,9 @@ import com.mobsandgeeks.saripaar.annotation.Order;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import java.util.List;
@@ -287,6 +289,13 @@ public class SignupFragment extends BaseFragment implements Validator.Validation
     }
 
     private void loginSuccess(User user) {
+        ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null)
+                    Timber.d(Log.getStackTraceString(e));
+            }
+        });
         hideProgress();
         String name = user.getFirstName() + " " + user.getLastName();
         Snackbar.make(getView(), String.format("Welcome %s", name),

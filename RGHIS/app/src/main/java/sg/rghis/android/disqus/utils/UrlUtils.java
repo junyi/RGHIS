@@ -30,4 +30,9 @@ public class UrlUtils {
     public static String[] author() {
         return new String[]{"author"};
     }
+
+    public static String[] open() {
+        return new String[]{"open"};
+    }
+
 }

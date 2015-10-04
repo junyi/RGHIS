@@ -20,8 +20,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.parse.DeleteCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -130,6 +132,13 @@ public class ProfileFragment extends BaseFragment implements Validator.Validatio
     @OnClick(R.id.sign_out_button)
     public void signOut() {
         ParseUser.logOut();
+        ParseInstallation.getCurrentInstallation().deleteInBackground(new DeleteCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null)
+                    Timber.d(Log.getStackTraceString(e));
+            }
+        });
         Toast.makeText(getContext(), "Sign out success!", Toast.LENGTH_SHORT).show();
         navigateToState(MainFragment.STATE_NEWS, null, false);
     }

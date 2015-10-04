@@ -10,6 +10,8 @@ import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Query;
 import rx.Observable;
+import sg.rghis.android.BuildConfig;
+import sg.rghis.android.disqus.models.AuthorlessThread;
 import sg.rghis.android.disqus.models.PaginatedList;
 import sg.rghis.android.disqus.models.Post;
 import sg.rghis.android.disqus.models.ResponseItem;
@@ -39,7 +41,7 @@ public interface ThreadsService {
      */
     @FormUrlEncoded
     @POST("threads/create.json")
-    Observable<ResponseItem<Thread>> create(@Field("forum") String forum,
+    Observable<ResponseItem<AuthorlessThread>> create(@Field("forum") String forum,
                                             @Field("title") String title);
 
     /**
@@ -53,10 +55,9 @@ public interface ThreadsService {
      */
     @FormUrlEncoded
     @POST("threads/create.json")
-    Observable<ResponseItem<Thread>> create(@Field("forum") String forum,
+    Observable<ResponseItem<AuthorlessThread>> create(@Field("forum") String forum,
                                             @Field("title") String title,
                                             @FieldMap Map<String, String> optionalParams);
-
 
 
     /**
@@ -69,8 +70,8 @@ public interface ThreadsService {
      * @see <a href="https://disqus.com/api/docs/threads/create/">Documentation</a>
      */
     @FormUrlEncoded
-    @POST("threads/update.json")
-    Observable<ResponseItem<Thread>> update(@Field("thread") String thread,
+    @POST("threads/update.json?access_token=" + BuildConfig.ACCESS_TOKEN)
+    Observable<ResponseItem<AuthorlessThread>> update(@Field("thread") String thread,
                                             @Field("category") String category,
                                             @FieldMap Map<String, String> optionalParams);
 

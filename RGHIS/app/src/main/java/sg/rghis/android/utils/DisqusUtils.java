@@ -16,6 +16,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import sg.rghis.android.BuildConfig;
+import sg.rghis.android.disqus.models.Thread;
 import timber.log.Timber;
 
 public class DisqusUtils {
@@ -74,5 +75,9 @@ public class DisqusUtils {
         Mac mac = Mac.getInstance(HMAC_SHA1_ALGORITHM);
         mac.init(signingKey);
         return toHexString(mac.doFinal(data.getBytes()));
+    }
+
+    public static String getChannelName(Thread thread) {
+        return "thread_" + String.valueOf(thread.id);
     }
 }

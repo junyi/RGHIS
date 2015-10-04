@@ -53,6 +53,12 @@ public class CategoriesFragment extends BaseDisqusFragment {
         return fragment;
     }
 
+
+    @Override
+    public int getTitleRes() {
+        return R.string.forum;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

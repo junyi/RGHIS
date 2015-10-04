@@ -85,6 +85,11 @@ public class DisqusSdkDaggerModule {
         return retrofit.create(PostsService.class);
     }
 
+//    @Provides
+//    ForumsService providesForumsService(Retrofit retrofit) {
+//        return retrofit.create(ForumsService.class);
+//    }
+
     @Provides
     @Singleton
     Context providesContext() {

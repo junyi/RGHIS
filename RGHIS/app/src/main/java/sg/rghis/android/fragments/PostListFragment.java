@@ -20,6 +20,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.parse.ParseException;
+import com.parse.ParsePush;
+import com.parse.SendCallback;
 
 import java.util.List;
 
@@ -41,7 +44,9 @@ import sg.rghis.android.disqus.models.ResponseItem;
 import sg.rghis.android.disqus.models.Thread;
 import sg.rghis.android.disqus.services.PostsService;
 import sg.rghis.android.disqus.services.ThreadsService;
+import sg.rghis.android.utils.DisqusUtils;
 import sg.rghis.android.utils.SystemUtils;
+import sg.rghis.android.utils.UserManager;
 import sg.rghis.android.views.RecyclerItemClickListener;
 import sg.rghis.android.views.widgets.DividerItemDecoration;
 import timber.log.Timber;
@@ -287,7 +292,27 @@ public class PostListFragment extends BaseDisqusFragment implements Validator.Va
             postsAdapter.addItem(postResponseItem.getResponse());
             postsAdapter.notifyDataSetChanged();
             recyclerView.smoothScrollToPosition(1);
+            String username = UserManager.getCurrentUser().getUsername();
+            String message = String.format("%s just replied to your thread named %s",
+                    username, ellipsize(thread.title));
+            ParsePush push = new ParsePush();
+            push.setChannel(DisqusUtils.getChannelName(thread));
+            push.setMessage(message);
+            push.sendInBackground(new SendCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null)
+                        Timber.d(Log.getStackTraceString(e));
+                }
+            });
         }
+    }
+
+    private String ellipsize(String text) {
+        if (text.length() > 20) {
+            return text.substring(0, 20) + "...";
+        }
+        return text;
     }
 
     @Override

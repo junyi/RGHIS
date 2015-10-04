@@ -25,7 +25,11 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.parse.ParseException;
+import com.parse.ParsePush;
+import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,10 +43,12 @@ import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import sg.rghis.android.BuildConfig;
 import sg.rghis.android.R;
 import sg.rghis.android.disqus.adapters.ThreadsAdapter;
+import sg.rghis.android.disqus.models.AuthorlessThread;
 import sg.rghis.android.disqus.models.Category;
 import sg.rghis.android.disqus.models.PaginatedList;
 import sg.rghis.android.disqus.models.ResponseItem;
@@ -51,6 +57,7 @@ import sg.rghis.android.disqus.services.CategoriesService;
 import sg.rghis.android.disqus.services.ThreadsService;
 import sg.rghis.android.disqus.utils.UrlUtils;
 import sg.rghis.android.utils.ColorUtils;
+import sg.rghis.android.utils.DisqusUtils;
 import sg.rghis.android.utils.SystemUtils;
 import sg.rghis.android.views.RecyclerItemClickListener;
 import sg.rghis.android.views.widgets.RGSlidingPaneLayout;
@@ -145,7 +152,26 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
             threadsAdapter.onRestoreInstanceState(PREFIX_ADAPTER, savedInstanceState);
         } else {
             Observable<PaginatedList<Thread>> observable =
-                    categoriesService.listThreads(category.id, UrlUtils.author(), null);
+                    categoriesService.listThreads(category.id,
+                            UrlUtils.author(), null)
+                            .flatMap(new Func1<PaginatedList<Thread>, Observable<PaginatedList<Thread>>>() {
+                                @Override
+                                public Observable<PaginatedList<Thread>> call(PaginatedList<Thread> threadPaginatedList) {
+                                    ArrayList<Thread> newThreads = new ArrayList<>();
+                                    ArrayList<Thread> threads = threadPaginatedList.getResponseData();
+                                    int size = threadPaginatedList.getResponseData().size();
+                                    for (int i = 0; i < size; i++) {
+                                        Thread thread = threads.get(i);
+                                        if (!thread.isClosed)
+                                            newThreads.add(thread);
+                                    }
+                                    PaginatedList<Thread> newList =
+                                            new PaginatedList<Thread>(threadPaginatedList.getCursor(),
+                                                    threadPaginatedList.getCode(), newThreads);
+                                    return Observable.just(newList);
+                                }
+                            });
+
             subscription = observable
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -251,46 +277,63 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
     private MaterialDialog.Builder getDialogBuilder() {
 
         boolean wrapInScrollView = true;
-        MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getActivity())
-                .backgroundColorRes(R.color.white)
-                .title("Create Thread")
-                .customView(R.layout.dialog_create_thread, wrapInScrollView)
-                .positiveText("Create")
-                .negativeText("Cancel")
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        String title = dialogViewHolder.titleEditText.getText().toString();
-                        String message = dialogViewHolder.messageEditText.getText().toString();
-                        Map<String, String> extras = new UrlUtils.MapBuilder()
-                                .add("category", String.valueOf(category.id))
-                                .add("message", message)
-                                .build();
+        MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getActivity());
+        dialogBuilder.backgroundColorRes(R.color.white);
+        dialogBuilder.title("Create Thread");
+        dialogBuilder.customView(R.layout.dialog_create_thread, wrapInScrollView);
+        dialogBuilder.positiveText("Create");
+        dialogBuilder.negativeText("Cancel");
+        dialogBuilder.callback(new MaterialDialog.ButtonCallback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
+                String title = dialogViewHolder.titleEditText.getText().toString();
+                String message = dialogViewHolder.messageEditText.getText().toString();
+                Map<String, String> extras = new UrlUtils.MapBuilder()
+                        .add("message", message)
+                        .build();
 
-                        Observable<ResponseItem<Thread>> observable =
-                                threadsService.create(BuildConfig.FORUM_SHORTNAME, title, extras);
-                        createThreadSubscription = observable.observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new CreateThreadObserver());
+                Observable<ResponseItem<Thread>> observable =
+                        threadsService.create(BuildConfig.FORUM_SHORTNAME, title, extras)
+                                .flatMap(new Func1<ResponseItem<AuthorlessThread>, Observable<ResponseItem<AuthorlessThread>>>() {
+                                    @Override
+                                    public Observable<ResponseItem<AuthorlessThread>> call(ResponseItem<AuthorlessThread> threadResponseItem) {
+                                        AuthorlessThread authorlessThread = threadResponseItem.getResponse();
 
-                    }
+                                        return threadsService.update(String.valueOf(authorlessThread.id),
+                                                String.valueOf(category.id),
+                                                null);
+                                    }
+                                }).flatMap(new Func1<ResponseItem<AuthorlessThread>, Observable<ResponseItem<Thread>>>() {
+                            @Override
+                            public Observable<ResponseItem<Thread>> call(ResponseItem<AuthorlessThread> authorlessThreadResponseItem) {
+                                AuthorlessThread authorlessThread = authorlessThreadResponseItem.getResponse();
+                                return threadsService.details(authorlessThread.id,
+                                        BuildConfig.FORUM_SHORTNAME, UrlUtils.author());
+                            }
+                        });
 
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        super.onNegative(dialog);
-                    }
-                })
-                .cancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        dialogInstance = null;
-                    }
-                })
-                .dismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        dialogInstance = null;
-                    }
-                });
+                createThreadSubscription = observable.observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new CreateThreadObserver());
+
+            }
+
+            @Override
+            public void onNegative(MaterialDialog dialog) {
+                super.onNegative(dialog);
+            }
+        });
+        dialogBuilder.cancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                dialogInstance = null;
+            }
+        });
+        dialogBuilder.dismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                dialogInstance = null;
+            }
+        });
 
         return dialogBuilder;
     }
@@ -394,8 +437,17 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
 
         @Override
         public void onNext(ResponseItem<Thread> threadResponseItem) {
-            threadsAdapter.addItem(threadResponseItem.getResponse());
+            Thread thread = threadResponseItem.getResponse();
+            threadsAdapter.addItem(thread);
             threadsAdapter.notifyDataSetChanged();
+            ParsePush.subscribeInBackground(DisqusUtils.getChannelName(thread), new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Timber.d(Log.getStackTraceString(e));
+                    }
+                }
+            });
         }
     }
 

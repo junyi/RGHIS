@@ -13,6 +13,8 @@ public class User extends ParseUser {
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_EMAIL = "email";
 
+    private ParseUser delegatedUser;
+
     public User() {
         super();
     }
@@ -23,32 +25,64 @@ public class User extends ParseUser {
         return user;
     }
 
+    public static User delegatedUser(ParseUser delegatedUser) {
+        User user = new User();
+        user.delegatedUser = delegatedUser;
+        return user;
+    }
+
     public void setFirstName(String firstName) {
-        put(KEY_FIRST_NAME, firstName);
+        if (delegatedUser == null)
+            put(KEY_FIRST_NAME, firstName);
+        else
+            delegatedUser.put(KEY_FIRST_NAME, firstName);
     }
 
     public void setLastName(String lastName) {
-        put(KEY_LAST_NAME, lastName);
+        if (delegatedUser == null)
+            put(KEY_LAST_NAME, lastName);
+        else
+            delegatedUser.put(KEY_LAST_NAME, lastName);
     }
 
     private void setRole(String role) {
-        put(KEY_ROLE, role);
+        if (delegatedUser == null)
+            put(KEY_ROLE, role);
+        else
+            delegatedUser.put(KEY_ROLE, role);
     }
 
     public String getFirstName() {
-        return getString(KEY_FIRST_NAME);
+        if (delegatedUser == null)
+            return getString(KEY_FIRST_NAME);
+        else
+            return delegatedUser.getString(KEY_FIRST_NAME);
     }
 
     public String getLastName() {
-        return getString(KEY_LAST_NAME);
+        if (delegatedUser == null)
+            return getString(KEY_LAST_NAME);
+        else
+            return delegatedUser.getString(KEY_LAST_NAME);
     }
 
     public String getRole() {
-        return getString(KEY_ROLE);
+        if (delegatedUser == null)
+            return getString(KEY_ROLE);
+        else
+            return delegatedUser.getString(KEY_ROLE);
+    }
+
+    @Override
+    public String getUsername() {
+        if (delegatedUser == null)
+            return super.getUsername();
+        else
+            return delegatedUser.getUsername();
     }
 
     public static User wrap(ParseUser parseUser) {
-        return (User) parseUser;
+        return delegatedUser(parseUser);
     }
 
 }
