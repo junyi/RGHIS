@@ -41,6 +41,7 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.utils.Utils;
+import com.parse.ParseUser;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -377,8 +378,8 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
 
     private void updateHeaderView() {
         if (UserManager.isLoggedIn()) {
-            User currentUser = UserManager.getCurrentUser();
-            String name = currentUser.getFirstName() + " " + currentUser.getLastName();
+            ParseUser currentUser = UserManager.getCurrentUser();
+            String name = currentUser.getString(User.KEY_FIRST_NAME) + " " + currentUser.getString(User.KEY_LAST_NAME);
             String username = "@" + currentUser.getUsername();
             nameTextView.setText(name);
             usernameTextView.setVisibility(View.VISIBLE);

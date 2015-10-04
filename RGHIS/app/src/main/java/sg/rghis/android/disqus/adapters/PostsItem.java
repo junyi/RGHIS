@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.jakewharton.rxbinding.widget.RxTextView;
+import com.parse.ParseUser;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -35,7 +36,6 @@ import sg.rghis.android.disqus.models.Post;
 import sg.rghis.android.disqus.models.ResponseItem;
 import sg.rghis.android.disqus.models.VoteResponseItem;
 import sg.rghis.android.disqus.services.PostsService;
-import sg.rghis.android.models.User;
 import sg.rghis.android.utils.SystemUtils;
 import sg.rghis.android.utils.UserManager;
 import timber.log.Timber;
@@ -129,7 +129,7 @@ public class PostsItem extends RecyclerView.ViewHolder implements ViewHolderItem
             }
         });
 
-        User user = UserManager.getCurrentUser();
+        ParseUser user = UserManager.getCurrentUser();
         if (UserManager.isLoggedIn() && user.getUsername().equals(post.getAuthor().getName())) {
             menuFrame.setVisibility(View.VISIBLE);
             menuFrame.setOnClickListener(new View.OnClickListener() {

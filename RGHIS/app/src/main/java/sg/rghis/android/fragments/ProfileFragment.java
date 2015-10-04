@@ -101,10 +101,10 @@ public class ProfileFragment extends BaseFragment implements Validator.Validatio
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        User user = UserManager.getCurrentUser();
-        nameView.setText(user.getFirstName() + " " + user.getLastName());
-        firstNameView.setText(user.getFirstName());
-        lastNameView.setText(user.getLastName());
+        ParseUser user = UserManager.getCurrentUser();
+        nameView.setText(user.getString(User.KEY_FIRST_NAME) + " " + user.getString(User.KEY_LAST_NAME));
+        firstNameView.setText(user.getString(User.KEY_FIRST_NAME));
+        lastNameView.setText(user.getString(User.KEY_LAST_NAME));
         emailView.setText(user.getEmail());
         usernameView.setText(user.getUsername());
     }
@@ -150,8 +150,8 @@ public class ProfileFragment extends BaseFragment implements Validator.Validatio
     }
 
     private void updateNameView() {
-        User user = UserManager.getCurrentUser();
-        nameView.setText(user.getFirstName() + " " + user.getLastName());
+        ParseUser user = UserManager.getCurrentUser();
+        nameView.setText(user.getString(User.KEY_FIRST_NAME) + " " + user.getString(User.KEY_LAST_NAME));
     }
 
     private void showEditDialog(final TextView view, final String field, String titlePostFix) {
@@ -172,7 +172,7 @@ public class ProfileFragment extends BaseFragment implements Validator.Validatio
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        User currentUser = UserManager.getCurrentUser();
+                        ParseUser currentUser = UserManager.getCurrentUser();
                         final String value = dialog.getInputEditText().getText().toString();
                         if (field.equals(User.KEY_EMAIL)) {
                             currentUser.setEmail(value);
@@ -220,7 +220,7 @@ public class ProfileFragment extends BaseFragment implements Validator.Validatio
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        final User currentUser = UserManager.getCurrentUser();
+                        final ParseUser currentUser = UserManager.getCurrentUser();
                         String oldPw = dialogViewHolder.oldPwEditText.getText().toString();
                         final String newPw = dialogViewHolder.newPwEditText.getText().toString();
                         ParseUser.logInInBackground(currentUser.getUsername(), oldPw, new LogInCallback() {
