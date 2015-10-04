@@ -68,4 +68,9 @@ public class NewsFragment extends BaseMasterDetailFragment {
 //        openDetailPane();
     }
 
+    @Override
+    public void closeDetailPane() {
+        detailFragment.stopLoading();
+        super.closeDetailPane();
+    }
 }

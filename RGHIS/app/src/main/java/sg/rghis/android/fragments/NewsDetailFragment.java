@@ -82,15 +82,11 @@ public class NewsDetailFragment extends Fragment {
             showProgressBar();
         }
 
-        if (!isLargeLayout)
-            setToolbarTitle("");
     }
 
     public void loadUrl(String url) {
         this.url = url;
         if (webView != null) {
-            if (getView() != null && !isLargeLayout)
-                setToolbarTitle("");
             hideProgressBar();
             webView.loadUrl("about:blank");
             webView.loadUrl(url);
@@ -100,20 +96,17 @@ public class NewsDetailFragment extends Fragment {
 
     private void setToolbarTitle(CharSequence s) {
         MainActivity activity = SystemUtils.getMainActivityFromContext(getContext());
-        if (activity != null)
-            activity.setToolbarTitle(s);
+        activity.getMainFragment().setToolbarTitle(s);
     }
 
     private void hideProgressBar() {
         MainActivity activity = SystemUtils.getMainActivityFromContext(getContext());
-        if (activity != null)
-            activity.hideProgressBar();
+        activity.getMainFragment().hideProgressBar();
     }
 
     private void showProgressBar() {
         MainActivity activity = SystemUtils.getMainActivityFromContext(getContext());
-        if (activity != null)
-            activity.showProgressBar();
+        activity.getMainFragment().showProgressBar();
     }
 
     @OnClick(R.id.fab)
@@ -123,6 +116,12 @@ public class NewsDetailFragment extends Fragment {
         }
         Intent openUrlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(openUrlIntent);
+    }
+
+    public void stopLoading() {
+        if (webView != null) {
+            webView.stopLoading();
+        }
     }
 
 }

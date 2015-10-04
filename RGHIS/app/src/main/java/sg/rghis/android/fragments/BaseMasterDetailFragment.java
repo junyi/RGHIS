@@ -38,7 +38,7 @@ public abstract class BaseMasterDetailFragment extends BaseFragment {
 
     public void setDetailFragment(Fragment f) {
         if (!isLargeLayout) {
-            ((MainActivity) getContext()).setDetailFragment(f);
+            ((MainActivity) getContext()).getMainFragment().setDetailFragment(f);
         } else {
             getChildFragmentManager()
                     .beginTransaction()
@@ -48,7 +48,7 @@ public abstract class BaseMasterDetailFragment extends BaseFragment {
     }
 
     public void showDetailFragment() {
-        ((MainActivity) getContext()).showDetailFragment();
+        ((MainActivity) getContext()).getMainFragment().showDetailFragment();
     }
 
     public void closeDetailPane() {

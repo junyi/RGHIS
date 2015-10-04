@@ -4,7 +4,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Log;
@@ -28,6 +27,7 @@ import sg.rghis.android.disqus.adapters.CategoriesAdapter;
 import sg.rghis.android.disqus.models.Category;
 import sg.rghis.android.disqus.models.PaginatedList;
 import sg.rghis.android.disqus.services.CategoriesService;
+import sg.rghis.android.views.MainActivity;
 import sg.rghis.android.views.RecyclerItemClickListener;
 import sg.rghis.android.views.widgets.AutofitRecyclerView;
 import sg.rghis.android.views.widgets.RoundedLetterView;
@@ -124,10 +124,17 @@ public class CategoriesFragment extends BaseDisqusFragment {
             ft.addSharedElement(avatar, avatar.getTransitionName());
         }
 
-        ft.replace(R.id.content, f);
+        ft.replace(R.id.detail_content, f);
         ft.addToBackStack(null);
         ft.commit();
+        showDetailFragment();
+
     }
+
+    private void showDetailFragment() {
+        ((MainActivity) getContext()).getMainFragment().showDetailFragment(true);
+    }
+
 
     private class GetCategoriesObserver implements Observer<PaginatedList<Category>> {
         @Override

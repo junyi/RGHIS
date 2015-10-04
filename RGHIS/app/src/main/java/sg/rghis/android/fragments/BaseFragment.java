@@ -28,11 +28,11 @@ public abstract class BaseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         MainActivity activity = SystemUtils.getMainActivityFromContext(getContext());
         if (activity != null)
-            activity.onViewReady(this);
+            activity.getMainFragment().onViewReady(this);
     }
 
-    protected void navigateToState(@MainActivity.FragmentState int state, Bundle bundle, boolean addToBackStack) {
-        ((MainActivity) getActivity()).navigateToState(state, bundle, addToBackStack);
+    protected void navigateToState(@MainFragment.FragmentState int state, Bundle bundle, boolean addToBackStack) {
+        ((MainActivity) getActivity()).getMainFragment().navigateToState(state, bundle, addToBackStack);
     }
 
     public boolean onBackPressed() {
@@ -52,14 +52,14 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void showProgressBar() {
-        ((MainActivity) getContext()).showProgressBar();
+        ((MainActivity) getContext()).getMainFragment().showProgressBar();
     }
 
     public void hideProgressBar() {
-        ((MainActivity) getContext()).hideProgressBar();
+        ((MainActivity) getContext()).getMainFragment().hideProgressBar();
     }
 
     public void setToolbarTitle(CharSequence s) {
-        ((MainActivity) getContext()).setToolbarTitle(s);
+        ((MainActivity) getContext()).getMainFragment().setToolbarTitle(s);
     }
 }

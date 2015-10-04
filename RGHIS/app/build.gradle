@@ -94,4 +94,6 @@ dependencies {
     compile 'org.sufficientlysecure:html-textview:1.2'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'me.grantland:autofittextview:0.2.+'
+    compile 'de.greenrobot:eventbus:3.0.0-beta1'
+    provided 'de.greenrobot:eventbus-annotation-processor:3.0.0-beta1'
 }

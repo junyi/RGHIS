@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -90,6 +91,9 @@ public class SignupFragment extends BaseFragment implements Validator.Validation
     @Bind(R.id.sign_up_fields)
     View signUpFields;
 
+    @Bind(R.id.logo)
+    ImageView logo;
+
     private Validator validator;
     private int currentState = STATE_LOGIN;
 
@@ -130,6 +134,7 @@ public class SignupFragment extends BaseFragment implements Validator.Validation
 
     private void ensureLoginState() {
         signUpFields.setVisibility(View.GONE);
+        logo.setVisibility(View.VISIBLE);
         primaryButton.setText(loginButtonString);
         descTextView.setText(signUpDescString);
         setToolbarTitle("Login");
@@ -137,6 +142,7 @@ public class SignupFragment extends BaseFragment implements Validator.Validation
 
     private void ensureSignupState() {
         signUpFields.setVisibility(View.VISIBLE);
+        logo.setVisibility(View.GONE);
         primaryButton.setText(signUpButtonString);
         descTextView.setText(loginDescString);
         setToolbarTitle("Sign up");
@@ -175,6 +181,8 @@ public class SignupFragment extends BaseFragment implements Validator.Validation
         signUpButtonString = getResources().getString(R.string.signup);
         loginDescString = getResources().getString(R.string.login_desc);
         signUpDescString = getResources().getString(R.string.signup_desc);
+
+        ensureCurrentState();
     }
 
     @OnClick(R.id.link_login)
@@ -284,10 +292,9 @@ public class SignupFragment extends BaseFragment implements Validator.Validation
         Snackbar.make(getView(), String.format("Welcome %s", name),
                 Snackbar.LENGTH_SHORT).show();
         primaryButton.setEnabled(true);
-        navigateToState(MainActivity.STATE_NEWS, null, false);
+        navigateToState(MainFragment.STATE_NEWS, null, false);
         MainActivity activity = SystemUtils.getMainActivityFromContext(getContext());
-        if (activity != null)
-            activity.notifyLoginSuccess();
+        activity.getMainFragment().notifyLoginSuccess();
     }
 
     private void signupSuccess() {

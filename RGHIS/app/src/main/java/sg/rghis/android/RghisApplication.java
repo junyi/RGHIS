@@ -25,12 +25,11 @@ import sg.rghis.android.models.User;
 import sg.rghis.android.rss.RssProvider;
 import sg.rghis.android.utils.Foreground;
 import timber.log.Timber;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class RghisApplication extends Application implements Foreground.CurrentActivityCallback {
     private static final String KEY_DATABASE_VERSION = "version";
     private DisqusSdkProvider disqusSdkProvider;
-    private RssProvider hpbRssProvider;
+    private RssProvider rssProvider;
     private Activity currentActivity;
 
     @Override
@@ -64,15 +63,15 @@ public class RghisApplication extends Application implements Foreground.CurrentA
                 .setContext(getApplicationContext())
                 .build();
 
-        hpbRssProvider = new RssProvider.Builder()
+        rssProvider = new RssProvider.Builder()
                 .setContext(getApplicationContext())
                 .build();
 
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-//                        .setDefaultFontPath("fonts/ClearSans-Regular.ttf")
-                        .setFontAttrId(R.attr.fontPath)
-                        .build()
-        );
+//        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+////                        .setDefaultFontPath("fonts/ClearSans-Regular.ttf")
+//                        .setFontAttrId(R.attr.fontPath)
+//                        .build()
+//        );
 
         Foreground.init(this);
     }

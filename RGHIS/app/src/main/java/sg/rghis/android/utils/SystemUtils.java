@@ -131,7 +131,7 @@ public class SystemUtils {
     public static boolean promptLoginIfNecessary(Context context) {
         MainActivity activity = getMainActivityFromContext(context);
         if (activity != null) {
-            return activity.promptLogin();
+            return activity.getMainFragment().promptLogin();
         }
         return !UserManager.isLoggedIn();
     }
