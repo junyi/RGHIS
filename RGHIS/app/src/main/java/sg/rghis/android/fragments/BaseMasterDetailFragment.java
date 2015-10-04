@@ -6,7 +6,6 @@ import android.view.View;
 
 import de.greenrobot.event.EventBus;
 import sg.rghis.android.R;
-import sg.rghis.android.events.SetDetailFragmentEvent;
 import sg.rghis.android.events.ShowDetailFragmentEvent;
 import sg.rghis.android.views.widgets.RGSlidingPaneLayout;
 
@@ -40,7 +39,11 @@ public abstract class BaseMasterDetailFragment extends BaseFragment {
 
     public void setDetailFragment(Fragment f) {
         if (!isLargeLayout) {
-            EventBus.getDefault().post(new SetDetailFragmentEvent(f));
+//            EventBus.getDefault().post(new SetDetailFragmentEvent(f));
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.detail_content, f)
+                    .commit();
         } else {
             getChildFragmentManager()
                     .beginTransaction()

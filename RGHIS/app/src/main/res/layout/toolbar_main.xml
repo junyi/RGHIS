@@ -45,7 +45,8 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:padding="12dp"
-                    android:src="@drawable/ic_search_white_24dp" />
+                    android:src="@drawable/ic_search_white_24dp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <ProgressBar
