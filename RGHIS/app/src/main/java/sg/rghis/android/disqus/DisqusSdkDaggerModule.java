@@ -14,6 +14,7 @@ import retrofit.RxJavaCallAdapterFactory;
 import sg.rghis.android.disqus.adapters.CategoriesAdapter;
 import sg.rghis.android.disqus.adapters.CategoriesItem;
 import sg.rghis.android.disqus.adapters.PostsAdapter;
+import sg.rghis.android.disqus.adapters.PostsHeaderItem;
 import sg.rghis.android.disqus.adapters.PostsItem;
 import sg.rghis.android.disqus.adapters.ThreadsAdapter;
 import sg.rghis.android.disqus.adapters.ThreadsItem;
@@ -39,6 +40,7 @@ import sg.rghis.android.fragments.ThreadsFragment;
                 PostListFragment.class,
                 PostsAdapter.class,
                 PostsItem.class,
+                PostsHeaderItem.class,
         }
 )
 public class DisqusSdkDaggerModule {

@@ -77,7 +77,7 @@ public class DisqusUtils {
         return toHexString(mac.doFinal(data.getBytes()));
     }
 
-    public static String getChannelName(Thread thread) {
-        return "thread_" + String.valueOf(thread.id);
+    public static String getChannelName(long threadId) {
+        return "thread_" + String.valueOf(threadId);
     }
 }

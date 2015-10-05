@@ -293,10 +293,10 @@ public class PostListFragment extends BaseDisqusFragment implements Validator.Va
             postsAdapter.notifyDataSetChanged();
             recyclerView.smoothScrollToPosition(1);
             String username = UserManager.getCurrentUser().getUsername();
-            String message = String.format("%s just replied to your thread named %s",
-                    username, ellipsize(thread.title));
+            String message = String.format("@%s just replied to a thread you subscribed to.",
+                    username);
             ParsePush push = new ParsePush();
-            push.setChannel(DisqusUtils.getChannelName(thread));
+            push.setChannel(DisqusUtils.getChannelName(thread.id));
             push.setMessage(message);
             push.sendInBackground(new SendCallback() {
                 @Override

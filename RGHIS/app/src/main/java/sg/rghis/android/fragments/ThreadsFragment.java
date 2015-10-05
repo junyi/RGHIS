@@ -440,7 +440,7 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
             Thread thread = threadResponseItem.getResponse();
             threadsAdapter.addItem(thread);
             threadsAdapter.notifyDataSetChanged();
-            ParsePush.subscribeInBackground(DisqusUtils.getChannelName(thread), new SaveCallback() {
+            ParsePush.subscribeInBackground(DisqusUtils.getChannelName(thread.id), new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
                     if (e != null) {

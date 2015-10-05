@@ -2,6 +2,7 @@ package sg.rghis.android.disqus.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -9,12 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.jakewharton.rxbinding.widget.RxTextView;
+import com.parse.ParseException;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +42,7 @@ import sg.rghis.android.disqus.models.Post;
 import sg.rghis.android.disqus.models.ResponseItem;
 import sg.rghis.android.disqus.models.VoteResponseItem;
 import sg.rghis.android.disqus.services.PostsService;
+import sg.rghis.android.utils.DisqusUtils;
 import sg.rghis.android.utils.SystemUtils;
 import sg.rghis.android.utils.UserManager;
 import timber.log.Timber;
@@ -130,14 +137,16 @@ public class PostsItem extends RecyclerView.ViewHolder implements ViewHolderItem
         });
 
         ParseUser user = UserManager.getCurrentUser();
-        if (UserManager.isLoggedIn() && user.getUsername().equals(post.getAuthor().getName())) {
-            menuFrame.setVisibility(View.VISIBLE);
-            menuFrame.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showMenu(post);
-                }
-            });
+        if (UserManager.isLoggedIn()) {
+            if (user.getUsername().equals(post.getAuthor().getName())) {
+                menuFrame.setVisibility(View.VISIBLE);
+                menuFrame.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showMenu(post);
+                    }
+                });
+            }
         } else {
             menuFrame.setVisibility(View.GONE);
         }
