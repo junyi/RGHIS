@@ -54,18 +54,12 @@ public class NewsFragment extends BaseMasterDetailFragment {
                 .commit();
         detailFragment = NewsDetailFragment.newInstance(isLargeLayout, null);
         setDetailFragment(detailFragment);
-//        getChildFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.right_container, detailFragment)
-//                .commit();
-
     }
 
     public void loadDetail(String url) {
         detailFragment.loadUrl(url);
         if (!isLargeLayout)
             showDetailFragment();
-//        openDetailPane();
     }
 
     @Override

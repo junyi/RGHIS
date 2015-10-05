@@ -776,6 +776,7 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
         anim.setInterpolator(new DecelerateInterpolator());
         anim.setDuration(500);
         anim.start();
+        searchButton.setVisibility(View.GONE);
         isDetailShowing = true;
     }
 
@@ -793,6 +794,7 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
         anim.start();
         isDetailShowing = false;
         updateCurrentTitle();
+        refreshSearchView(getCurrentFragment());
     }
 
     public void showProgressBar() {

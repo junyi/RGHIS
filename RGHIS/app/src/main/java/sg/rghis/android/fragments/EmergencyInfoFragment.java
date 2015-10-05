@@ -1,25 +1,16 @@
 package sg.rghis.android.fragments;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
 import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.MaterialScrollBar;
-
-import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,8 +18,6 @@ import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
 import sg.rghis.android.R;
 import sg.rghis.android.models.EmergencyTopic;
 import sg.rghis.android.views.RecyclerItemClickListener;
@@ -80,30 +69,11 @@ public class EmergencyInfoFragment extends BaseMasterDetailFragment {
         super.onViewCreated(view, savedInstanceState);
 
         detailFragment = EmergencyInfoDetailFragment.newInstance(isLargeLayout);
-        getChildFragmentManager()
-                .beginTransaction()
-                .replace(R.id.right_container, detailFragment)
-                .commit();
-
-//        toolbar.inflateMenu(R.menu.menu_emergency_info_list);
-//        final MenuItem searchMenuItem = toolbar.getMenu().findItem(R.id.action_search);
-//        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(
-//                searchMenuItem);
-//        SearchManager searchManager = (SearchManager) getContext().getSystemService(
-//                Context.SEARCH_SERVICE);
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(
-//                getActivity().getComponentName()));
-//        searchSubscription = RxSearchView.queryTextChanges(searchView)
-//                .debounce(200, TimeUnit.MILLISECONDS)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(getSearchObserver());
-//        toolbar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Open search when toolbar is clicked
-//                MenuItemCompat.expandActionView(searchMenuItem);
-//            }
-//        });
+        setDetailFragment(detailFragment);
+//        getChildFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.right_container, detailFragment)
+//                .commit();
 
         realm = Realm.getDefaultInstance();
 
@@ -120,9 +90,11 @@ public class EmergencyInfoFragment extends BaseMasterDetailFragment {
                     public void onItemClick(View view, int position) {
                         EmergencyTopic emergencyTopic = adapter.getItem(position);
                         detailFragment.bindData(emergencyTopic);
-                        if (!isLargeLayout && slidingPaneLayout != null) {
-                            slidingPaneLayout.closePane();
-                        }
+//                        if (!isLargeLayout && slidingPaneLayout != null) {
+//                            slidingPaneLayout.closePane();
+//                        }
+                        if (!isLargeLayout)
+                            showDetailFragment();
                         detailFragment.resetView();
                     }
                 }));

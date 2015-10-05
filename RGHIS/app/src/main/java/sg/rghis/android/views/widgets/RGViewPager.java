@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
-import timber.log.Timber;
-
 public class RGViewPager extends ViewPager {
     ViewConfiguration vc = ViewConfiguration.get(getContext());
     private int mSlop = vc.getScaledTouchSlop();
@@ -29,7 +27,6 @@ public class RGViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Timber.d(ev.toString());
         /*
          * This method JUST determines whether we want to intercept the motion.
          * If we return true, onTouchEvent will be called and we do the actual

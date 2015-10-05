@@ -70,30 +70,11 @@ public class HealthInfoFragment extends BaseMasterDetailFragment {
         super.onViewCreated(view, savedInstanceState);
 
         detailFragment = HealthInfoDetailFragment.newInstance(isLargeLayout);
-        getChildFragmentManager()
-                .beginTransaction()
-                .replace(R.id.right_container, detailFragment)
-                .commit();
-
-//        toolbar.inflateMenu(R.menu.menu_health_info_list);
-//        final MenuItem searchMenuItem = toolbar.getMenu().findItem(R.id.action_search);
-//        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(
-//                searchMenuItem);
-//        SearchManager searchManager = (SearchManager) getContext().getSystemService(
-//                Context.SEARCH_SERVICE);
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(
-//                getActivity().getComponentName()));
-//        searchSubscription = RxSearchView.queryTextChanges(searchView)
-//                .debounce(200, TimeUnit.MILLISECONDS)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(getSearchObserver());
-//        toolbar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Open search when toolbar is clicked
-//                MenuItemCompat.expandActionView(searchMenuItem);
-//            }
-//        });
+        setDetailFragment(detailFragment);
+//        getChildFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.right_container, detailFragment)
+//                .commit();
 
         realm = Realm.getDefaultInstance();
 
@@ -110,9 +91,11 @@ public class HealthInfoFragment extends BaseMasterDetailFragment {
                     public void onItemClick(View view, int position) {
                         HealthTopic healthTopic = adapter.getItem(position);
                         detailFragment.bindData(healthTopic);
-                        if (!isLargeLayout && slidingPaneLayout != null) {
-                            slidingPaneLayout.closePane();
-                        }
+                        if (!isLargeLayout)
+                            showDetailFragment();
+//                        if (!isLargeLayout && slidingPaneLayout != null) {
+//                            slidingPaneLayout.closePane();
+//                        }
                         detailFragment.resetView();
                     }
                 }));
