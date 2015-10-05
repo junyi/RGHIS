@@ -3,11 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <include
-        layout="@layout/toolbar_main"/>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/toolbar_main" />
+    </android.support.design.widget.AppBarLayout>
 
     <ViewSwitcher
         android:id="@+id/view_switcher"

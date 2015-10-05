@@ -69,6 +69,21 @@
                 android:textColor="@color/black"
                 tools:text="\@junyihjy" />
 
+            <TextView
+                android:id="@+id/professional_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/rounded_rect"
+                android:paddingBottom="3dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="3dp"
+                android:text="@string/health_pro"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:visibility="gone" />
+
             <com.mikepenz.iconics.view.IconicsTextView
                 android:id="@+id/num_likes"
                 android:layout_width="wrap_content"

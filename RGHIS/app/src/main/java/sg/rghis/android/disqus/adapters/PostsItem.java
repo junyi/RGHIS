@@ -2,25 +2,20 @@ package sg.rghis.android.disqus.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.jakewharton.rxbinding.widget.RxTextView;
-import com.parse.ParseException;
-import com.parse.ParsePush;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -42,6 +37,7 @@ import sg.rghis.android.disqus.models.Post;
 import sg.rghis.android.disqus.models.ResponseItem;
 import sg.rghis.android.disqus.models.VoteResponseItem;
 import sg.rghis.android.disqus.services.PostsService;
+import sg.rghis.android.models.User;
 import sg.rghis.android.utils.DisqusUtils;
 import sg.rghis.android.utils.SystemUtils;
 import sg.rghis.android.utils.UserManager;
@@ -74,6 +70,9 @@ public class PostsItem extends RecyclerView.ViewHolder implements ViewHolderItem
 
     @Bind(R.id.post_menu)
     View menuFrame;
+
+    @Bind(R.id.professional_label)
+    View professionalLabel;
 
     interface PostHandler {
         void onVoteResult(Post post, int voteDelta, int position);
@@ -116,11 +115,18 @@ public class PostsItem extends RecyclerView.ViewHolder implements ViewHolderItem
     public void onBindViewHolder(Object data) {
         final Post post = (Post) data;
         position = getAdapterPosition();
+        Pair<String, String> nameRole = DisqusUtils.disqusNameToParse(post.getAuthor().getName());
 
         messageTextView.setText(post.getRawMessage());
-        authorTextView.setText(post.getAuthor().getName());
+        authorTextView.setText(nameRole.first);
         timeAgoTextView.setText(buildTimeAgo(post.getCreatedDate()));
         numLikesTextView.setText(String.valueOf(post.getLikes()));
+
+        if (nameRole.second.equals(User.ROLE_HEALTH_PROFESSIONAL)) {
+            professionalLabel.setVisibility(View.VISIBLE);
+        } else {
+            professionalLabel.setVisibility(View.GONE);
+        }
 
         upVoteFrame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +144,7 @@ public class PostsItem extends RecyclerView.ViewHolder implements ViewHolderItem
 
         ParseUser user = UserManager.getCurrentUser();
         if (UserManager.isLoggedIn()) {
-            if (user.getUsername().equals(post.getAuthor().getName())) {
+            if (user.getUsername().equals(nameRole.first)) {
                 menuFrame.setVisibility(View.VISIBLE);
                 menuFrame.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -150,6 +156,7 @@ public class PostsItem extends RecyclerView.ViewHolder implements ViewHolderItem
         } else {
             menuFrame.setVisibility(View.GONE);
         }
+
     }
 
     private void upVote(Post post) {

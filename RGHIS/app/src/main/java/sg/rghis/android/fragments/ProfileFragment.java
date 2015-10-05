@@ -53,6 +53,8 @@ public class ProfileFragment extends BaseFragment implements Validator.Validatio
     TextView emailView;
     @Bind(R.id.password)
     TextView passwordView;
+    @Bind(R.id.professional_label)
+    TextView professionalLabel;
 
     private MaterialDialog dialogInstance;
     private ProgressDialog progressDialog;
@@ -107,6 +109,11 @@ public class ProfileFragment extends BaseFragment implements Validator.Validatio
         lastNameView.setText(user.getString(User.KEY_LAST_NAME));
         emailView.setText(user.getEmail());
         usernameView.setText(user.getUsername());
+        if (UserManager.isUserProfessional()) {
+            professionalLabel.setVisibility(View.VISIBLE);
+        } else {
+            professionalLabel.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.edit_first_name)

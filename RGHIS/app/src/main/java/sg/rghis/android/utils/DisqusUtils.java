@@ -1,8 +1,10 @@
 package sg.rghis.android.utils;
 
 import android.util.Log;
+import android.util.Pair;
 
 import com.google.gson.Gson;
+import com.parse.ParseUser;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -16,7 +18,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import sg.rghis.android.BuildConfig;
-import sg.rghis.android.disqus.models.Thread;
+import sg.rghis.android.models.User;
 import timber.log.Timber;
 
 public class DisqusUtils {
@@ -79,5 +81,17 @@ public class DisqusUtils {
 
     public static String getChannelName(long threadId) {
         return "thread_" + String.valueOf(threadId);
+    }
+
+    public static Pair<String, String> disqusNameToParse(String name) {
+        String[] splitted = name.split("@@");
+        if (splitted.length == 2)
+            return Pair.create(splitted[0], splitted[1]);
+        else
+            return Pair.create(name, User.ROLE_CONSUMER);
+    }
+
+    public static String parseUsernameToDisqus(ParseUser user) {
+        return user.getUsername() + "@@" + user.getString(User.KEY_ROLE);
     }
 }

@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import sg.rghis.android.models.User;
+
 public class UserManager {
     public static boolean isLoggedIn() {
         return ParseUser.getCurrentUser() != null;
@@ -21,6 +23,14 @@ public class UserManager {
         if (subscribedChannels != null) {
             Set<String> channelSet = new HashSet<>(subscribedChannels);
             return channelSet.contains(channel);
+        }
+        return false;
+    }
+
+    public static boolean isUserProfessional() {
+        if (getCurrentUser() != null) {
+            String role = getCurrentUser().getString(User.KEY_ROLE);
+            return role.equals(User.ROLE_HEALTH_PROFESSIONAL);
         }
         return false;
     }

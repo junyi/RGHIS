@@ -628,14 +628,14 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
             currentState = STATE_SIGNUP;
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if (isDetailShowing) {
-//            hideDetailFragment();
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
+    public boolean onBackPressed() {
+        if (isDetailShowing) {
+            hideDetailFragment();
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public void internalSetToolbarTitle(CharSequence title) {
         toolbarTitleView.setText(title);
@@ -815,4 +815,5 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
             }
         }
     }
+
 }

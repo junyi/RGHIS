@@ -80,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if (mainFragment != null && mainFragment.isVisible()) {
+            if (mainFragment.onBackPressed())
+                return;
+        }
         super.onBackPressed();
     }
 }

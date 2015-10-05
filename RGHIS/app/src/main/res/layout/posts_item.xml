@@ -26,7 +26,8 @@
         android:layout_marginRight="@dimen/eight"
         android:layout_marginTop="6dp"
         android:layout_toEndOf="@id/img_avatar"
-        android:layout_toRightOf="@id/img_avatar">
+        android:layout_toRightOf="@id/img_avatar"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/txt_user_name"
@@ -35,6 +36,21 @@
             android:textColor="@color/blue_500"
             android:textSize="@dimen/text_support"
             tools:text="Ubermensch" />
+
+        <TextView
+            android:id="@+id/professional_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/rounded_rect"
+            android:paddingBottom="3dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="3dp"
+            android:text="@string/health_pro"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:visibility="gone" />
 
         <!--TODO add reply image-->
         <ImageView
