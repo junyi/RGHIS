@@ -48,6 +48,7 @@
     <string name="profile">Profile</string>
     <string name="sign_out">Sign out</string>
     <string name="by">by</string>
+    <string name="search_hint">Search</string>
 
     <array name="post_item_menu">
         <item>Edit post</item>
