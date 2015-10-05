@@ -805,5 +805,14 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
         progressBar.setVisibility(View.GONE);
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isVisible()) {
+            if (Build.VERSION.SDK_INT >= 21) {
+                getActivity().getWindow().setStatusBarColor(SystemUtils.getColorAttr(getContext(),
+                        android.R.attr.colorPrimaryDark));
+            }
+        }
+    }
 }

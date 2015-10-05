@@ -86,6 +86,17 @@ public class SystemUtils {
         return dimen;
     }
 
+    public static int getColorAttr(Context context, @AttrRes int attrResId) {
+        TypedValue typedValue = new TypedValue();
+
+        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[]{attrResId});
+        int color = a.getColor(0, 0);
+
+        a.recycle();
+
+        return color;
+    }
+
     public static void hideKeyboard(Activity activity) {
         // Check if no view has focus:
         View view = activity.getCurrentFocus();

@@ -222,9 +222,14 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
 
         int colorRes = ColorUtils.getColorGenerator().getColor(category.title);
         int color = ContextCompat.getColor(getContext(), colorRes);
+        int bgColor = ColorUtils.combineColors(0.4f, color, 0x000000);
         avatarView.setInitials(String.valueOf(category.title.charAt(0)));
         avatarView.setBackgroundColor(color);
-        appBarLayout.setBackgroundColor(ColorUtils.combineColors(0.4f, color, 0x000000));
+        appBarLayout.setBackgroundColor(bgColor);
+        if (Build.VERSION.SDK_INT >= 21) {
+            int darkerColor = ColorUtils.darker(bgColor, 1.3f);
+            getActivity().getWindow().setStatusBarColor(darkerColor);
+        }
 
     }
 

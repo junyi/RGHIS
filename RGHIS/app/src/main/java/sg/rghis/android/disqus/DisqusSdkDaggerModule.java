@@ -19,7 +19,6 @@ import sg.rghis.android.disqus.adapters.PostsItem;
 import sg.rghis.android.disqus.adapters.ThreadsAdapter;
 import sg.rghis.android.disqus.adapters.ThreadsItem;
 import sg.rghis.android.disqus.interceptors.ApiKeyRequestInterceptor;
-import sg.rghis.android.disqus.interceptors.LoggingInterceptor;
 import sg.rghis.android.disqus.json.GsonFactory;
 import sg.rghis.android.disqus.services.CategoriesService;
 import sg.rghis.android.disqus.services.PostsService;
@@ -67,7 +66,7 @@ public class DisqusSdkDaggerModule {
     @Singleton
     OkHttpClient providesOkHttpClient() {
         OkHttpClient client = new OkHttpClient();
-        client.interceptors().add(new LoggingInterceptor());
+//        client.interceptors().add(new LoggingInterceptor());
         client.networkInterceptors().add(new ApiKeyRequestInterceptor());
         return client;
     }
