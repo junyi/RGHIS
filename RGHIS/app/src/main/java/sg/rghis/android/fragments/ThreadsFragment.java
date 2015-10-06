@@ -175,6 +175,7 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
             subscription = observable
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .compose(this.<PaginatedList<Thread>>bindToLifecycle())
                     .subscribe(new GetThreadsObserver());
         }
     }
@@ -317,7 +318,9 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
                             }
                         });
 
-                createThreadSubscription = observable.observeOn(AndroidSchedulers.mainThread())
+                createThreadSubscription = observable
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .compose(ThreadsFragment.this.<ResponseItem<Thread>>bindToLifecycle())
                         .subscribe(new CreateThreadObserver());
 
             }
@@ -454,14 +457,5 @@ public class ThreadsFragment extends BaseDisqusFragment implements Validator.Val
                 }
             });
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (subscription != null)
-            subscription.unsubscribe();
-        if (createThreadSubscription != null)
-            createThreadSubscription.unsubscribe();
     }
 }

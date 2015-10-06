@@ -34,7 +34,6 @@ public class EmergencyInfoFragment extends BaseMasterDetailFragment {
 
     private Realm realm;
     private EmergencyTopicAdapter adapter;
-    //    private Subscription searchSubscription;
     private EmergencyInfoDetailFragment detailFragment;
 
     public static EmergencyInfoFragment newInstance() {

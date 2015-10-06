@@ -71,6 +71,7 @@ public class CategoriesFragment extends BaseDisqusFragment {
             subscription = observable
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .compose(this.<PaginatedList<Category>>bindToLifecycle())
                     .subscribe(new GetCategoriesObserver());
         }
     }
@@ -150,12 +151,5 @@ public class CategoriesFragment extends BaseDisqusFragment {
             categoriesAdapter.addList(categoryPaginatedList);
             categoriesAdapter.notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (subscription != null)
-            subscription.unsubscribe();
     }
 }

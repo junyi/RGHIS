@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.trello.rxlifecycle.components.support.RxFragment;
+
 import de.greenrobot.event.EventBus;
 import rx.Observer;
 import sg.rghis.android.events.NavigationEvent;
@@ -14,7 +16,7 @@ import sg.rghis.android.events.SetToolbarTitleEvent;
 import sg.rghis.android.utils.SystemUtils;
 import sg.rghis.android.views.MainActivity;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends RxFragment {
     public interface OnViewReadyListener {
         void onViewReady(BaseFragment fragment);
     }

@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.trello.rxlifecycle.components.support.RxFragment;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -32,7 +34,7 @@ import sg.rghis.android.views.RecyclerItemClickListener;
 import sg.rghis.android.views.widgets.DividerItemDecoration;
 import timber.log.Timber;
 
-public class NewsListFragment extends Fragment {
+public class NewsListFragment extends RxFragment {
     public static final String PREFIX_ADAPTER = ".NewsFragment.MyAdapter";
 
     @Inject
@@ -68,6 +70,7 @@ public class NewsListFragment extends Fragment {
         subscription = observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(this.<Rss>bindToLifecycle())
                 .subscribe(new GetRssObserver());
 
     }
@@ -119,12 +122,5 @@ public class NewsListFragment extends Fragment {
             newsAdapter.addList(rss.getChannel().getItems());
             newsAdapter.notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (subscription != null)
-            subscription.unsubscribe();
     }
 }

@@ -116,6 +116,7 @@ public class PostListFragment extends BaseDisqusFragment implements Validator.Va
             subscription = observable
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .compose(this.<PaginatedList<Post>>bindToLifecycle())
                     .subscribe(new GetPostsObserver());
         }
 
@@ -183,7 +184,9 @@ public class PostListFragment extends BaseDisqusFragment implements Validator.Va
 
                         Observable<ResponseItem<Post>> observable =
                                 postsService.create(thread.id, message);
-                        createThreadSubscription = observable.observeOn(AndroidSchedulers.mainThread())
+                        createThreadSubscription = observable
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .compose(PostListFragment.this.<ResponseItem<Post>>bindToLifecycle())
                                 .subscribe(new CreatePostObserver());
 
                     }
@@ -317,14 +320,5 @@ public class PostListFragment extends BaseDisqusFragment implements Validator.Va
             return text.substring(0, 20) + "...";
         }
         return text;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (subscription != null)
-            subscription.unsubscribe();
-        if (createThreadSubscription != null)
-            createThreadSubscription.unsubscribe();
     }
 }

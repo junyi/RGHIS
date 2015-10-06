@@ -71,10 +71,6 @@ public class HealthInfoFragment extends BaseMasterDetailFragment {
 
         detailFragment = HealthInfoDetailFragment.newInstance(isLargeLayout);
         setDetailFragment(detailFragment);
-//        getChildFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.right_container, detailFragment)
-//                .commit();
 
         realm = Realm.getDefaultInstance();
 
@@ -93,9 +89,6 @@ public class HealthInfoFragment extends BaseMasterDetailFragment {
                         detailFragment.bindData(healthTopic);
                         if (!isLargeLayout)
                             showDetailFragment();
-//                        if (!isLargeLayout && slidingPaneLayout != null) {
-//                            slidingPaneLayout.closePane();
-//                        }
                         detailFragment.resetView();
                     }
                 }));

@@ -99,5 +99,6 @@ dependencies {
     provided 'de.greenrobot:eventbus-annotation-processor:3.0.0-beta1'
     compile 'frankiesardo:icepick:3.1.0'
     provided 'frankiesardo:icepick-processor:3.1.0'
-    compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'
+    compile 'com.trello:rxlifecycle:0.3.0'
+    compile 'com.trello:rxlifecycle-components:0.3.0'
 }

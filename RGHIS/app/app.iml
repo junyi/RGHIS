@@ -81,7 +81,6 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/gridlayout-v7/23.0.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.bartoszlipinski.recyclerviewheader/library/1.2.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.medyo/dynamicbox/1.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.jakewharton.rxbinding/rxbinding-appcompat-v7/0.2.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.jakewharton.rxbinding/rxbinding/0.2.0/jars" />
@@ -89,6 +88,8 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.mikepenz/fontawesome-typeface/4.4.0.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.mikepenz/google-material-typeface/1.2.0.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.mikepenz/iconics-core/1.7.6/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.trello/rxlifecycle-components/0.3.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.trello/rxlifecycle/0.3.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.turingtechnologies.materialscrollbar/lib/4.1.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/de.hdodenhof/circleimageview/2.0.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/io.reactivex/rxandroid/1.0.1/jars" />
@@ -132,12 +133,12 @@
     <orderEntry type="library" exported="" name="timber-3.1.0" level="project" />
     <orderEntry type="library" exported="" name="eventbus-annotation-processor-3.0.0-beta1" level="project" />
     <orderEntry type="library" exported="" name="okhttp-urlconnection-2.5.0" level="project" />
-    <orderEntry type="library" exported="" name="stencil-0.3.5" level="project" />
     <orderEntry type="library" exported="" name="kotlin-stdlib-0.12.613" level="project" />
+    <orderEntry type="library" exported="" name="stencil-0.3.5" level="project" />
     <orderEntry type="library" exported="" name="calligraphy-2.1.0" level="project" />
     <orderEntry type="library" exported="" name="antlr4-annotations-4.5" level="project" />
-    <orderEntry type="library" exported="" name="scout-0.1.0" level="project" />
     <orderEntry type="library" exported="" name="antlr4-4.5" level="project" />
+    <orderEntry type="library" exported="" name="scout-0.1.0" level="project" />
     <orderEntry type="library" exported="" name="converter-simplexml-2.0.0-beta1" level="project" />
     <orderEntry type="library" exported="" name="data.priority-map-0.0.2" level="project" />
     <orderEntry type="library" exported="" name="dynamicbox-1.2" level="project" />
@@ -145,7 +146,6 @@
     <orderEntry type="library" exported="" name="Parse-1.10.2" level="project" />
     <orderEntry type="library" exported="" name="icepick-processor-3.1.0" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.2.1" level="project" />
-    <orderEntry type="library" exported="" name="library-1.2.0" level="project" />
     <orderEntry type="library" exported="" name="baseLibrary-1.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="quoin-0.1.2" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-23.0.1" level="project" />
@@ -159,6 +159,7 @@
     <orderEntry type="library" exported="" name="adapter-rxjava-2.0.0-beta1" level="project" />
     <orderEntry type="library" exported="" name="htmlspanner-0.5-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="library-1.0-rc1" level="project" />
+    <orderEntry type="library" exported="" name="rxlifecycle-0.3.0" level="project" />
     <orderEntry type="library" exported="" name="html-textview-1.2" level="project" />
     <orderEntry type="library" exported="" name="circleimageview-2.0.0" level="project" />
     <orderEntry type="library" exported="" name="org.abego.treelayout.core-1.0.1" level="project" />
@@ -186,10 +187,11 @@
     <orderEntry type="library" exported="" name="compiler-1.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="commons-codec-1.10" level="project" />
     <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
-    <orderEntry type="library" exported="" name="auto-service-1.0-rc2" level="project" />
-    <orderEntry type="library" exported="" name="jsoup-1.8.3" level="project" />
     <orderEntry type="library" exported="" name="ST4-4.0.8" level="project" />
+    <orderEntry type="library" exported="" name="jsoup-1.8.3" level="project" />
+    <orderEntry type="library" exported="" name="auto-service-1.0-rc2" level="project" />
     <orderEntry type="library" exported="" name="simple-xml-2.7.1" level="project" />
+    <orderEntry type="library" exported="" name="rxlifecycle-components-0.3.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="lib-4.1.0" level="project" />

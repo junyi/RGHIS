@@ -42,6 +42,7 @@ import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.utils.Utils;
 import com.parse.ParseUser;
+import com.trello.rxlifecycle.components.support.RxFragment;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -68,7 +69,7 @@ import sg.rghis.android.utils.SystemUtils;
 import sg.rghis.android.utils.UserManager;
 import sg.rghis.android.views.drawable.IconicsDrawable;
 
-public class MainFragment extends Fragment implements BaseFragment.OnViewReadyListener {
+public class MainFragment extends RxFragment implements BaseFragment.OnViewReadyListener {
     @IntDef({STATE_SIGNUP, STATE_NEWS, STATE_HEALTH_INFO,
             STATE_EMERGENCY_INFO, STATE_CATEGORIES, STATE_THREADS, STATE_PROFILE, STATE_NONE})
     @Retention(RetentionPolicy.SOURCE)
@@ -517,6 +518,7 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
                     searchSubscription = RxTextView.textChanges(searchEditText)
                             .debounce(200, TimeUnit.MILLISECONDS)
                             .observeOn(AndroidSchedulers.mainThread())
+                            .compose(this.<CharSequence>bindToLifecycle())
                             .subscribe(fragment.getSearchObserver());
                 }
             } else {
