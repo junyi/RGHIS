@@ -34,7 +34,7 @@ public class EmergencyInfoFragment extends BaseMasterDetailFragment {
 
     private Realm realm;
     private EmergencyTopicAdapter adapter;
-//    private Subscription searchSubscription;
+    //    private Subscription searchSubscription;
     private EmergencyInfoDetailFragment detailFragment;
 
     public static EmergencyInfoFragment newInstance() {
@@ -145,6 +145,7 @@ public class EmergencyInfoFragment extends BaseMasterDetailFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        realm.close();
+        if (realm != null)
+            realm.close();
     }
 }

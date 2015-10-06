@@ -293,18 +293,22 @@ public class PostListFragment extends BaseDisqusFragment implements Validator.Va
             postsAdapter.notifyDataSetChanged();
             recyclerView.smoothScrollToPosition(1);
             String username = UserManager.getCurrentUser().getUsername();
-            String message = String.format("@%s just replied to a thread you subscribed to.",
-                    username);
-            ParsePush push = new ParsePush();
-            push.setChannel(DisqusUtils.getChannelName(thread.id));
-            push.setMessage(message);
-            push.sendInBackground(new SendCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e != null)
-                        Timber.d(Log.getStackTraceString(e));
-                }
-            });
+            String authorName = DisqusUtils.disqusNameToParse(postResponseItem
+                    .getResponse().getAuthor().getName()).first;
+            if (!username.equals(authorName)) {
+                String message = String.format("@%s just replied to a thread you subscribed to.",
+                        authorName);
+                ParsePush push = new ParsePush();
+                push.setChannel(DisqusUtils.getChannelName(thread.id));
+                push.setMessage(message);
+                push.sendInBackground(new SendCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null)
+                            Timber.d(Log.getStackTraceString(e));
+                    }
+                });
+            }
         }
     }
 

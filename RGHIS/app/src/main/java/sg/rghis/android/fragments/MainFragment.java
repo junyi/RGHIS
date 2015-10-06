@@ -184,7 +184,7 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
         getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
-                if (getCurrentFragment() != null)
+                if (getFragmentManager() != null && getCurrentFragment() != null)
                     updateCurrentTitle();
             }
         });
@@ -333,6 +333,7 @@ public class MainFragment extends Fragment implements BaseFragment.OnViewReadyLi
                 break;
         }
         if (id != -1) {
+            navigationView.getMenu().findItem(id).setChecked(true);
             navigationView.setCheckedItem(id);
         } else {
             int size = navigationView.getMenu().size();
