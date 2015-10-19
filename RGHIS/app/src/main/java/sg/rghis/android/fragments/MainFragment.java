@@ -35,6 +35,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -42,6 +43,7 @@ import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.utils.Utils;
 import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import java.lang.annotation.Retention;
@@ -383,12 +385,22 @@ public class MainFragment extends RxFragment implements BaseFragment.OnViewReady
             ParseUser currentUser = UserManager.getCurrentUser();
             String name = currentUser.getString(User.KEY_FIRST_NAME) + " " + currentUser.getString(User.KEY_LAST_NAME);
             String username = "@" + currentUser.getUsername();
+            String avatarUrl = currentUser.getString(User.KEY_AVATAR_URL);
             nameTextView.setText(name);
             usernameTextView.setVisibility(View.VISIBLE);
             usernameTextView.setText(username);
+            if (avatarUrl != null) {
+                Picasso.with(getContext())
+                        .load(avatarUrl)
+                        .placeholder(R.drawable.avatar_placeholder)
+                        .into(avatarView);
+            }
         } else {
             usernameTextView.setVisibility(View.GONE);
             nameTextView.setText(getString(R.string.login_signup));
+            Picasso.with(getContext())
+                    .load(R.drawable.avatar_placeholder)
+                    .into(avatarView);
         }
     }
 
@@ -660,6 +672,12 @@ public class MainFragment extends RxFragment implements BaseFragment.OnViewReady
 
     public void notifyLoginSuccess() {
         updateHeaderView();
+    }
+
+    public void notifyLogoutSuccess() {
+        updateHeaderView();
+        Toast.makeText(getContext(), "Sign out success!", Toast.LENGTH_SHORT).show();
+        navigateToState(MainFragment.STATE_NEWS, null, false);
     }
 
     private void openSearchView() {

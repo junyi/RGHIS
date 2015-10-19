@@ -81,7 +81,7 @@ public class NewsDetailFragment extends Fragment {
         if (url != null) {
             webView.loadUrl("about:blank");
             webView.loadUrl(url);
-            showProgressBar();
+//            showProgressBar();
         }
 
     }
@@ -92,7 +92,7 @@ public class NewsDetailFragment extends Fragment {
             hideProgressBar();
             webView.loadUrl("about:blank");
             webView.loadUrl(url);
-            hideProgressBar();
+//            hideProgressBar();
         }
     }
 

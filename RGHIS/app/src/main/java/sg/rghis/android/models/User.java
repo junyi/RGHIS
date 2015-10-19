@@ -9,6 +9,7 @@ public class User extends ParseUser {
     public final static String KEY_FIRST_NAME = "firstName";
     public final static String KEY_LAST_NAME = "lastName";
     public final static String KEY_ROLE = "role";
+    public final static String KEY_AVATAR_URL = "avatarUrl";
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_EMAIL = "email";
@@ -45,6 +46,13 @@ public class User extends ParseUser {
             delegatedUser.put(KEY_LAST_NAME, lastName);
     }
 
+    public void setAvatarUrl(String avatarUrl) {
+        if (delegatedUser == null)
+            put(KEY_AVATAR_URL, avatarUrl);
+        else
+            delegatedUser.put(KEY_AVATAR_URL, avatarUrl);
+    }
+
     private void setRole(String role) {
         if (delegatedUser == null)
             put(KEY_ROLE, role);
@@ -64,6 +72,13 @@ public class User extends ParseUser {
             return getString(KEY_LAST_NAME);
         else
             return delegatedUser.getString(KEY_LAST_NAME);
+    }
+
+    public String getAvatarUrl() {
+        if (delegatedUser == null)
+            return getString(KEY_AVATAR_URL);
+        else
+            return delegatedUser.getString(KEY_AVATAR_URL);
     }
 
     public String getRole() {

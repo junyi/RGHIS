@@ -30,7 +30,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:gravity="center_horizontal"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/primary_text"
                 tools:text="Nexus 6 2014" />
@@ -41,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
                 android:layout_marginBottom="4dp"
-                android:gravity="center_horizontal"
+                android:gravity="left"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/secondary_text"
                 tools:text="Nexus 6 2014" />

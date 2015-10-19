@@ -26,12 +26,14 @@ import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import sg.rghis.android.R;
 import sg.rghis.android.models.User;
 import sg.rghis.android.utils.SystemUtils;
@@ -41,6 +43,8 @@ import timber.log.Timber;
 
 public class ProfileFragment extends BaseFragment implements Validator.ValidationListener {
 
+    @Bind(R.id.avatar_view)
+    CircleImageView avatarView;
     @Bind(R.id.name_view)
     TextView nameView;
     @Bind(R.id.username)
@@ -114,6 +118,13 @@ public class ProfileFragment extends BaseFragment implements Validator.Validatio
         } else {
             professionalLabel.setVisibility(View.GONE);
         }
+        String avatarUrl = user.getString(User.KEY_AVATAR_URL);
+        if (avatarUrl != null) {
+            Picasso.with(view.getContext())
+                    .load(avatarUrl)
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .into(avatarView);
+        }
     }
 
     @OnClick(R.id.edit_first_name)
@@ -146,8 +157,8 @@ public class ProfileFragment extends BaseFragment implements Validator.Validatio
                     Timber.d(Log.getStackTraceString(e));
             }
         });
-        Toast.makeText(getContext(), "Sign out success!", Toast.LENGTH_SHORT).show();
-        navigateToState(MainFragment.STATE_NEWS, null, false);
+        MainActivity activity = SystemUtils.getMainActivityFromContext(getContext());
+        activity.getMainFragment().notifyLogoutSuccess();
     }
 
     private String capitalize(String s) {
